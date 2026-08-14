@@ -1,5 +1,10 @@
 # Implementation Status
 
+> **Status: TRAINING READY** — implementation frozen at commit `3298cf3`
+> (see [IMPLEMENTATION_FREEZE.md](IMPLEMENTATION_FREEZE.md)).
+> Datasets integrated and licence-reviewed; official GPU runs awaiting
+> allocation and the decisions in [OFFICIAL_TRAINING_PLAN.md](OFFICIAL_TRAINING_PLAN.md).
+
 What is built and verified, versus what needs data or GPU time to run.
 Generated against commit at time of writing; re-check with `pytest -q`.
 
@@ -56,20 +61,31 @@ Generated against commit at time of writing; re-check with `pytest -q`.
 | One-command pipeline | ✅ | `reproduce_paper.sh`, dry-run verified |
 | Test suite | ✅ | 25 tests passing |
 
-## Blocked on data
+## Data status
 
-These are implemented but cannot produce paper numbers until corpora arrive:
+All designated datasets are integrated from local copies, checksum-verified, and
+documented. See [DATASET_PROVENANCE.md](DATASET_PROVENANCE.md).
 
-| Item | Needs |
-|---|---|
-| Tokenizers at full 32K/50K | Amharic and Tigrinya corpora at scale |
-| Stage 1 pretraining | the same corpora |
-| QA results | TIGQA, AmQA |
-| NER (Tigrinya) | a named Tigrinya NER corpus |
-| Table 2 parity (valid) | sentence-aligned parallel text |
-| All Table 4/5 numbers | the above, plus GPU time for 5 seeds × 4 arms |
+| Dataset | Integrated | Verified end-to-end |
+|---|---|---|
+| TIGQA | ✅ 797 QA pairs | ✅ 67 val questions scored |
+| AmQA | ✅ 1,723/600/299 | ✅ 600 val questions scored |
+| MasakhaNER (amh) | ✅ 1,750/250/500 | ✅ 9 labels |
+| Tigrinya NER | ✅ 4,562/570/571 | ✅ 11 labels after repair |
+| AfriSenti | ✅ Hub loader | ✅ ran |
+| MLM corpora | ✅ 200K lines each | ✅ Stage 1 ran |
 
-See [DATA_SETUP.md](DATA_SETUP.md) and [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
+## Remaining blockers
+
+| Item | Blocks | Reference |
+|---|---|---|
+| MLM corpus provenance UNKNOWN | publication, not training | [MLM_CORPUS_ANALYSIS.md](MLM_CORPUS_ANALYSIS.md) |
+| Tigrinya NER has no licence | bundling | [DATASET_REDISTRIBUTION.md](DATASET_REDISTRIBUTION.md) |
+| MasakhaNER CC BY-NC 4.0 | commercial use of NER models | [DATASET_REDISTRIBUTION.md](DATASET_REDISTRIBUTION.md) |
+| Parallel corpus absent | valid Table 2 parity | [DATA_SETUP.md](DATA_SETUP.md) |
+| GPU allocation | all official runs | [OFFICIAL_TRAINING_PLAN.md](OFFICIAL_TRAINING_PLAN.md) |
+
+See [RELEASE_AUDIT.md](RELEASE_AUDIT.md) for component-level readiness.
 
 ## Verification performed
 
