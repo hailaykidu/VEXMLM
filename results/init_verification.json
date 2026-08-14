@@ -1,74 +1,73 @@
 {
-  "model": "/homes/neumann/teklehaymanot/VEXMLM_Model",
+  "model": "checkpoints/vexmlm-expanded",
   "embedding_shape": [
-    280147,
+    280002,
     768
   ],
   "n_old": 250002,
-  "n_new": 30145,
+  "n_new": 30000,
   "hidden_size": 768,
   "observed": {
-    "old_perdim_std": 0.212292,
-    "new_perdim_std": 0.500958,
-    "old_norm_mean": 5.8702,
-    "new_norm_mean": 13.8506,
-    "global_mean_norm": 2.597,
+    "old_perdim_std": 0.212022,
+    "new_perdim_std": 0.09312,
+    "old_norm_mean": 5.8657,
+    "new_norm_mean": 2.5981,
+    "global_mean_norm": 2.5981,
     "dist_to_global_mean": {
-      "mean": 13.8599,
-      "std": 0.8306,
-      "min": 2.6034,
-      "max": 15.3726,
-      "coefficient_of_variation": 0.0599
+      "mean": 0.0,
+      "std": 0.0,
+      "min": 0.0,
+      "max": 0.0,
+      "coefficient_of_variation": NaN
     },
-    "rows_identical_to_global_mean": 0
+    "rows_identical_to_global_mean": 30000
   },
   "candidates": {
     "global_mean": {
       "predicted_distance": 0.0,
-      "relative_error": 13.85994
+      "relative_error": 0.0
     },
     "mixed": {
       "predicted_distance": 13.8564,
-      "relative_error": 0.000255
+      "relative_error": 1.0
     },
     "random": {
       "predicted_distance": 27.7128,
-      "relative_error": 0.499873
+      "relative_error": 1.0
     },
     "constituent_mean": {
       "predicted_distance": "no closed form (data-dependent)",
       "signature": "small mean distance with HIGH relative row-to-row variance",
-      "observed_cv": 0.0599
+      "observed_cv": NaN
     }
   },
-  "verdict": "mixed",
+  "verdict": "global_mean",
   "confidence": "high",
   "histogram": {
     "bin_edges": [
-      2.603,
-      3.242,
-      3.88,
-      4.519,
-      5.157,
-      5.796,
-      6.434,
-      7.073,
-      7.711,
-      8.35,
-      8.988,
-      9.626,
-      10.265,
-      10.903,
-      11.542,
-      12.18,
-      12.819,
-      13.457,
-      14.096,
-      14.734,
-      15.373
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
     ],
     "counts": [
-      135,
       0,
       0,
       0,
@@ -79,15 +78,16 @@
       0,
       0,
       0,
+      30000,
       0,
       0,
       0,
       0,
-      26,
-      2931,
-      18074,
-      8653,
-      326
+      0,
+      0,
+      0,
+      0,
+      0
     ]
   }
 }

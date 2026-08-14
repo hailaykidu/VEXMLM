@@ -236,7 +236,7 @@ def main() -> None:
         load_best_model_at_end=p.get("load_best_model_at_end", True),
         metric_for_best_model=p.get("metric_for_best_model", "eval_loss"),
         greater_is_better=p.get("greater_is_better", False),
-        logging_steps=50,
+        logging_steps=p.get("logging_steps", 50),
         seed=seed,
         data_seed=seed,
         dataloader_num_workers=cfgmod.get(cfg, "hardware.dataloader_num_workers", 4),

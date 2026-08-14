@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=vexmlm-stage1
+#SBATCH --job-name=vexmlm-calib
 #SBATCH --partition=ampere
 #SBATCH --gres=gpu:a100_80gb:1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=120G
-#SBATCH --time=24:00:00
-#SBATCH --output=logs/stage1_%j.out
-#SBATCH --error=logs/stage1_%j.err
+#SBATCH --time=00:30:00
+#SBATCH --output=logs/calib_%j.out
+#SBATCH --error=logs/calib_%j.err
 #SBATCH --signal=B:USR1@300      # warn 5 min before preemption
 #
 # Stage 1: continued MLM pretraining.
@@ -37,7 +37,7 @@ srun python3 pretraining/run_mlm.py \
   --tigrinya datasets/processed/tigrinya.train.txt \
   --block-chunk \
   --mode official \
-  --output checkpoints/vexmlm-stage1 \
-  --override pretraining.save_total_limit=1 pretraining.logging_steps=25
+  --output checkpoints/calib-stage1 \
+  --max-steps 30 --no-tracking --override pretraining.save_total_limit=1
 
 echo "done=$(date -Is)"
