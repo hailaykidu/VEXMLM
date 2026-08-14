@@ -142,11 +142,17 @@ def main() -> int:
                 spe = round(1.0 / log_train[0][0]) if log_train[0][0] < 1 else None
             train = [((int(ep * spe) if spe else i + 1), loss)
                      for i, (ep, loss) in enumerate(log_train)]
-    if len(evals) < 2:
-        log_eval = [(float(m.group(2)), float(m.group(1))) for m in re.finditer(
-            r"\{'eval_loss': ([0-9.]+),[^}]*'epoch': ([0-9.]+)\}", logtext)]
-        if len(log_eval) > len(evals):
-            evals = [(int(round(ep * 512)), loss, ep) for ep, loss in log_eval]
+    # The final epoch's evaluation runs AFTER the last checkpoint is written, so
+    # trainer_state.json always misses it. Merge in every eval point from the log.
+    log_eval = [(float(m.group(2)), float(m.group(1))) for m in re.finditer(
+        r"\{'eval_loss': ([0-9.]+),[^}]*'epoch': ([0-9.]+)\}", logtext)]
+    if log_eval:
+        spe = max((s for s, _, _ in evals), default=0) / max(
+            (e for _, _, e in evals if e), default=1) if evals else 512
+        by_epoch = {round(e, 3): (s, v, e) for s, v, e in evals}
+        for ep, loss in log_eval:
+            by_epoch.setdefault(round(ep, 3), (int(round(ep * spe)), loss, ep))
+        evals = [by_epoch[k] for k in sorted(by_epoch)]
 
     # Curves
     plots = REPO / "reports/figures"

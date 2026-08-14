@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" font-family="system-ui,sans-serif">
+<rect width="760" height="380" fill="#ffffff"/>
+<text x="380.0" y="24" text-anchor="middle" font-size="15" font-weight="600" fill="#111">Stage 1 — validation perplexity</text>
+<line x1="68" y1="40.0" x2="630" y2="40.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="44.0" text-anchor="end" font-size="11" fill="#6b7280">632.029</text>
+<line x1="68" y1="112.0" x2="630" y2="112.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="116.0" text-anchor="end" font-size="11" fill="#6b7280">488.409</text>
+<line x1="68" y1="184.0" x2="630" y2="184.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="188.0" text-anchor="end" font-size="11" fill="#6b7280">344.788</text>
+<line x1="68" y1="256.0" x2="630" y2="256.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="260.0" text-anchor="end" font-size="11" fill="#6b7280">201.167</text>
+<line x1="68" y1="328.0" x2="630" y2="328.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="60" y="332.0" text-anchor="end" font-size="11" fill="#6b7280">57.546</text>
+<text x="68.0" y="346" text-anchor="middle" font-size="11" fill="#6b7280">512</text>
+<text x="208.5" y="346" text-anchor="middle" font-size="11" fill="#6b7280">1664</text>
+<text x="349.0" y="346" text-anchor="middle" font-size="11" fill="#6b7280">2816</text>
+<text x="489.5" y="346" text-anchor="middle" font-size="11" fill="#6b7280">3968</text>
+<text x="630.0" y="346" text-anchor="middle" font-size="11" fill="#6b7280">5120</text>
+<line x1="68" y1="40" x2="68" y2="328" stroke="#9ca3af"/>
+<line x1="68" y1="328" x2="630" y2="328" stroke="#9ca3af"/>
+<path d="M68.0,59.9 L130.4,225.9 L192.9,258.6 L255.3,273.4 L317.8,292.4 L380.2,295.4 L442.7,301.5 L505.1,305.1 L567.6,308.1 L630.0,307.1" fill="none" stroke="#2563eb" stroke-width="2"/>
+<circle cx="68.0" cy="59.9" r="2.5" fill="#2563eb"/>
+<circle cx="130.4" cy="225.9" r="2.5" fill="#2563eb"/>
+<circle cx="192.9" cy="258.6" r="2.5" fill="#2563eb"/>
+<circle cx="255.3" cy="273.4" r="2.5" fill="#2563eb"/>
+<circle cx="317.8" cy="292.4" r="2.5" fill="#2563eb"/>
+<circle cx="380.2" cy="295.4" r="2.5" fill="#2563eb"/>
+<circle cx="442.7" cy="301.5" r="2.5" fill="#2563eb"/>
+<circle cx="505.1" cy="305.1" r="2.5" fill="#2563eb"/>
+<circle cx="567.6" cy="308.1" r="2.5" fill="#2563eb"/>
+<circle cx="630.0" cy="307.1" r="2.5" fill="#2563eb"/>
+<line x1="640" y1="46" x2="662" y2="46" stroke="#2563eb" stroke-width="2.5"/>
+<text x="668" y="50" font-size="12" fill="#374151">validation perplexity</text>
+<text x="349.0" y="370" text-anchor="middle" font-size="12" fill="#374151">step</text>
+<text x="16" y="184.0" font-size="12" fill="#374151" transform="rotate(-90 16 184.0)" text-anchor="middle">perplexity</text>
+</svg>
