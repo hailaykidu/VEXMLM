@@ -9,7 +9,7 @@
     "hub_id": null,
     "hub_config": null,
     "citation": "@inproceedings{teklehaymanot2024tigqa,\n  title={TIGQA: An Expert-Annotated Question-Answering Dataset in Tigrinya},\n  author={Teklehaymanot, Hailay and others},\n  year={2024},\n  note={Zenodo: https://zenodo.org/records/11423987}\n}",
-    "license": "see Zenodo record",
+    "license": "CC BY 4.0",
     "url": "https://zenodo.org/records/11423987",
     "version": "TIGQA-1.0",
     "text_field": null,

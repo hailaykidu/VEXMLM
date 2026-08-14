@@ -9,7 +9,7 @@
     "hub_id": null,
     "hub_config": null,
     "citation": "@article{yohannes2022tigrinya,\n  title={Named Entity Recognition for Tigrinya},\n  author={Yohannes, Hailemariam Mehari and Amagasa, Toshiyuki},\n  year={2022},\n  note={https://github.com/mehari-eng/Tigrinya-NER}\n}",
-    "license": "see source repository",
+    "license": "UNLICENSED — no licence file in the source repository",
     "url": "https://github.com/mehari-eng/Tigrinya-NER",
     "version": "Yohannes and Amagasa (2022)",
     "text_field": null,

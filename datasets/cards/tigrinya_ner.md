@@ -6,7 +6,7 @@
 | Task | ner |
 | Languages | tir |
 | Version | Yohannes and Amagasa (2022) |
-| Licence | see source repository |
+| Licence | UNLICENSED — no licence file in the source repository |
 | Source | https://github.com/mehari-eng/Tigrinya-NER |
 | Hub ID | **none — local copy** |
 | Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya` |

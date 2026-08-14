@@ -6,7 +6,7 @@
 | Task | qa |
 | Languages | tir |
 | Version | TIGQA-1.0 |
-| Licence | see Zenodo record |
+| Licence | CC BY 4.0 |
 | Source | https://zenodo.org/records/11423987 |
 | Hub ID | **none — local copy** |
 | Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/qa/tigqa_squad` |

@@ -1,0 +1,399 @@
+{
+  "corpora": {
+    "amharic": {
+      "path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amharic/amharic.txt",
+      "bytes": 23338664,
+      "sha256": "b5d5b1da90d3fff680d083dcab7ad8416037665e7762c99a2826b53ef8a849e1",
+      "lines_total": 200002,
+      "lines_empty": 1,
+      "lines_nonempty": 200001,
+      "lines_unique": 129864,
+      "duplicate_lines": 70137,
+      "duplicate_rate": 0.350683,
+      "tokens_whitespace": 1902258,
+      "characters": 9091793,
+      "mean_tokens_per_line": 9.511,
+      "mean_chars_per_line": 45.46,
+      "length_distribution_chars": {
+        "min": 8,
+        "p10": 20,
+        "p25": 27,
+        "median": 40,
+        "p75": 58,
+        "p90": 78,
+        "p99": 120,
+        "max": 329
+      },
+      "mean_token_length": 3.884,
+      "character_distribution": {
+        "ethiopic": 6968071,
+        "latin": 95769,
+        "digit": 114893,
+        "whitespace": 1703138,
+        "other": 209922,
+        "ethiopic_share_of_all": 0.7664,
+        "ethiopic_share_of_nonspace": 0.9431
+      },
+      "geez_coverage": {
+        "distinct_ethiopic_codepoints": 318,
+        "lines_with_any_ethiopic": 200001,
+        "lines_below_50pct_ethiopic": 269,
+        "mean_ethiopic_ratio": 0.9435
+      },
+      "encoding_issues": {
+        "replacement_chars": 1,
+        "lines_with_control_chars": 0,
+        "lines_not_nfc": 0,
+        "lines_with_url": 7
+      },
+      "domain_composition": {
+        "religious_christian": {
+          "lines_with_marker": 14224,
+          "share_of_sampled": 0.0711
+        },
+        "religious_islamic": {
+          "lines_with_marker": 5196,
+          "share_of_sampled": 0.026
+        },
+        "news_politics": {
+          "lines_with_marker": 1599,
+          "share_of_sampled": 0.008
+        },
+        "web_commerce": {
+          "lines_with_marker": 2993,
+          "share_of_sampled": 0.015
+        }
+      },
+      "top_20_characters": [
+        {
+          "char": "ን",
+          "name": "ETHIOPIC SYLLABLE NE",
+          "count": 406938
+        },
+        {
+          "char": "ም",
+          "name": "ETHIOPIC SYLLABLE ME",
+          "count": 248606
+        },
+        {
+          "char": "እ",
+          "name": "ETHIOPIC SYLLABLE GLOTTAL E",
+          "count": 244017
+        },
+        {
+          "char": "ው",
+          "name": "ETHIOPIC SYLLABLE WE",
+          "count": 219574
+        },
+        {
+          "char": "ት",
+          "name": "ETHIOPIC SYLLABLE TE",
+          "count": 215761
+        },
+        {
+          "char": "በ",
+          "name": "ETHIOPIC SYLLABLE BA",
+          "count": 210547
+        },
+        {
+          "char": "አ",
+          "name": "ETHIOPIC SYLLABLE GLOTTAL A",
+          "count": 201562
+        },
+        {
+          "char": "ለ",
+          "name": "ETHIOPIC SYLLABLE LA",
+          "count": 193022
+        },
+        {
+          "char": "ር",
+          "name": "ETHIOPIC SYLLABLE RE",
+          "count": 179791
+        },
+        {
+          "char": "ል",
+          "name": "ETHIOPIC SYLLABLE LE",
+          "count": 172626
+        },
+        {
+          "char": "ይ",
+          "name": "ETHIOPIC SYLLABLE YE",
+          "count": 164742
+        },
+        {
+          "char": "ነ",
+          "name": "ETHIOPIC SYLLABLE NA",
+          "count": 163788
+        },
+        {
+          "char": "መ",
+          "name": "ETHIOPIC SYLLABLE MA",
+          "count": 158600
+        },
+        {
+          "char": "የ",
+          "name": "ETHIOPIC SYLLABLE YA",
+          "count": 157521
+        },
+        {
+          "char": "ስ",
+          "name": "ETHIOPIC SYLLABLE SE",
+          "count": 157072
+        },
+        {
+          "char": "ች",
+          "name": "ETHIOPIC SYLLABLE CE",
+          "count": 133844
+        },
+        {
+          "char": "ተ",
+          "name": "ETHIOPIC SYLLABLE TA",
+          "count": 116868
+        },
+        {
+          "char": "ና",
+          "name": "ETHIOPIC SYLLABLE NAA",
+          "count": 116293
+        },
+        {
+          "char": "ያ",
+          "name": "ETHIOPIC SYLLABLE YAA",
+          "count": 115571
+        }
+      ],
+      "reference_overlap": {
+        "HornMT (tir)": {
+          "path": "/homes/neumann/teklehaymanot/amseg/data/corpus/hornmt_tir.txt",
+          "reference_lines": 2030,
+          "reference_unique": 2029,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        },
+        "HornMT (raw ti)": {
+          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
+          "reference_lines": 2030,
+          "reference_unique": 2029,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        },
+        "HornMT (raw en)": {
+          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
+          "reference_lines": 2030,
+          "reference_unique": 2030,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        }
+      },
+      "origin": {
+        "classification": "UNKNOWN",
+        "rationale": "No checksum or content match ties this file to any named source available on this machine. Scale, structure, and the round line cap rule out the designated HornMT reference, but the positive identity of the source cannot be established from the evidence at hand.",
+        "evidence": [
+          "HornMT reference on this machine has 2,030 unique lines, against 200,001 in this corpus (99x larger).",
+          "Zero exact line overlap with any HornMT copy present here.",
+          "Religious markers appear in 9.7% of sampled lines; news/politics in 0.8%."
+        ],
+        "ruled_out": [
+          "HornMT — scale and zero content overlap"
+        ]
+      }
+    },
+    "tigrinya": {
+      "path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya/tigrinya.txt",
+      "bytes": 18026579,
+      "sha256": "e006c5ff19e3ec63f29b862871607d2be1cb94d3fe5db8447cd0f17898e0f6ec",
+      "lines_total": 200000,
+      "lines_empty": 0,
+      "lines_nonempty": 200000,
+      "lines_unique": 141015,
+      "duplicate_lines": 58985,
+      "duplicate_rate": 0.294925,
+      "tokens_whitespace": 1531950,
+      "characters": 6982723,
+      "mean_tokens_per_line": 7.66,
+      "mean_chars_per_line": 34.91,
+      "length_distribution_chars": {
+        "min": 9,
+        "p10": 15,
+        "p25": 21,
+        "median": 30,
+        "p75": 43,
+        "p90": 60,
+        "p99": 109,
+        "max": 340
+      },
+      "mean_token_length": 3.686,
+      "character_distribution": {
+        "ethiopic": 5420027,
+        "latin": 29988,
+        "digit": 67346,
+        "whitespace": 1336084,
+        "other": 129278,
+        "ethiopic_share_of_all": 0.7762,
+        "ethiopic_share_of_nonspace": 0.9599
+      },
+      "geez_coverage": {
+        "distinct_ethiopic_codepoints": 345,
+        "lines_with_any_ethiopic": 200000,
+        "lines_below_50pct_ethiopic": 252,
+        "mean_ethiopic_ratio": 0.9562
+      },
+      "encoding_issues": {
+        "replacement_chars": 8,
+        "lines_with_control_chars": 0,
+        "lines_not_nfc": 0,
+        "lines_with_url": 29
+      },
+      "domain_composition": {
+        "religious_christian": {
+          "lines_with_marker": 17879,
+          "share_of_sampled": 0.0894
+        },
+        "religious_islamic": {
+          "lines_with_marker": 152,
+          "share_of_sampled": 0.0008
+        },
+        "news_politics": {
+          "lines_with_marker": 1754,
+          "share_of_sampled": 0.0088
+        },
+        "web_commerce": {
+          "lines_with_marker": 706,
+          "share_of_sampled": 0.0035
+        }
+      },
+      "top_20_characters": [
+        {
+          "char": "ን",
+          "name": "ETHIOPIC SYLLABLE NE",
+          "count": 300085
+        },
+        {
+          "char": "ም",
+          "name": "ETHIOPIC SYLLABLE ME",
+          "count": 240279
+        },
+        {
+          "char": "እ",
+          "name": "ETHIOPIC SYLLABLE GLOTTAL E",
+          "count": 223209
+        },
+        {
+          "char": "ብ",
+          "name": "ETHIOPIC SYLLABLE BE",
+          "count": 220960
+        },
+        {
+          "char": "ኣ",
+          "name": "ETHIOPIC SYLLABLE GLOTTAL AA",
+          "count": 213704
+        },
+        {
+          "char": "ይ",
+          "name": "ETHIOPIC SYLLABLE YE",
+          "count": 187377
+        },
+        {
+          "char": "ት",
+          "name": "ETHIOPIC SYLLABLE TE",
+          "count": 169115
+        },
+        {
+          "char": "።",
+          "name": "ETHIOPIC FULL STOP",
+          "count": 141859
+        },
+        {
+          "char": "ል",
+          "name": "ETHIOPIC SYLLABLE LE",
+          "count": 122751
+        },
+        {
+          "char": "ር",
+          "name": "ETHIOPIC SYLLABLE RE",
+          "count": 117732
+        },
+        {
+          "char": "ስ",
+          "name": "ETHIOPIC SYLLABLE SE",
+          "count": 113513
+        },
+        {
+          "char": "ና",
+          "name": "ETHIOPIC SYLLABLE NAA",
+          "count": 98884
+        },
+        {
+          "char": "መ",
+          "name": "ETHIOPIC SYLLABLE MA",
+          "count": 94013
+        },
+        {
+          "char": "ነ",
+          "name": "ETHIOPIC SYLLABLE NA",
+          "count": 89087
+        },
+        {
+          "char": "ተ",
+          "name": "ETHIOPIC SYLLABLE TA",
+          "count": 87744
+        },
+        {
+          "char": "ለ",
+          "name": "ETHIOPIC SYLLABLE LA",
+          "count": 80532
+        },
+        {
+          "char": "ዝ",
+          "name": "ETHIOPIC SYLLABLE ZE",
+          "count": 80147
+        },
+        {
+          "char": "ድ",
+          "name": "ETHIOPIC SYLLABLE DE",
+          "count": 76204
+        },
+        {
+          "char": "በ",
+          "name": "ETHIOPIC SYLLABLE BA",
+          "count": 72119
+        }
+      ],
+      "reference_overlap": {
+        "HornMT (tir)": {
+          "path": "/homes/neumann/teklehaymanot/amseg/data/corpus/hornmt_tir.txt",
+          "reference_lines": 2030,
+          "reference_unique": 2029,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        },
+        "HornMT (raw ti)": {
+          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
+          "reference_lines": 2030,
+          "reference_unique": 2029,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        },
+        "HornMT (raw en)": {
+          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
+          "reference_lines": 2030,
+          "reference_unique": 2030,
+          "exact_line_overlap": 0,
+          "share_of_reference_found": 0.0
+        }
+      },
+      "origin": {
+        "classification": "UNKNOWN",
+        "rationale": "No checksum or content match ties this file to any named source available on this machine. Scale, structure, and the round line cap rule out the designated HornMT reference, but the positive identity of the source cannot be established from the evidence at hand.",
+        "evidence": [
+          "HornMT reference on this machine has 2,030 unique lines, against 200,000 in this corpus (99x larger).",
+          "Zero exact line overlap with any HornMT copy present here.",
+          "Religious markers appear in 9.0% of sampled lines; news/politics in 0.9%.",
+          "Line count is exactly 200,000, indicating a deliberate cap applied during preparation rather than a natural corpus boundary."
+        ],
+        "ruled_out": [
+          "HornMT — scale and zero content overlap"
+        ]
+      }
+    }
+  }
+}

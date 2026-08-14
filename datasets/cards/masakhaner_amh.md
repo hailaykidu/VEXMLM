@@ -6,7 +6,7 @@
 | Task | ner |
 | Languages | amh |
 | Version | MasakhaNER v1 (amh) |
-| Licence | CC BY 4.0 |
+| Licence | CC BY-NC 4.0 |
 | Source | https://github.com/masakhane-io/masakhane-ner |
 | Hub ID | masakhane/masakhaner2 |
 | Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic` |
@@ -22,7 +22,7 @@
 
 ## Notes
 
-Official splits used as released: 1,750/250/500 sentences (25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE.
+Official splits used as released: 1,750/250/500 sentences (25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE. LICENCE IS NON-COMMERCIAL (CC BY-NC 4.0), unlike most of the other datasets here; underlying news text carries per-site licences. Any model fine-tuned on it inherits a non-commercial constraint. See docs/DATASET_REDISTRIBUTION.md.
 
 ## Split statistics
 

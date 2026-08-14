@@ -56,7 +56,7 @@ TIGQA = DatasetSpec(
         "  year={2024},\n"
         "  note={Zenodo: https://zenodo.org/records/11423987}\n}"
     ),
-    license="see Zenodo record",
+    license="CC BY 4.0",   # verified on the Zenodo record
     version="TIGQA-1.0",
     notes=("SQuAD-format extractive QA, stored flat (title/context/qas, with no "
            "'paragraphs' level). 797 question-answer pairs over 365 contexts, "
@@ -109,10 +109,14 @@ MASAKHANER_AMH = DatasetSpec(
         "  author={Adelani, David Ifeoluwa and others},\n"
         "  journal={TACL},\n  year={2021}\n}"
     ),
-    license="CC BY 4.0",
+    license="CC BY-NC 4.0",   # NON-COMMERCIAL; verified in the upstream README
     version="MasakhaNER v1 (amh)",
     notes=("Official splits used as released: 1,750/250/500 sentences "
-           "(25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE."),
+           "(25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE. "
+           "LICENCE IS NON-COMMERCIAL (CC BY-NC 4.0), unlike most of the other "
+           "datasets here; underlying news text carries per-site licences. Any "
+           "model fine-tuned on it inherits a non-commercial constraint. "
+           "See docs/DATASET_REDISTRIBUTION.md."),
 )
 
 TIGRINYA_NER = DatasetSpec(
@@ -131,7 +135,7 @@ TIGRINYA_NER = DatasetSpec(
         "  year={2022},\n"
         "  note={https://github.com/mehari-eng/Tigrinya-NER}\n}"
     ),
-    license="see source repository",
+    license="UNLICENSED — no licence file in the source repository",
     version="Yohannes and Amagasa (2022)",
     notes=("Tigrinya is NOT covered by MasakhaNER v1 or v2; this is a separate "
            "resource. Splits: 4,562/570/571 sentences (88,102/11,003/10,818 "
