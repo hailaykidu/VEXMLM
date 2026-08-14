@@ -1,0 +1,11 @@
+# Table 5, arm 3 -- Vocabulary Expansion + Mean Init.
+# The paper's initialization (Sec. 3.3) WITHOUT continued pretraining.
+# Isolates the contribution of Stage 1 when compared against arm 4.
+name: expansion_mean_init
+label: "Vocab Expansion + Mean Init"
+inherits: ../base.yaml
+vocabulary_expansion:
+  enabled: true
+  initialization: global_mean
+pretraining:
+  enabled: false

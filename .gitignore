@@ -1,0 +1,27 @@
+# Data and model artifacts (large, regenerable, or licence-restricted)
+datasets/raw/
+datasets/processed/
+datasets/cache/
+checkpoints/
+tokenizer/artifacts/
+vocabulary_expansion/artifacts/
+experiment_tracking/mlruns/
+experiment_tracking/runs/
+legacy/*/model.safetensors
+*.safetensors
+*.bin
+*.pt
+
+# Logs
+*.out
+*.err
+*.log
+slurm-*.out
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/

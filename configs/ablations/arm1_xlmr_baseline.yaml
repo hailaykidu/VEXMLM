@@ -1,0 +1,11 @@
+# Table 5, arm 1 -- XLM-R baseline.
+# No vocabulary expansion, no continued pretraining. Fine-tuned directly.
+name: xlmr_baseline
+label: "XLM-R"
+inherits: ../base.yaml
+vocabulary_expansion:
+  enabled: false
+pretraining:
+  enabled: false
+finetuning:
+  model_path: xlm-roberta-base

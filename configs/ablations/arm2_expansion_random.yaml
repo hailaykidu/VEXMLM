@@ -1,0 +1,11 @@
+# Table 5, arm 2 -- Vocabulary Expansion + Random Init.
+# Isolates the contribution of mean-based initialization: identical to arm 3
+# except for the initialization strategy.
+name: expansion_random_init
+label: "Vocab Expansion + Random Init"
+inherits: ../base.yaml
+vocabulary_expansion:
+  enabled: true
+  initialization: random
+pretraining:
+  enabled: false

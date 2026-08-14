@@ -1,0 +1,120 @@
+{
+  "model_dir": "/homes/neumann/teklehaymanot/VEXMLM_Model",
+  "encoding": {
+    "added_token_count": 30145,
+    "id_min": 250002,
+    "id_max": 280146,
+    "ids_contiguous": true,
+    "ethiopic_as_stored": 0,
+    "ethiopic_via_latin1": 0,
+    "ethiopic_via_bytelevel_bpe": 29819,
+    "bytelevel_pct": 98.92,
+    "examples": [
+      {
+        "stored": "\"áį¡",
+        "decodes_to": "\"፡"
+      },
+      {
+        "stored": "\"áį¢",
+        "decodes_to": "\"።"
+      },
+      {
+        "stored": "\"áį£",
+        "decodes_to": "\"፣"
+      },
+      {
+        "stored": "'áį¡",
+        "decodes_to": "'፡"
+      },
+      {
+        "stored": ")áį¡",
+        "decodes_to": ")፡"
+      },
+      {
+        "stored": ")áį¢",
+        "decodes_to": ")።"
+      },
+      {
+        "stored": ")áį£",
+        "decodes_to": ")፣"
+      },
+      {
+        "stored": ".áį¡",
+        "decodes_to": ".፡"
+      },
+      {
+        "stored": "áĪ£",
+        "decodes_to": "ሣ"
+      },
+      {
+        "stored": "áĪ£áĬ¤",
+        "decodes_to": "ሣኤ"
+      }
+    ],
+    "conclusion": "Tokens are GPT-2/RoBERTa byte-level-BPE encoded, not raw Unicode. They were added verbatim to a SentencePiece tokenizer, which matches on raw Unicode. They can therefore never match Ge'ez input."
+  },
+  "vocabulary": {
+    "xlmr_base_vocab": 250002,
+    "spm_pieces": 250000,
+    "candidates_in_vocab_json": 30522,
+    "actually_added": 30145,
+    "skipped_already_present": 377,
+    "final_vocab_size_config": 280147,
+    "arithmetic_check": true,
+    "brief_claim_added": 30000,
+    "brief_claim_final": 280000,
+    "delta_added": 145,
+    "delta_final": 147
+  },
+  "sentencepiece": {
+    "digests": {
+      "/homes/neumann/teklehaymanot/VEXMLM_Model/sentencepiece.bpe.model": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "/homes/neumann/teklehaymanot/EXLMR_Model/sentencepiece.bpe.model": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865",
+      "/homes/neumann/teklehaymanot/EXLMR_release/sentencepiece.bpe.model": "cfc8146abe2a0488e9e2a0c56de7952f7c11ab059eca145a0a727afce0db2865"
+    },
+    "all_identical": true,
+    "piece_size": 250000,
+    "expected_if_retrained_amharic": 32000,
+    "expected_if_retrained_tigrinya": 50000,
+    "conclusion": "All copies are byte-identical and contain 250,000 pieces -- the stock XLM-R model. No 32k/50k SentencePiece tokenizer was ever trained."
+  },
+  "initialization": {
+    "embedding_shape": [
+      280147,
+      768
+    ],
+    "old_rows": 250002,
+    "new_rows": 30145,
+    "old_norm_mean": 5.8702,
+    "old_perdim_std": 0.2123,
+    "new_norm_mean": 13.8506,
+    "new_perdim_std": 0.501,
+    "global_mean_norm": 2.597,
+    "dist_to_global_mean": {
+      "mean": 13.8599,
+      "std": 0.8306,
+      "min": 2.6034,
+      "max": 15.3726
+    },
+    "rows_equal_to_global_mean": 0,
+    "predicted_distance": {
+      "global_mean": 0.0,
+      "random_normal": 27.7128,
+      "mixed_random_plus_mean_over_2": 13.8564
+    },
+    "relative_error_vs_mixed": 0.000255,
+    "verdict": "mixed = (randn + global_mean) / 2"
+  },
+  "tokenizer_behaviour": {
+    "corpus": "/homes/neumann/teklehaymanot/EXLMR/cleaned_test.csv",
+    "sentences": 2000,
+    "tokens_vexmlm": 84101,
+    "tokens_xlmr_base": 83953,
+    "new_token_firings": 0,
+    "sentences_using_new_token": 0,
+    "fertility_vexmlm": 42.0505,
+    "fertility_xlmr": 41.9765,
+    "token_delta_vs_base": 148,
+    "conclusion": "Zero added tokens fire. The expansion has no effect on segmentation; the expanded tokenizer is marginally WORSE than stock XLM-R."
+  }
+}

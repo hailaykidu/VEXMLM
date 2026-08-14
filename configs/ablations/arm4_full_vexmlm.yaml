@@ -1,0 +1,10 @@
+# Table 5, arm 4 -- Full VEXMLM.
+# Vocabulary expansion + mean-based init + Stage 1 continued MLM pretraining.
+name: full_vexmlm
+label: "Full VEXMLM"
+inherits: ../base.yaml
+vocabulary_expansion:
+  enabled: true
+  initialization: global_mean
+pretraining:
+  enabled: true

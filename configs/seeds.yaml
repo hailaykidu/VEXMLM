@@ -1,0 +1,20 @@
+# Multi-seed protocol.
+#
+# Every reported number is aggregated over these five seeds. Single-seed results
+# must not be reported: with datasets this small, seed variance is frequently
+# larger than the differences between systems.
+
+seeds: [42, 43, 44, 45, 46]
+
+aggregation:
+  statistics: [mean, std, min, max, median]
+  primary: mean
+  dispersion: std
+  # Reported as "mean ± std over N seeds"; N is always stated.
+  report_format: "{mean:.2f} ± {std:.2f}"
+  round_digits: 2
+
+requirements:
+  min_seeds_for_reporting: 3
+  fail_on_missing_seed: false   # aggregate what exists, but record which ran
+  record_per_seed_values: true  # per-seed numbers are always kept alongside

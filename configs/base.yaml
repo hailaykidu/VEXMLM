@@ -1,0 +1,91 @@
+# VEXMLM base configuration.
+#
+# Hyperparameters follow the paper, Table 1. Do not edit these values to make a
+# run converge -- override them on the command line or in an ablation config so
+# the deviation is recorded.
+
+model:
+  base_model: xlm-roberta-base
+  architecture: XLMRoberta
+  num_hidden_layers: 12
+  hidden_size: 768
+  num_attention_heads: 12
+  base_vocab_size: 250002        # XLM-R base, including the 2 added specials
+  target_vocab_size: 280000      # paper: 250K -> 280K
+
+tokenizer:
+  amharic_vocab_size: 32000      # paper Step 1
+  tigrinya_vocab_size: 50000     # paper Step 1
+  model_type: unigram            # matches XLM-R's SentencePiece
+  character_coverage: 0.9995
+  normalization: NFC
+  deduplicate: true
+  min_sentence_length: 10
+  min_ethiopic_ratio: 0.5
+
+vocabulary_expansion:
+  target_new_tokens: 30000       # paper: ~30K new Ge'ez-derived tokens
+  add_only_absent: true          # preserve all original XLM-R entries
+  initialization: global_mean    # paper Sec. 3.3: e_t = (1/|V_s|) * sum e_s
+  require_ethiopic: true
+  enforce_encoding_gate: true    # reject byte-level-BPE tokens
+
+# Stage 1 -- Continued MLM pretraining (paper Table 1)
+pretraining:
+  max_seq_length: 256
+  per_device_train_batch_size: 32
+  num_train_epochs: 10
+  learning_rate: 5.0e-5
+  optimizer: adamw_torch
+  weight_decay: 0.01
+  mlm_probability: 0.15
+  max_grad_norm: 1.0
+  warmup_ratio: 0.06
+  lr_scheduler_type: linear
+  gradient_accumulation_steps: 1
+  freeze_layers: []              # all parameters trainable
+  save_strategy: epoch
+  eval_strategy: epoch
+  save_total_limit: 3
+  load_best_model_at_end: true
+  metric_for_best_model: eval_loss
+  greater_is_better: false
+
+# Stage 2 -- Task-specific fine-tuning (paper Table 1)
+finetuning:
+  max_seq_length: 256
+  per_device_train_batch_size: 32
+  num_train_epochs: 4
+  learning_rate: 2.0e-5
+  optimizer: adamw_torch
+  weight_decay: 0.01
+  max_grad_norm: 1.0
+  warmup_ratio: 0.1
+  lr_scheduler_type: linear
+  gradient_accumulation_steps: 1
+  save_strategy: epoch
+  eval_strategy: epoch
+  save_total_limit: 2
+  load_best_model_at_end: true
+
+# QA-specific decoding parameters (not in Table 1; standard SQuAD defaults)
+qa:
+  doc_stride: 128
+  max_answer_length: 64
+  n_best_size: 20
+  version_2_with_negative: false
+
+hardware:
+  precision: auto                # auto -> bf16 on SM80+, else fp16
+  dataloader_num_workers: 4
+  gradient_checkpointing: false
+  ddp_find_unused_parameters: false
+  torch_compile: false
+
+tracking:
+  backend: mlflow
+  experiment_name: vexmlm
+  tracking_uri: ./experiment_tracking/mlruns
+  log_system_metrics: true
+
+seed: 42
