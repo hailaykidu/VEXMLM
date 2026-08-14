@@ -1,0 +1,51 @@
+# Experiment modes.
+#
+# Select with --mode on any training script, or `inherits:` from a mode file.
+# Modes change ONLY scale and reporting -- never the method. Paper
+# hyperparameters (learning rate, batch size, MLM probability, initialization)
+# are identical across all three; debug/research shorten runs so the pipeline
+# can be exercised without pretending the result is a finding.
+
+modes:
+
+  debug:
+    description: >-
+      Smoke test. A few steps on a small subset, to prove the pipeline runs.
+      Results are NOT valid measurements and are labelled as such.
+    max_train_samples: 200
+    max_eval_samples: 100
+    max_steps: 5
+    num_train_epochs: 1
+    seeds: [42]
+    tracking: false
+    report_results: false
+    label: "DEBUG — not a measurement"
+
+  research:
+    description: >-
+      Single-seed exploration on the full dataset. Suitable for iterating on
+      the method; NOT suitable for reported numbers, because a single seed
+      cannot show variance.
+    max_train_samples: null
+    max_eval_samples: null
+    max_steps: -1
+    seeds: [42]
+    tracking: true
+    report_results: true
+    single_seed_warning: true
+    label: "RESEARCH — single seed, variance unknown"
+
+  official:
+    description: >-
+      Full protocol: complete datasets, all five seeds, full evaluation.
+      The only mode whose numbers may appear in the paper.
+    max_train_samples: null
+    max_eval_samples: null
+    max_steps: -1
+    seeds: [42, 43, 44, 45, 46]
+    tracking: true
+    report_results: true
+    require_all_seeds: true
+    label: "OFFICIAL"
+
+default_mode: research

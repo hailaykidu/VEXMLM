@@ -19,17 +19,22 @@ resolved before any public release.
 
 ## Data
 
-- [ ] **BLOCKER** — Amharic MLM corpus: source, licence, and citation recorded
-- [ ] **BLOCKER** — Tigrinya MLM corpus: source, licence, and citation recorded
-- [ ] **BLOCKER** — Tigrinya NER corpus identified and licensed
-      (MasakhaNER covers Amharic but *not* Tigrinya)
-- [ ] TIGQA obtained; licence confirmed redistributable
-- [ ] AmQA obtained; licence confirmed redistributable
+- [x] TIGQA integrated (797 QA pairs / 365 contexts; Zenodo 11423987)
+- [x] AmQA integrated (1,723/600/299 questions; MIT)
+- [x] MasakhaNER integrated (1,750/250/500 sentences; CC BY 4.0)
+- [x] Tigrinya NER integrated (4,562/570/571 sentences; Yohannes & Amagasa 2022)
 - [x] AfriSenti identified (CC BY 4.0) with citation
-- [x] MasakhaNER identified (CC BY 4.0) with citation
+- [x] MLM corpora integrated (200K lines per language)
+- [x] Dataset card written for every dataset (`datasets/cards/`, 7 cards)
+- [x] Every card states source, licence, version, checksum, and split statistics
+- [x] `docs/DATASET_PROVENANCE.md` records origin and preprocessing for each
+- [x] All copies checksum-verified against source (14/14)
+- [ ] **BLOCKER** — MLM corpus provenance: designated source is HornMT, but the
+      imported files are 200K lines each while HornMT holds ~2,030 sentence
+      pairs. True source and licence unknown. See DATASET_PROVENANCE.md.
+- [ ] Tigrinya NER licence confirmed redistributable (source repo states none)
+- [ ] TIGQA licence confirmed redistributable (check the Zenodo record)
 - [ ] Sentence-aligned Amharic–Tigrinya parallel corpus for Table 2 parity
-- [ ] Dataset card written for every dataset (`datasets/cards/`)
-- [ ] Every card states source, licence, citation, hash, and split statistics
 
 Do not redistribute any dataset whose licence is `UNKNOWN`.
 
@@ -81,10 +86,18 @@ Do not redistribute any dataset whose licence is `UNKNOWN`.
 
 ## Known blockers
 
-1. **Corpus provenance.** The Stage 1 corpora and the Tigrinya NER set have no
-   recorded source or licence. They cannot be redistributed, and results from
-   them cannot be independently checked, until this is resolved.
-2. **Tigrinya NER source.** Must be named explicitly; it cannot be inferred, and
-   MasakhaNER does not cover Tigrinya.
+1. **MLM corpus provenance (unresolved).** The designated source is HornMT, but
+   HornMT is a ~2,030-sentence parallel corpus and the imported files hold
+   200,000 monolingual lines each — two orders of magnitude apart. Content
+   sampling suggests a CC-100/OSCAR-style crawl. Until the authors confirm the
+   real source, these corpora cannot be redistributed and no model trained on
+   them can ship a complete data statement. Evidence in
+   [DATASET_PROVENANCE.md](DATASET_PROVENANCE.md).
+2. **Licences to confirm.** Tigrinya NER and TIGQA are integrated and usable,
+   but their redistribution terms need checking against the source repository
+   and Zenodo record respectively.
 3. **Parallel corpus.** Without sentence-aligned text, Table 2 parity cannot be
    reported as a valid fairness measure.
+4. **Upstream data defect (handled).** Tigrinya NER `train.conll:1350` carries a
+   malformed `B-LO` tag. It is repaired in memory at read time and logged; the
+   source file is untouched. Worth reporting upstream.

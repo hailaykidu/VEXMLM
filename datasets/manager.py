@@ -52,14 +52,25 @@ class DatasetManager:
         from datasets import DatasetDict, load_dataset
 
         spec = get(key)
-        if local_path:
-            ds = self._load_local(spec, Path(local_path))
+        # Resolution order: explicit --local-path, then this repository's own
+        # datasets/raw/<local_dir> (populated by scripts/acquire_datasets.py),
+        # then the Hub. The repository never reads through to an external one.
+        resolved = Path(local_path) if local_path else None
+        if resolved is None and spec.local_dir:
+            own = ROOT / "raw" / spec.local_dir
+            if own.is_dir() and any(own.iterdir()):
+                resolved = own
+                log.info("%s: using in-repository copy %s", key, own)
+
+        if resolved is not None:
+            ds = self._load_local(spec, resolved)
         elif spec.hub_id:
             ds = load_dataset(spec.hub_id, config or spec.hub_config,
                               cache_dir=str(self.cache_dir))
         else:
             raise SystemExit(
-                f"{spec.name} has no public loader. Supply --local-path.\n"
+                f"{spec.name} has no public loader and no local copy.\n"
+                f"  Run: python scripts/acquire_datasets.py --copy\n"
                 f"  {spec.notes}")
 
         if not isinstance(ds, DatasetDict):
@@ -74,10 +85,18 @@ class DatasetManager:
         if path.is_file():
             return DatasetDict({"train": self._load_file(spec, path)})
 
+        # Corpora on disk name the dev split variously; map every alias onto the
+        # canonical HuggingFace split name so downstream code sees 'validation'.
+        aliases = {
+            "train": ("train",),
+            "validation": ("validation", "dev", "valid", "val"),
+            "test": ("test", "eval"),
+        }
         splits = {}
         for split in spec.splits:
-            for pat in (f"{split}.*", f"*{split}*"):
-                hits = sorted(p for p in path.glob(pat) if p.is_file())
+            for alias in aliases.get(split, (split,)):
+                hits = sorted(p for p in path.glob(f"{alias}.*")
+                              if p.is_file() and p.name != "upstream_manifest.json")
                 if hits:
                     splits[split] = self._load_file(spec, hits[0])
                     break
@@ -164,17 +183,36 @@ class DatasetManager:
         out_dir.mkdir(parents=True, exist_ok=True)
         out = out_dir / f"{spec.key}.md"
 
+        # Source-file checksums, recorded at acquisition time.
+        acq_path = self.metadata_dir / "acquisition.json"
+        acq = {}
+        if acq_path.exists():
+            acq = json.loads(acq_path.read_text()).get("datasets", {}).get(spec.key, {})
+
         lines = [
             f"# Dataset Card — {spec.name}", "",
             "| Field | Value |", "|---|---|",
             f"| Key | `{spec.key}` |",
             f"| Task | {spec.task} |",
             f"| Languages | {', '.join(spec.languages)} |",
+            f"| Version | {spec.version} |",
             f"| Licence | {spec.license} |",
             f"| Source | {spec.url or 'n/a'} |",
-            f"| Hub ID | {spec.hub_id or '**none — supply locally**'} |",
+            f"| Hub ID | {spec.hub_id or '**none — local copy**'} |",
+            f"| Imported from | `{acq.get('origin_dir') or acq.get('source_dir', 'n/a')}` |",
+            f"| Imported on | {acq.get('first_imported', 'n/a')} |",
             "",
         ]
+
+        if acq.get("files"):
+            lines += ["## Checksums (source files)", "",
+                      "| Split | Bytes | SHA-256 | Verified |", "|---|---|---|---|"]
+            for split, info in acq["files"].items():
+                verified = info.get("checksum_match")
+                mark = "✅" if verified else ("—" if verified is None else "❌")
+                lines.append(f"| {split} | {info['bytes']:,} | "
+                             f"`{info['sha256'][:32]}` | {mark} |")
+            lines.append("")
         if spec.notes:
             lines += ["## Notes", "", spec.notes, ""]
 
@@ -205,22 +243,48 @@ class DatasetManager:
 
 # --- format readers ---------------------------------------------------------
 
-def read_conll(path: Path) -> list[dict]:
-    """Read CoNLL-format NER data into {'tokens', 'ner_tags'} records."""
+# Known upstream tag typos, repaired on read. Each entry is documented in
+# docs/DATASET_PROVENANCE.md; the source files are never modified.
+CONLL_TAG_REPAIRS = {
+    "B-LO": "B-LOC",   # Tigrinya NER train.conll:1350, truncated 'B-LOC'
+    "I-LO": "I-LOC",
+}
+
+
+def read_conll(path: Path, *, repair_tags: bool = True) -> list[dict]:
+    """Read CoNLL-format NER data into {'tokens', 'ner_tags'} records.
+
+    Malformed tags listed in CONLL_TAG_REPAIRS are corrected in memory and the
+    substitutions logged. Leaving them would create spurious label classes that
+    inflate the label set and distort macro-F1.
+    """
     records, tokens, tags = [], [], []
+    repairs: dict[str, int] = {}
+
+    def flush() -> None:
+        if tokens:
+            records.append({"tokens": list(tokens), "ner_tags": list(tags)})
+            tokens.clear()
+            tags.clear()
+
     for line in path.read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if not line or line.startswith("-DOCSTART-"):
-            if tokens:
-                records.append({"tokens": tokens, "ner_tags": tags})
-                tokens, tags = [], []
+            flush()
             continue
         parts = line.split()
         if len(parts) >= 2:
+            tag = parts[-1]
+            if repair_tags and tag in CONLL_TAG_REPAIRS:
+                repairs[tag] = repairs.get(tag, 0) + 1
+                tag = CONLL_TAG_REPAIRS[tag]
             tokens.append(parts[0])
-            tags.append(parts[-1])
-    if tokens:
-        records.append({"tokens": tokens, "ner_tags": tags})
+            tags.append(tag)
+    flush()
+
+    for bad, count in repairs.items():
+        log.warning("%s: repaired %d occurrence(s) of malformed tag %r -> %r",
+                    path.name, count, bad, CONLL_TAG_REPAIRS[bad])
     return records
 
 
@@ -236,20 +300,49 @@ def read_squad(path: Path) -> list[dict]:
     if "data" not in data:
         raise SystemExit(f"unrecognized QA JSON structure in {path}")
 
-    out = []
+    out: list[dict] = []
+    dropped_unanswerable = 0
+
+    def emit(article: dict, context: str, qas: list[dict]) -> None:
+        nonlocal dropped_unanswerable
+        for qa in qas:
+            answers = qa.get("answers", []) or []
+            texts = [a["text"] for a in answers]
+            starts = [a["answer_start"] for a in answers]
+            # answer_start == -1 marks an answer that is not present verbatim in
+            # the context (abstractive). Span extraction cannot score it, and
+            # feeding it in would silently train the model toward the CLS index.
+            keep = [(t, s) for t, s in zip(texts, starts) if s is not None and s >= 0]
+            if texts and not keep:
+                dropped_unanswerable += 1
+                continue
+            out.append({
+                "id": qa.get("id", str(len(out))),
+                "title": article.get("title", ""),
+                "context": context,
+                "question": qa["question"],
+                "answers": {"text": [t for t, _ in keep],
+                            "answer_start": [s for _, s in keep]},
+            })
+
     for article in data["data"]:
-        for para in article.get("paragraphs", []):
-            context = para["context"]
-            for qa in para.get("qas", []):
-                answers = qa.get("answers", [])
-                out.append({
-                    "id": qa.get("id", str(len(out))),
-                    "title": article.get("title", ""),
-                    "context": context,
-                    "question": qa["question"],
-                    "answers": {
-                        "text": [a["text"] for a in answers],
-                        "answer_start": [a["answer_start"] for a in answers],
-                    },
-                })
+        if "paragraphs" in article:
+            paragraphs = article["paragraphs"]
+            # One AmQA article stores paragraphs as a dict rather than a list.
+            if isinstance(paragraphs, dict):
+                paragraphs = [paragraphs]
+            for para in paragraphs:
+                emit(article, para["context"], para.get("qas", []))
+        elif "context" in article:
+            # TIGQA ships a flat title/context/qas structure with no
+            # intermediate 'paragraphs' level.
+            emit(article, article["context"], article.get("qas", []))
+        else:
+            raise SystemExit(
+                f"article in {path} has neither 'paragraphs' nor 'context'")
+
+    if dropped_unanswerable:
+        log.warning("%s: dropped %d question(s) whose answers are not present "
+                    "verbatim in the context (answer_start == -1)",
+                    path.name, dropped_unanswerable)
     return out

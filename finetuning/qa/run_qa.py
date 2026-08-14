@@ -35,6 +35,7 @@ sys.path.insert(0, str(ROOT / "datasets"))
 from vexmlm import config as cfgmod  # noqa: E402
 from vexmlm.device import detect, log_environment, precision_flags  # noqa: E402
 from vexmlm.geez import GEEZ_PUNCT  # noqa: E402
+from vexmlm.modes import apply_to_config, load_mode, subsample  # noqa: E402
 from vexmlm.tracking import RunContext, Tracker  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -186,6 +187,9 @@ def main() -> None:
     ap.add_argument("--dataset-config")
     ap.add_argument("--local-path")
     ap.add_argument("--seed", type=int)
+    ap.add_argument("--mode", default=None,
+                    choices=["debug", "research", "official"],
+                    help="experiment scale/reporting profile")
     ap.add_argument("--output", required=True)
     ap.add_argument("--max-steps", type=int, default=-1)
     ap.add_argument("--no-tracking", action="store_true")
@@ -201,6 +205,9 @@ def main() -> None:
     from manager import DatasetManager
 
     cfg = cfgmod.apply_overrides(cfgmod.load_config(args.config), args.override)
+    mode = load_mode(args.mode)
+    cfg = apply_to_config(cfg, mode, "finetuning")
+    log.info("mode %s", mode.banner())
     seed = args.seed if args.seed is not None else cfgmod.get(cfg, "seed", 42)
     set_seed(seed)
 
@@ -213,6 +220,7 @@ def main() -> None:
 
     dm = DatasetManager()
     ds = dm.load(args.dataset, config=args.dataset_config, local_path=args.local_path)
+    ds = subsample(ds, mode, seed)
 
     tokenizer = AutoTokenizer.from_pretrained(args.model)
     if not tokenizer.is_fast:

@@ -29,3 +29,7 @@ venv/
 # Test/tooling caches
 .pytest_cache/
 .ruff_cache/
+
+# Imported datasets: copies of external data, tracked by provenance record
+# (datasets/metadata/acquisition.json) rather than by content.
+datasets/raw/

@@ -1,0 +1,61 @@
+{
+  "dataset": {
+    "key": "masakhaner_amh",
+    "name": "MasakhaNER — Amharic",
+    "task": "ner",
+    "languages": [
+      "amh"
+    ],
+    "hub_id": "masakhane/masakhaner2",
+    "hub_config": "amh",
+    "citation": "@inproceedings{adelani-etal-2021-masakhaner,\n  title={MasakhaNER: Named Entity Recognition for African Languages},\n  author={Adelani, David Ifeoluwa and others},\n  journal={TACL},\n  year={2021}\n}",
+    "license": "CC BY 4.0",
+    "url": "https://github.com/masakhane-io/masakhane-ner",
+    "version": "MasakhaNER v1 (amh)",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Official splits used as released: 1,750/250/500 sentences (25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": true,
+    "local_dir": "masakhaner_amh",
+    "extra": {}
+  },
+  "context": {},
+  "splits": {
+    "train": {
+      "rows": 1750,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "074b65e5c520b40489cf18a8aa190d41",
+      "label_distribution": null,
+      "mean_chars": 71.41
+    },
+    "validation": {
+      "rows": 250,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "a43df9a483e5cb05751c2c8ed2033a94",
+      "label_distribution": null,
+      "mean_chars": 72.46
+    },
+    "test": {
+      "rows": 500,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "06a4fda1031400da18f60eeddff145b8",
+      "label_distribution": null,
+      "mean_chars": 72.19
+    }
+  },
+  "total_rows": 2500
+}

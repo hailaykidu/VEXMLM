@@ -1,0 +1,70 @@
+{
+  "dataset": {
+    "key": "tigqa",
+    "name": "TIGQA — Tigrinya Question Answering",
+    "task": "qa",
+    "languages": [
+      "tir"
+    ],
+    "hub_id": null,
+    "hub_config": null,
+    "citation": "@inproceedings{teklehaymanot2024tigqa,\n  title={TIGQA: An Expert-Annotated Question-Answering Dataset in Tigrinya},\n  author={Teklehaymanot, Hailay and others},\n  year={2024},\n  note={Zenodo: https://zenodo.org/records/11423987}\n}",
+    "license": "see Zenodo record",
+    "url": "https://zenodo.org/records/11423987",
+    "version": "TIGQA-1.0",
+    "text_field": null,
+    "label_field": null,
+    "notes": "SQuAD-format extractive QA, stored flat (title/context/qas, with no 'paragraphs' level). 797 question-answer pairs over 365 contexts, split 80/10/10 by context with seed 42: 644/67/86 questions over 292/36/37 contexts. 1,039 abstractive and 272 unanswerable items were excluded upstream, since answer_start == -1 cannot be scored by span extraction; no negative offsets remain. See docs/DATASET_PROVENANCE.md.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": true,
+    "local_dir": "tigqa",
+    "extra": {}
+  },
+  "context": {},
+  "splits": {
+    "train": {
+      "rows": 644,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "54e28676ae94c307cb2a2d06b12321a1",
+      "label_distribution": null,
+      "mean_chars": 29.21
+    },
+    "validation": {
+      "rows": 67,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "7525f4eeccb645f77bdc1b2cd623f79f",
+      "label_distribution": null,
+      "mean_chars": 28.84
+    },
+    "test": {
+      "rows": 86,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "a13983f5e58b4b70e93a72d71036a3b1",
+      "label_distribution": null,
+      "mean_chars": 32.38
+    }
+  },
+  "total_rows": 797
+}

@@ -24,11 +24,13 @@ class DatasetSpec:
     citation: str = ""
     license: str = "UNKNOWN"
     url: str = ""
+    version: str = "unversioned"
     text_field: str | None = None
     label_field: str | None = None
     notes: str = ""
     splits: tuple[str, ...] = ("train", "validation", "test")
     requires_local: bool = False
+    local_dir: str | None = None   # subdirectory under datasets/raw/
     extra: dict = field(default_factory=dict)
 
     def as_dict(self) -> dict:
@@ -42,19 +44,27 @@ TIGQA = DatasetSpec(
     name="TIGQA — Tigrinya Question Answering",
     task="qa",
     languages=("tir",),
-    hub_id=None,               # no canonical Hub mirror confirmed
+    hub_id=None,               # distributed via Zenodo, not the Hub
     requires_local=True,
-    url="https://arxiv.org/abs/2404.17194",
+    local_dir="tigqa",
+    url="https://zenodo.org/records/11423987",
     citation=(
-        "@article{tigqa2024,\n"
+        "@inproceedings{teklehaymanot2024tigqa,\n"
         "  title={TIGQA: An Expert-Annotated Question-Answering Dataset "
         "in Tigrinya},\n"
-        "  journal={arXiv preprint arXiv:2404.17194},\n"
-        "  year={2024}\n}"
+        "  author={Teklehaymanot, Hailay and others},\n"
+        "  year={2024},\n"
+        "  note={Zenodo: https://zenodo.org/records/11423987}\n}"
     ),
-    license="see publication",
-    notes=("~2.68K QA pairs over 537 paragraphs. SQuAD-style extractive spans. "
-           "Supply with --local-path; no verified Hub mirror."),
+    license="see Zenodo record",
+    version="TIGQA-1.0",
+    notes=("SQuAD-format extractive QA, stored flat (title/context/qas, with no "
+           "'paragraphs' level). 797 question-answer pairs over 365 contexts, "
+           "split 80/10/10 by context with seed 42: 644/67/86 questions over "
+           "292/36/37 contexts. 1,039 abstractive and 272 unanswerable items "
+           "were excluded upstream, since answer_start == -1 cannot be scored "
+           "by span extraction; no negative offsets remain. "
+           "See docs/DATASET_PROVENANCE.md."),
 )
 
 AMQA = DatasetSpec(
@@ -64,36 +74,45 @@ AMQA = DatasetSpec(
     languages=("amh",),
     hub_id=None,
     requires_local=True,
-    url="https://arxiv.org/abs/2303.03290",
+    local_dir="amqa",
+    url="https://github.com/semantic-systems/amharic-qa",
     citation=(
-        "@article{amqa2023,\n"
-        "  title={An Amharic Question Answering Dataset},\n"
-        "  journal={arXiv preprint arXiv:2303.03290},\n"
-        "  year={2023}\n}"
+        "@inproceedings{taffa2024amqa,\n"
+        "  title={Low-Resource Question Answering: An Amharic "
+        "Benchmarking Dataset},\n"
+        "  author={Taffa, Tilahun Abedissa and others},\n"
+        "  year={2024},\n"
+        "  note={https://github.com/semantic-systems/amharic-qa}\n}"
     ),
-    license="see publication",
-    notes=("2,628 QA pairs over 378 Amharic Wikipedia articles. SQuAD-style. "
-           "Supply with --local-path."),
+    license="MIT",
+    version="SQuAD v2.0 format",
+    notes=("Official train/dev/test splits used as released: 1,723/600/299 "
+           "questions. 20 answer offsets were corrected upstream and one "
+           "dict-wrapped paragraph list normalized; no questions dropped."),
 )
 
 # --- Named Entity Recognition ---------------------------------------------------
 
 MASAKHANER_AMH = DatasetSpec(
     key="masakhaner_amh",
-    name="MasakhaNER 2.0 — Amharic",
+    name="MasakhaNER — Amharic",
     task="ner",
     languages=("amh",),
     hub_id="masakhane/masakhaner2",
     hub_config="amh",
+    requires_local=True,       # a prepared local copy ships with this repo
+    local_dir="masakhaner_amh",
     url="https://github.com/masakhane-io/masakhane-ner",
     citation=(
-        "@inproceedings{adelani-etal-2022-masakhaner,\n"
-        "  title={MasakhaNER 2.0: Africa-centric Transfer Learning for "
-        "Named Entity Recognition},\n"
-        "  booktitle={EMNLP},\n  year={2022}\n}"
+        "@inproceedings{adelani-etal-2021-masakhaner,\n"
+        "  title={MasakhaNER: Named Entity Recognition for African Languages},\n"
+        "  author={Adelani, David Ifeoluwa and others},\n"
+        "  journal={TACL},\n  year={2021}\n}"
     ),
     license="CC BY 4.0",
-    notes="CoNLL BIO tags: PER, ORG, LOC, DATE.",
+    version="MasakhaNER v1 (amh)",
+    notes=("Official splits used as released: 1,750/250/500 sentences "
+           "(25,819/3,749/7,449 tokens). CoNLL BIO tags: PER, ORG, LOC, DATE."),
 )
 
 TIGRINYA_NER = DatasetSpec(
@@ -103,11 +122,23 @@ TIGRINYA_NER = DatasetSpec(
     languages=("tir",),
     hub_id=None,
     requires_local=True,
-    url="",
-    license="UNKNOWN",
-    notes=("Tigrinya is NOT covered by MasakhaNER v1 or v2. The specific corpus "
-           "must be supplied with --local-path in CoNLL format. Record its "
-           "source in the dataset card before release."),
+    local_dir="tigrinya_ner",
+    url="https://github.com/mehari-eng/Tigrinya-NER",
+    citation=(
+        "@article{yohannes2022tigrinya,\n"
+        "  title={Named Entity Recognition for Tigrinya},\n"
+        "  author={Yohannes, Hailemariam Mehari and Amagasa, Toshiyuki},\n"
+        "  year={2022},\n"
+        "  note={https://github.com/mehari-eng/Tigrinya-NER}\n}"
+    ),
+    license="see source repository",
+    version="Yohannes and Amagasa (2022)",
+    notes=("Tigrinya is NOT covered by MasakhaNER v1 or v2; this is a separate "
+           "resource. Splits: 4,562/570/571 sentences (88,102/11,003/10,818 "
+           "tokens). Tags: PER, ORG, LOC, DATE, MISC. NOTE: the train split "
+           "contains one malformed tag ('B-LO' at line 1350, evidently a "
+           "truncated 'B-LOC'); see docs/DATASET_PROVENANCE.md for how it is "
+           "handled."),
 )
 
 # --- Sentiment ------------------------------------------------------------------
@@ -135,6 +166,16 @@ AFRISENTI = DatasetSpec(
 
 # --- MLM pretraining corpora ----------------------------------------------------
 
+_MLM_NOTE = (
+    "200,000 lines, imported from a prepared monolingual corpus in the local "
+    "LGSE workspace. PROVENANCE UNRESOLVED: the designated reference source is "
+    "HornMT, but HornMT is a ~2,030-sentence parallel corpus and cannot be the "
+    "origin of a 200,000-line monolingual file. Content sampling shows "
+    "religious translations plus general web text, consistent with a "
+    "CC-100/OSCAR-style crawl. Treated as a release blocker until the authors "
+    "confirm the true source. See docs/DATASET_PROVENANCE.md."
+)
+
 AMHARIC_CORPUS = DatasetSpec(
     key="amharic_mlm",
     name="Amharic monolingual corpus (Stage 1)",
@@ -142,10 +183,12 @@ AMHARIC_CORPUS = DatasetSpec(
     languages=("amh",),
     hub_id=None,
     requires_local=True,
-    license="UNKNOWN",
+    local_dir="amharic",
+    url="https://github.com/asmelashteka/HornMT",
+    license="UNKNOWN — blocker",
+    version="lgse-lapt-200k",
     splits=("train", "validation"),
-    notes=("Curated Amharic corpus for continued MLM pretraining. Supply with "
-           "--local-path and record composition in the dataset card."),
+    notes=_MLM_NOTE + " Amharic: 200,001 lines, 9,192,496 characters.",
 )
 
 TIGRINYA_CORPUS = DatasetSpec(
@@ -155,10 +198,12 @@ TIGRINYA_CORPUS = DatasetSpec(
     languages=("tir",),
     hub_id=None,
     requires_local=True,
-    license="UNKNOWN",
+    local_dir="tigrinya",
+    url="https://github.com/asmelashteka/HornMT",
+    license="UNKNOWN — blocker",
+    version="lgse-lapt-200k",
     splits=("train", "validation"),
-    notes=("Curated Tigrinya corpus for continued MLM pretraining. Supply with "
-           "--local-path and record composition in the dataset card."),
+    notes=_MLM_NOTE + " Tigrinya: 200,000 lines, 6,982,894 characters.",
 )
 
 

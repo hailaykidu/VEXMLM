@@ -1,0 +1,61 @@
+{
+  "dataset": {
+    "key": "tigrinya_ner",
+    "name": "Tigrinya NER",
+    "task": "ner",
+    "languages": [
+      "tir"
+    ],
+    "hub_id": null,
+    "hub_config": null,
+    "citation": "@article{yohannes2022tigrinya,\n  title={Named Entity Recognition for Tigrinya},\n  author={Yohannes, Hailemariam Mehari and Amagasa, Toshiyuki},\n  year={2022},\n  note={https://github.com/mehari-eng/Tigrinya-NER}\n}",
+    "license": "see source repository",
+    "url": "https://github.com/mehari-eng/Tigrinya-NER",
+    "version": "Yohannes and Amagasa (2022)",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Tigrinya is NOT covered by MasakhaNER v1 or v2; this is a separate resource. Splits: 4,562/570/571 sentences (88,102/11,003/10,818 tokens). Tags: PER, ORG, LOC, DATE, MISC. NOTE: the train split contains one malformed tag ('B-LO' at line 1350, evidently a truncated 'B-LOC'); see docs/DATASET_PROVENANCE.md for how it is handled.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": true,
+    "local_dir": "tigrinya_ner",
+    "extra": {}
+  },
+  "context": {},
+  "splits": {
+    "train": {
+      "rows": 4562,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "cad6540e780230010482b65d1fc333da",
+      "label_distribution": null,
+      "mean_chars": 86.35
+    },
+    "validation": {
+      "rows": 570,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "5db216697d0deb535c1127738c0c72c5",
+      "label_distribution": null,
+      "mean_chars": 86.38
+    },
+    "test": {
+      "rows": 571,
+      "columns": [
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "5eac7a735145525faa78ed3453ffe637",
+      "label_distribution": null,
+      "mean_chars": 84.34
+    }
+  },
+  "total_rows": 5703
+}

@@ -34,6 +34,7 @@ sys.path.insert(0, str(ROOT / "src"))
 from vexmlm import config as cfgmod  # noqa: E402
 from vexmlm.device import (detect, effective_batch_size, log_environment,  # noqa: E402
                            precision_flags)
+from vexmlm.modes import apply_to_config, load_mode, subsample  # noqa: E402
 from vexmlm.tracking import RunContext, Tracker, hash_path  # noqa: E402
 
 log = logging.getLogger(__name__)
@@ -112,6 +113,9 @@ def main() -> None:
     ap.add_argument("--tigrinya", nargs="*", default=[])
     ap.add_argument("--output", required=True)
     ap.add_argument("--seed", type=int)
+    ap.add_argument("--mode", default=None,
+                    choices=["debug", "research", "official"],
+                    help="experiment scale/reporting profile")
     ap.add_argument("--val-fraction", type=float, default=0.01)
     ap.add_argument("--upsample-alpha", type=float, default=0.5,
                     help="1.0 = natural proportions, 0.0 = equal languages")
@@ -133,6 +137,9 @@ def main() -> None:
     from transformers.trainer_utils import get_last_checkpoint
 
     cfg = cfgmod.apply_overrides(cfgmod.load_config(args.config), args.override)
+    mode = load_mode(args.mode)
+    cfg = apply_to_config(cfg, mode, "pretraining")
+    log.info("mode %s", mode.banner())
     seed = args.seed if args.seed is not None else cfgmod.get(cfg, "seed", 42)
     set_seed(seed)
 
@@ -149,6 +156,7 @@ def main() -> None:
 
     ds = build_corpus(args.amharic, args.tigrinya, cfg, tokenizer, seed,
                       args.val_fraction, args.upsample_alpha)
+    ds = subsample(ds, mode, seed)
     log.info("tokenized: train=%d val=%d", len(ds["train"]), len(ds["validation"]))
 
     collator = DataCollatorForLanguageModeling(

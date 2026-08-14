@@ -1,0 +1,70 @@
+{
+  "dataset": {
+    "key": "amqa",
+    "name": "AmQA — Amharic Question Answering",
+    "task": "qa",
+    "languages": [
+      "amh"
+    ],
+    "hub_id": null,
+    "hub_config": null,
+    "citation": "@inproceedings{taffa2024amqa,\n  title={Low-Resource Question Answering: An Amharic Benchmarking Dataset},\n  author={Taffa, Tilahun Abedissa and others},\n  year={2024},\n  note={https://github.com/semantic-systems/amharic-qa}\n}",
+    "license": "MIT",
+    "url": "https://github.com/semantic-systems/amharic-qa",
+    "version": "SQuAD v2.0 format",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Official train/dev/test splits used as released: 1,723/600/299 questions. 20 answer offsets were corrected upstream and one dict-wrapped paragraph list normalized; no questions dropped.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": true,
+    "local_dir": "amqa",
+    "extra": {}
+  },
+  "context": {},
+  "splits": {
+    "train": {
+      "rows": 1723,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "745ff98118b537548ea17f5103a5eabd",
+      "label_distribution": null,
+      "mean_chars": 45.16
+    },
+    "validation": {
+      "rows": 600,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "dca8d8ea93290ea194ab9a15ce6132fe",
+      "label_distribution": null,
+      "mean_chars": 43.81
+    },
+    "test": {
+      "rows": 299,
+      "columns": [
+        "id",
+        "title",
+        "context",
+        "question",
+        "answers"
+      ],
+      "sha256": "712edee82c947f68b46f06759db73ed1",
+      "label_distribution": null,
+      "mean_chars": 39.94
+    }
+  },
+  "total_rows": 2622
+}
