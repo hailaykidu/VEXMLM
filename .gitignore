@@ -33,3 +33,7 @@ venv/
 # Imported datasets: copies of external data, tracked by provenance record
 # (datasets/metadata/acquisition.json) rather than by content.
 datasets/raw/
+
+# Trained tokenizer artifacts and normalized corpora (regenerable, large)
+tokenizer/artifacts/
+logs/

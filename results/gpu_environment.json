@@ -1,0 +1,37 @@
+{
+  "checked": "2026-08-14T21:08:06",
+  "hostname": "gpunode05",
+  "slurm_job_id": "60578",
+  "slurm_node": "gpunode05",
+  "slurm_partition": "ampere",
+  "cuda_available": true,
+  "device_count": 1,
+  "torch_version": "2.5.1+cu118",
+  "torch_cuda_build": "11.8",
+  "cudnn_version": 90100,
+  "python": "3.13.11",
+  "cuda_visible_devices": "0",
+  "driver_version": "610.57.04",
+  "devices": [
+    {
+      "index": 0,
+      "name": "NVIDIA A100 80GB PCIe",
+      "vram_gb": 79.27,
+      "compute_capability": "8.0",
+      "multi_processor_count": 108
+    }
+  ],
+  "accelerate_version": "1.14.0",
+  "bf16_supported": true,
+  "fp16_supported": true,
+  "precision_selected": "bf16",
+  "expected_effective_batch_size": 32,
+  "per_device_batch_size": 32,
+  "distributed_recommended": false,
+  "smoke_test": {
+    "status": "OK",
+    "matmul_2048_sum_finite": true,
+    "bf16_matmul": "OK",
+    "allocated_mb": 68.1
+  }
+}

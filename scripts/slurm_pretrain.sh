@@ -20,7 +20,11 @@ cd "${SLURM_SUBMIT_DIR:-$(pwd)}"
 echo "job=$SLURM_JOB_ID node=$(hostname) start=$(date -Is)"
 nvidia-smi || true
 
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ -n "${SLURM_SUBMIT_DIR:-}" ]]; then
+  REPO="$SLURM_SUBMIT_DIR"
+else
+  REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
 cd "$REPO"
 
 srun python3 pretraining/run_mlm.py \

@@ -16,7 +16,11 @@
 
 set -euo pipefail
 mkdir -p logs
-REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ -n "${SLURM_SUBMIT_DIR:-}" ]]; then
+  REPO="$SLURM_SUBMIT_DIR"
+else
+  REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+fi
 cd "$REPO"
 
 TASK="${1:?usage: slurm_finetune.sh <qa|ner|sentiment> <dataset> [config]}"

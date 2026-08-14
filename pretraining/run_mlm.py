@@ -41,7 +41,8 @@ log = logging.getLogger(__name__)
 
 
 def build_corpus(amharic: list[str], tigrinya: list[str], cfg: dict,
-                 tokenizer, seed: int, val_fraction: float, upsample_alpha: float):
+                 tokenizer, seed: int, val_fraction: float, upsample_alpha: float,
+                 block_chunk: bool = True):
     """Build the MLM DatasetDict from monolingual text files.
 
     Amharic corpora are usually much larger than Tigrinya ones. `upsample_alpha`
@@ -96,12 +97,56 @@ def build_corpus(amharic: list[str], tigrinya: list[str], cfg: dict,
 
     max_len = cfgmod.get(cfg, "pretraining.max_seq_length", 256)
 
-    def tokenize(batch):
-        return tokenizer(batch["text"], truncation=True, max_length=max_len,
-                         return_special_tokens_mask=True)
+    if not block_chunk:
+        def tokenize(batch):
+            return tokenizer(batch["text"], truncation=True, max_length=max_len,
+                             return_special_tokens_mask=True)
 
-    return ds.map(tokenize, batched=True, remove_columns=["text"],
-                  desc="tokenizing", num_proc=None)
+        return ds.map(tokenize, batched=True, remove_columns=["text"],
+                      desc="tokenizing", num_proc=None)
+
+    # Block-chunked construction (approved for the official run).
+    #
+    # Corpus lines are short -- median 30-40 characters -- so one-line-per-example
+    # leaves ~90% of every 256-token sequence as padding. Concatenating the
+    # tokenized corpus and slicing it into full-length blocks removes that waste
+    # and gives the model contiguous context. Standard MLM practice.
+    #
+    # Special tokens are added per block rather than per line: adding <s>/</s>
+    # around every short line would fill the block with boundary markers.
+    def tokenize_plain(batch):
+        return tokenizer(batch["text"], add_special_tokens=False,
+                         return_attention_mask=False)
+
+    tokenized = ds.map(tokenize_plain, batched=True, remove_columns=["text"],
+                       desc="tokenizing", num_proc=None)
+
+    # Reserve room for the two special tokens wrapped around each block.
+    inner = max_len - tokenizer.num_special_tokens_to_add(pair=False)
+
+    def group_into_blocks(batch):
+        flat: list[int] = []
+        for ids in batch["input_ids"]:
+            flat.extend(ids)
+        n_blocks = len(flat) // inner          # drop the ragged tail
+        blocks = [flat[i * inner:(i + 1) * inner] for i in range(n_blocks)]
+        built = [tokenizer.build_inputs_with_special_tokens(b) for b in blocks]
+        return {
+            "input_ids": built,
+            "attention_mask": [[1] * len(b) for b in built],
+            "special_tokens_mask": [
+                tokenizer.get_special_tokens_mask(b, already_has_special_tokens=True)
+                for b in built
+            ],
+        }
+
+    blocked = tokenized.map(group_into_blocks, batched=True, batch_size=1000,
+                            remove_columns=tokenized["train"].column_names,
+                            desc=f"chunking into {max_len}-token blocks")
+    for split in blocked:
+        log.info("block-chunked %s: %d lines -> %d blocks of %d tokens",
+                 split, len(ds[split]), len(blocked[split]), max_len)
+    return blocked
 
 
 def main() -> None:
@@ -119,6 +164,11 @@ def main() -> None:
     ap.add_argument("--val-fraction", type=float, default=0.01)
     ap.add_argument("--upsample-alpha", type=float, default=0.5,
                     help="1.0 = natural proportions, 0.0 = equal languages")
+    ap.add_argument("--block-chunk", dest="block_chunk", action="store_true",
+                    default=True,
+                    help="concatenate and chunk into max_seq_length blocks (default; official)")
+    ap.add_argument("--no-block-chunk", dest="block_chunk", action="store_false",
+                    help="one line per example (not the approved configuration)")
     ap.add_argument("--no-resume", action="store_true")
     ap.add_argument("--max-steps", type=int, default=-1,
                     help="cap steps (smoke tests only)")
@@ -155,7 +205,10 @@ def main() -> None:
              sum(x.numel() for x in model.parameters()) / 1e6)
 
     ds = build_corpus(args.amharic, args.tigrinya, cfg, tokenizer, seed,
-                      args.val_fraction, args.upsample_alpha)
+                      args.val_fraction, args.upsample_alpha,
+                      block_chunk=args.block_chunk)
+    log.info("example construction: %s",
+             "block-chunked" if args.block_chunk else "one-line-per-example")
     ds = subsample(ds, mode, seed)
     log.info("tokenized: train=%d val=%d", len(ds["train"]), len(ds["validation"]))
 
@@ -220,7 +273,8 @@ def main() -> None:
         tracker.log_params({"pretraining": p, "corpus": {
             "amharic_files": len(args.amharic), "tigrinya_files": len(args.tigrinya),
             "train_rows": len(ds["train"]), "val_rows": len(ds["validation"]),
-            "upsample_alpha": args.upsample_alpha}})
+            "upsample_alpha": args.upsample_alpha,
+            "block_chunked": args.block_chunk}})
 
         result = trainer.train(resume_from_checkpoint=resume)
         trainer.save_model(args.output)
