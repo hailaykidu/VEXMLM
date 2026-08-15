@@ -1,0 +1,78 @@
+{
+  "dataset": {
+    "key": "afrisenti",
+    "name": "AfriSenti-SemEval 2023 Task 12",
+    "task": "sentiment",
+    "languages": [
+      "amh",
+      "tir",
+      "mul"
+    ],
+    "hub_id": "shmuhammad/AfriSenti-twitter-sentiment",
+    "hub_config": null,
+    "citation": "@inproceedings{muhammad-etal-2023-afrisenti,\n  title={{A}fri{S}enti: A Twitter Sentiment Analysis Benchmark for African Languages},\n  booktitle={SemEval-2023},\n  year={2023}\n}",
+    "license": "CC BY 4.0",
+    "url": "https://github.com/afrisenti-semeval/afrisent-semeval-2023",
+    "version": "unversioned",
+    "text_field": "tweet",
+    "label_field": "label",
+    "notes": "3-class: positive/negative/neutral. Amharic ('amh') is a native subtask. Tigrinya ('tir') appears in the AfriSenti collection but not in SemEval Subtask B; verify the config before use.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": false,
+    "local_dir": null,
+    "extra": {}
+  },
+  "context": {
+    "config": "amh",
+    "local_path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/afrisenti"
+  },
+  "splits": {
+    "train": {
+      "rows": 5984,
+      "columns": [
+        "tweet",
+        "label"
+      ],
+      "sha256": "53b830cedf932c835ecdb019de065d91",
+      "label_distribution": {
+        "negative": 1548,
+        "neutral": 3104,
+        "positive": 1332
+      },
+      "mean_chars": 71.45
+    },
+    "validation": {
+      "rows": 1497,
+      "columns": [
+        "tweet",
+        "label"
+      ],
+      "sha256": "8b4834cb62331e57e289261ca74323b4",
+      "label_distribution": {
+        "negative": 388,
+        "neutral": 776,
+        "positive": 333
+      },
+      "mean_chars": 70.94
+    },
+    "test": {
+      "rows": 1999,
+      "columns": [
+        "tweet",
+        "label"
+      ],
+      "sha256": "c13aa97ebf94bcb247add36830d1ac4d",
+      "label_distribution": {
+        "negative": 1337,
+        "neutral": 224,
+        "positive": 438
+      },
+      "mean_chars": 80.86
+    }
+  },
+  "total_rows": 9480
+}

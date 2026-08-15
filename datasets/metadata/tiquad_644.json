@@ -1,0 +1,56 @@
+{
+  "dataset": {
+    "key": "tiquad_644",
+    "name": "TiQuAD (644-question ablation subset)",
+    "task": "qa",
+    "languages": [
+      "tir"
+    ],
+    "hub_id": null,
+    "hub_config": null,
+    "citation": "",
+    "license": "CC BY 4.0",
+    "url": "https://huggingface.co/datasets/fgaim/tiquad",
+    "version": "tiquad-644-seed42",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Ablation only, not a benchmark. A 644-question random subsample (seed 42) of the TiQuAD training set, matching TIGQA's training size exactly, evaluated on the full TiQuAD validation split. Isolates training-set size from annotation quality when comparing TIGQA and TiQuAD. See reports/TIQUAD_IMPACT_ANALYSIS.md.",
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "requires_local": true,
+    "local_dir": "tiquad_644",
+    "extra": {}
+  },
+  "context": {
+    "local_path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tiquad_644"
+  },
+  "splits": {
+    "train": {
+      "rows": 644,
+      "columns": [
+        "id",
+        "question",
+        "context",
+        "answers"
+      ],
+      "sha256": "b8a2c7f0c75f6f77719996c5d5d2139c",
+      "label_distribution": null,
+      "mean_chars": 39.6
+    },
+    "validation": {
+      "rows": 926,
+      "columns": [
+        "id",
+        "question",
+        "context",
+        "answers"
+      ],
+      "sha256": "c295581097dec896ddd0da8bcb80ca5e",
+      "label_distribution": null,
+      "mean_chars": 42.79
+    }
+  },
+  "total_rows": 1570
+}

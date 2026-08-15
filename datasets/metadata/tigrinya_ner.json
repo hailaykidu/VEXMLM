@@ -24,7 +24,9 @@
     "local_dir": "tigrinya_ner",
     "extra": {}
   },
-  "context": {},
+  "context": {
+    "local_path": "datasets/raw/tigrinya_ner"
+  },
   "splits": {
     "train": {
       "rows": 4562,

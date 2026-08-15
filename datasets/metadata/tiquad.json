@@ -1,0 +1,56 @@
+{
+  "dataset": {
+    "key": "tiquad",
+    "name": "TiQuAD — Tigrinya Question Answering Dataset",
+    "task": "qa",
+    "languages": [
+      "tir"
+    ],
+    "hub_id": "fgaim/tiquad",
+    "hub_config": null,
+    "citation": "@inproceedings{gaim-etal-2023-question,\n  title={Question-Answering in a Low-resourced Language: Benchmark Dataset and Models for Tigrinya},\n  author={Gaim, Fitsum and Yang, Wonsuk and Park, Hancheol and Park, Jong C.},\n  booktitle={ACL},\n  year={2023}\n}",
+    "license": "CC BY 4.0",
+    "url": "https://huggingface.co/datasets/fgaim/tiquad",
+    "version": "tiquad-parquet",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Supplementary Tigrinya extractive QA benchmark, used as a diagnostic contrast to TIGQA. Distributed as parquet (train.parquet/dev.parquet), so no dataset script is involved. 4,452 train / 934 validation questions -- roughly 7x TIGQA's 644 training questions. Schema is SQuAD-style: id/question/context/answers(answer_start,text)/article_title/context_id. Train has 1 reference answer per question; validation averages 7.77, scored max-over-references. No test split is published and there are no unanswerable items. 7,236 of 7,260 answer offsets (99.7%) match their context exactly. See reports/TIQUAD_DATASET_REVIEW.md.",
+    "splits": [
+      "train",
+      "validation"
+    ],
+    "requires_local": false,
+    "local_dir": "tiquad",
+    "extra": {}
+  },
+  "context": {
+    "local_path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tiquad"
+  },
+  "splits": {
+    "train": {
+      "rows": 4452,
+      "columns": [
+        "id",
+        "question",
+        "context",
+        "answers"
+      ],
+      "sha256": "81fc461f711e8844eacab2119032d248",
+      "label_distribution": null,
+      "mean_chars": 39.66
+    },
+    "validation": {
+      "rows": 926,
+      "columns": [
+        "id",
+        "question",
+        "context",
+        "answers"
+      ],
+      "sha256": "c295581097dec896ddd0da8bcb80ca5e",
+      "label_distribution": null,
+      "mean_chars": 42.79
+    }
+  },
+  "total_rows": 5378
+}

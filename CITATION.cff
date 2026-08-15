@@ -6,6 +6,8 @@ abstract: >-
   XLM-R to the Ge'ez-script languages Amharic and Tigrinya through language-specific
   SentencePiece tokenization, mean-based embedding initialization, and two-stage
   training (continued MLM pretraining followed by task-specific fine-tuning).
+  Evaluation spans intrinsic tokenizer quality across 19 languages and downstream
+  question answering, named entity recognition, and sentiment analysis.
 authors:
   - family-names: Teklehaymanot
     given-names: Hailay
@@ -13,19 +15,24 @@ authors:
 type: software
 license: Apache-2.0
 version: 1.0.0
+repository-code: "https://github.com/hailaykidu/VEXMLM"
 keywords:
   - natural language processing
   - vocabulary expansion
+  - tokenization
   - low-resource languages
+  - multilingual language models
   - Amharic
   - Tigrinya
   - Ge'ez
 preferred-citation:
-  type: article
+  type: conference-paper
   title: >-
-    Vocabulary Expansion for Low-Resource African Languages:
-    A Case Study in Amharic and Tigrinya
+    Expanding the Lexicon of Ge'ez Based African Languages: A Comparative Study of Amharic and Tigrinya
   authors:
     - family-names: Teklehaymanot
       given-names: Hailay
   year: 2026
+  collection-title: "Proceedings of the Workshop on Language Models for Underserved Communities (LM4UC), IJCAI 2026"
+  conference:
+    name: "LM4UC Workshop, IJCAI 2026"

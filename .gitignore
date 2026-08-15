@@ -37,3 +37,6 @@ datasets/raw/
 # Trained tokenizer artifacts and normalized corpora (regenerable, large)
 tokenizer/artifacts/
 logs/
+
+# Legacy pre-VEXMLM artifacts (retained locally for provenance, not released)
+legacy/

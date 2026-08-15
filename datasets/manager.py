@@ -120,6 +120,10 @@ class DatasetManager:
         if suffix in (".csv", ".tsv"):
             sep = "\t" if suffix == ".tsv" else ","
             return load_dataset("csv", data_files=str(path), split="train", sep=sep)
+        if suffix == ".parquet":
+            # Already SQuAD-shaped on disk (id/question/context/answers), so it
+            # needs no read_squad() reshaping the way the JSON corpora do.
+            return load_dataset("parquet", data_files=str(path), split="train")
         raise SystemExit(f"unsupported file type for {spec.key}: {path}")
 
     # --- provenance --------------------------------------------------------

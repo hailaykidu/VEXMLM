@@ -211,10 +211,63 @@ TIGRINYA_CORPUS = DatasetSpec(
 )
 
 
+TIQUAD = DatasetSpec(
+    key="tiquad",
+    name="TiQuAD — Tigrinya Question Answering Dataset",
+    task="qa",
+    languages=("tir",),
+    hub_id="fgaim/tiquad",
+    requires_local=False,
+    local_dir="tiquad",
+    url="https://huggingface.co/datasets/fgaim/tiquad",
+    citation=(
+        "@inproceedings{gaim-etal-2023-question,\n"
+        "  title={Question-Answering in a Low-resourced Language: Benchmark "
+        "Dataset and Models for Tigrinya},\n"
+        "  author={Gaim, Fitsum and Yang, Wonsuk and Park, Hancheol and "
+        "Park, Jong C.},\n"
+        "  booktitle={ACL},\n  year={2023}\n}"
+    ),
+    license="CC BY 4.0",
+    version="tiquad-parquet",
+    splits=("train", "validation"),
+    notes=("Supplementary Tigrinya extractive QA benchmark, used as a "
+           "diagnostic contrast to TIGQA. Distributed as parquet "
+           "(train.parquet/dev.parquet), so no dataset script is involved. "
+           "4,452 train / 934 validation questions -- roughly 7x TIGQA's 644 "
+           "training questions. Schema is SQuAD-style: id/question/context/"
+           "answers(answer_start,text)/article_title/context_id. Train has 1 "
+           "reference answer per question; validation averages 7.77, scored "
+           "max-over-references. No test split is published and there are no "
+           "unanswerable items. 7,236 of 7,260 answer offsets (99.7%) match "
+           "their context exactly. See reports/TIQUAD_DATASET_REVIEW.md."),
+)
+
+
+TIQUAD_644 = DatasetSpec(
+    key="tiquad_644",
+    name="TiQuAD (644-question ablation subset)",
+    task="qa",
+    languages=("tir",),
+    hub_id=None,
+    requires_local=True,
+    local_dir="tiquad_644",
+    url="https://huggingface.co/datasets/fgaim/tiquad",
+    license="CC BY 4.0",
+    version="tiquad-644-seed42",
+    splits=("train", "validation"),
+    notes=("Ablation only, not a benchmark. A 644-question random subsample "
+           "(seed 42) of the TiQuAD training set, matching TIGQA's training "
+           "size exactly, evaluated on the full TiQuAD validation split. "
+           "Isolates training-set size from annotation quality when comparing "
+           "TIGQA and TiQuAD. See reports/TIQUAD_IMPACT_ANALYSIS.md."),
+)
+
+
 REGISTRY: dict[str, DatasetSpec] = {
     s.key: s for s in (
         TIGQA, AMQA, MASAKHANER_AMH, TIGRINYA_NER, AFRISENTI,
-        AMHARIC_CORPUS, TIGRINYA_CORPUS,
+        AMHARIC_CORPUS, TIGRINYA_CORPUS, TIQUAD, TIQUAD_644,
     )
 }
 
