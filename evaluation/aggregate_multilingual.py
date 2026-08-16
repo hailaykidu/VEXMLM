@@ -31,8 +31,22 @@ import statistics as stats
 from collections import defaultdict
 from pathlib import Path
 
-# Metric reported as the headline per task.
-HEADLINE = {"sentiment": "macro_f1", "ner": "f1", "qa": "f1"}
+# Metric reported as the headline per task. First key present wins, so a task
+# whose runner names its metric differently still resolves.
+HEADLINE = {"sentiment": ("macro_f1",), "ner": ("f1", "macro_f1"),
+            "qa": ("f1", "exact_match")}
+
+# Bookkeeping emitted by the Trainer alongside real metrics; never averaged.
+NON_METRIC = {"epoch", "loss", "runtime", "samples_per_second",
+              "steps_per_second", "n_questions", "jit_compilation_time"}
+
+
+def headline_metric(task: str, available) -> str:
+    """First configured headline metric that the run actually reports."""
+    for name in HEADLINE.get(task, ()):
+        if name in available:
+            return name
+    return "accuracy" if "accuracy" in available else next(iter(sorted(available)), "")
 
 
 def parse_run(path: Path) -> dict | None:
@@ -72,8 +86,8 @@ def parse_run(path: Path) -> dict | None:
                 if k.startswith("eval_") and isinstance(v, (int, float))}
     if not test:
         # Unprefixed metrics (the QA runner reports exact_match / f1 directly).
-        test = {k: v for k, v in metrics.items()
-                if isinstance(v, (int, float)) and k != "n_questions"}
+        test = {k: v for k, v in metrics.items() if isinstance(v, (int, float))}
+    test = {k: v for k, v in test.items() if k not in NON_METRIC}
     if not test:
         return None
 
@@ -106,6 +120,19 @@ def main() -> None:
     if not runs:
         raise SystemExit(f"no results.json found under {runs_root}")
 
+    # Test-set sizes for the micro average. The task runners do not record them,
+    # so take them from the language inventory; without this every language
+    # would carry equal weight and micro would collapse onto macro.
+    cov_path = Path(args.coverage)
+    cov_sizes: dict[tuple[str, str], int] = {}
+    if cov_path.exists():
+        with cov_path.open() as fh:
+            for rec in csv.DictReader(fh):
+                try:
+                    cov_sizes[(rec["dataset"], rec["language_code"])] = int(rec["test"])
+                except (ValueError, KeyError):
+                    pass
+
     # group: (task, mode, dataset, language) -> {metric: [values]}
     grouped: dict[tuple, dict[str, list[float]]] = defaultdict(lambda: defaultdict(list))
     sizes: dict[tuple, int] = {}
@@ -115,6 +142,8 @@ def main() -> None:
             grouped[key][m].append(v)
         if r.get("examples"):
             sizes[key] = r["examples"]
+        elif (r["dataset"], r["language"]) in cov_sizes:
+            sizes[key] = cov_sizes[(r["dataset"], r["language"])]
 
     # ---- per-language ----
     per_lang_rows = []
@@ -143,8 +172,8 @@ def main() -> None:
         by_task[(key[0], key[1])].append((key, metrics))
 
     for (task, mode), entries in sorted(by_task.items()):
-        headline = HEADLINE.get(task, "accuracy")
         metric_names = sorted({m for _, ms in entries for m in ms})
+        headline = headline_metric(task, set(metric_names))
         row = {"task": task, "mode": mode, "languages": len(entries),
                "headline_metric": headline}
         for m in metric_names:
@@ -218,7 +247,8 @@ def main() -> None:
               "| Task | Mode | Dataset | Language | Headline | Seeds |",
               "|---|---|---|---|---|---|"]
     for r in per_lang_rows:
-        h = HEADLINE.get(r["task"], "accuracy")
+        h = headline_metric(r["task"],
+                            {k[:-5] for k in r if k.endswith("_mean")})
         mu, sd = r.get(f"{h}_mean"), r.get(f"{h}_std")
         cell = f"{mu * 100:.2f} ± {sd * 100:.2f}" if mu is not None else "—"
         lines.append(f"| {r['task']} | {r['mode']} | {r['dataset']} | "
