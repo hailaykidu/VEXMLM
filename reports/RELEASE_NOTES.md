@@ -195,7 +195,7 @@ unresolved; see `datasets/registry.py` for the licence of every dataset.
                A Comparative Study of Amharic and Tigrinya},
   author    = {Teklehaymanot, Hailay},
   booktitle = {Proceedings of the Workshop on Language Models for
-               Underserved Communities (LM4UC), IJCAI},
+               Underserved Communities (LM4UC), IJCAI 2026},
   year      = {2026}
 }
 ```

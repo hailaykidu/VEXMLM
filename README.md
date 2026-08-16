@@ -74,7 +74,7 @@ finetuning/       Stage 2: qa/, ner/, sentiment/
 evaluation/       intrinsic metrics, aggregation, table generation
 scripts/          reproduce_paper.sh, SLURM job scripts
 src/vexmlm/       shared library: geez, device, config, tracking
-results/          generated tables (CSV + RESULTS.md)
+results/          implementation artifacts (CSV + JSON)
 tests/            pytest suite
 ```
 
@@ -232,7 +232,7 @@ pytest tests/test_geez.py -v   # script handling and encoding checks
                A Comparative Study of Amharic and Tigrinya},
   author    = {Teklehaymanot, Hailay},
   booktitle = {Proceedings of the Workshop on Language Models for
-               Underserved Communities (LM4UC), IJCAI},
+               Underserved Communities (LM4UC), IJCAI 2026},
   year      = {2026}
 }
 ```
