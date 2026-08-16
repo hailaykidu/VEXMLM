@@ -44,3 +44,7 @@ legacy/
 # Internal development material (retained locally, not part of the public release)
 reports/internal/
 scripts/internal/
+
+# Expanded multilingual evaluation: run outputs and checkpoints (regenerable)
+results/multilingual_evaluation/**/checkpoint-*/
+results/multilingual_evaluation/**/*.safetensors

@@ -213,7 +213,8 @@ def main() -> None:
         tracker.log_metrics({k: v for k, v in metrics.items()
                              if isinstance(v, (int, float))})
 
-        summary = {"task": "ner", "dataset": args.dataset, "seed": seed,
+        summary = {"task": "ner", "dataset": args.dataset,
+                   "config": args.dataset_config, "seed": seed,
                    "model": args.model, "metrics": metrics, "labels": label_list}
         out = Path(args.output) / "results.json"
         out.parent.mkdir(parents=True, exist_ok=True)

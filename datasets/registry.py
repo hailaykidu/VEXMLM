@@ -98,8 +98,7 @@ MASAKHANER_AMH = DatasetSpec(
     name="MasakhaNER — Amharic",
     task="ner",
     languages=("amh",),
-    hub_id="masakhane/masakhaner2",
-    hub_config="amh",
+    hub_id=None,               # Amharic is in MasakhaNER v1; v2 has no amh config
     requires_local=True,       # a prepared local copy ships with this repo
     local_dir="masakhaner_amh",
     url="https://github.com/masakhane-io/masakhane-ner",
@@ -117,6 +116,32 @@ MASAKHANER_AMH = DatasetSpec(
            "datasets here; underlying news text carries per-site licences. Any "
            "model fine-tuned on it inherits a non-commercial constraint. "
            "See docs/DATASET_REDISTRIBUTION.md."),
+)
+
+MASAKHANER2 = DatasetSpec(
+    key="masakhaner2",
+    name="MasakhaNER 2.0",
+    task="ner",
+    languages=("bam", "bbj", "ewe", "fon", "hau", "ibo", "kin", "lug", "luo",
+               "mos", "nya", "pcm", "sna", "swa", "tsn", "twi", "wol", "xho",
+               "yor", "zul"),
+    hub_id="masakhane/masakhaner2",
+    url="https://github.com/masakhane-io/masakhane-ner",
+    citation=(
+        "@inproceedings{adelani-etal-2022-masakhaner2,\n"
+        "  title={MasakhaNER 2.0: Africa-centric Transfer Learning for Named "
+        "Entity Recognition},\n"
+        "  author={Adelani, David Ifeoluwa and others},\n"
+        "  booktitle={EMNLP},\n  year={2022}\n}"
+    ),
+    license="CC BY-NC 4.0",   # NON-COMMERCIAL, as for v1
+    version="MasakhaNER 2.0 (20 languages)",
+    notes=("Twenty languages, official train/dev/test splits used as released. "
+           "Covers NEITHER Amharic NOR Tigrinya: Amharic comes from MasakhaNER "
+           "v1 (see masakhaner_amh) and Tigrinya from a separate resource (see "
+           "tigrinya_ner). LICENCE IS NON-COMMERCIAL (CC BY-NC 4.0); any model "
+           "fine-tuned on it inherits that constraint. Used only by the "
+           "expanded multilingual evaluation, not by the paper release."),
 )
 
 TIGRINYA_NER = DatasetSpec(
@@ -266,7 +291,7 @@ TIQUAD_644 = DatasetSpec(
 
 REGISTRY: dict[str, DatasetSpec] = {
     s.key: s for s in (
-        TIGQA, AMQA, MASAKHANER_AMH, TIGRINYA_NER, AFRISENTI,
+        TIGQA, AMQA, MASAKHANER_AMH, MASAKHANER2, TIGRINYA_NER, AFRISENTI,
         AMHARIC_CORPUS, TIGRINYA_CORPUS, TIQUAD, TIQUAD_644,
     )
 }
