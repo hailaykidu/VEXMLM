@@ -6,8 +6,8 @@
     "languages": [
       "amh"
     ],
-    "hub_id": "masakhane/masakhaner2",
-    "hub_config": "amh",
+    "hub_id": null,
+    "hub_config": null,
     "citation": "@inproceedings{adelani-etal-2021-masakhaner,\n  title={MasakhaNER: Named Entity Recognition for African Languages},\n  author={Adelani, David Ifeoluwa and others},\n  journal={TACL},\n  year={2021}\n}",
     "license": "CC BY-NC 4.0",
     "url": "https://github.com/masakhane-io/masakhane-ner",
@@ -24,9 +24,7 @@
     "local_dir": "masakhaner_amh",
     "extra": {}
   },
-  "context": {
-    "local_path": "datasets/raw/masakhaner_amh"
-  },
+  "context": {},
   "splits": {
     "train": {
       "rows": 1750,

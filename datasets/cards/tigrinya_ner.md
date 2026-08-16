@@ -9,7 +9,7 @@
 | Licence | UNLICENSED — no licence file in the source repository |
 | Source | https://github.com/mehari-eng/Tigrinya-NER |
 | Hub ID | **none — local copy** |
-| Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya` |
+| Imported from | `<external>/lgse-repro/data/ner/tigrinya` |
 | Imported on | 2026-08-14T20:44:48 |
 
 ## Checksums (source files)

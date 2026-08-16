@@ -1,0 +1,85 @@
+{
+  "dataset": {
+    "key": "masakhaner2",
+    "name": "MasakhaNER 2.0",
+    "task": "ner",
+    "languages": [
+      "bam",
+      "bbj",
+      "ewe",
+      "fon",
+      "hau",
+      "ibo",
+      "kin",
+      "lug",
+      "luo",
+      "mos",
+      "nya",
+      "pcm",
+      "sna",
+      "swa",
+      "tsn",
+      "twi",
+      "wol",
+      "xho",
+      "yor",
+      "zul"
+    ],
+    "hub_id": "masakhane/masakhaner2",
+    "hub_config": null,
+    "citation": "@inproceedings{adelani-etal-2022-masakhaner2,\n  title={MasakhaNER 2.0: Africa-centric Transfer Learning for Named Entity Recognition},\n  author={Adelani, David Ifeoluwa and others},\n  booktitle={EMNLP},\n  year={2022}\n}",
+    "license": "CC BY-NC 4.0",
+    "url": "https://github.com/masakhane-io/masakhane-ner",
+    "version": "MasakhaNER 2.0 (20 languages)",
+    "text_field": null,
+    "label_field": null,
+    "notes": "Twenty languages, official train/dev/test splits used as released. Covers NEITHER Amharic NOR Tigrinya: Amharic comes from MasakhaNER v1 (see masakhaner_amh) and Tigrinya from a separate resource (see tigrinya_ner). LICENCE IS NON-COMMERCIAL (CC BY-NC 4.0); any model fine-tuned on it inherits that constraint. Used only by the expanded multilingual evaluation, not by the paper release.",
+    "splits": [
+      "train",
+      "validation",
+      "test"
+    ],
+    "requires_local": false,
+    "local_dir": null,
+    "extra": {}
+  },
+  "context": {
+    "config": "swa"
+  },
+  "splits": {
+    "train": {
+      "rows": 6593,
+      "columns": [
+        "id",
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "5bb13d28686f71e817115d560e652a9f",
+      "label_distribution": null,
+      "mean_chars": 161.42
+    },
+    "validation": {
+      "rows": 942,
+      "columns": [
+        "id",
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "1bef28ca816002ce3cd992bca7546996",
+      "label_distribution": null,
+      "mean_chars": 161.81
+    },
+    "test": {
+      "rows": 1883,
+      "columns": [
+        "id",
+        "tokens",
+        "ner_tags"
+      ],
+      "sha256": "f6fa731f57f7fb037d7848cbf86dfa68",
+      "label_distribution": null,
+      "mean_chars": 164.28
+    }
+  },
+  "total_rows": 9418
+}

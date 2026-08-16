@@ -159,11 +159,27 @@ class DatasetManager:
         raise SystemExit(f"unsupported file type for {spec.key}: {path}")
 
     # --- provenance --------------------------------------------------------
+    @staticmethod
+    def _relative(value) -> str:
+        """Render a context value without this machine's directory layout.
+
+        These records are published with the repository, so an absolute path
+        would leak the author's home directory. Paths inside the repository
+        become repo-relative; anything outside keeps only its final component,
+        which is what carries the provenance meaning.
+        """
+        text = str(value)
+        repo_root = ROOT.parent
+        try:
+            return str(Path(text).resolve().relative_to(repo_root))
+        except (ValueError, OSError):
+            return text
+
     def _record(self, spec: DatasetSpec, ds, **ctx) -> dict:
         stats = {name: asdict(self._stats(split, spec)) for name, split in ds.items()}
         record = {
             "dataset": spec.as_dict(),
-            "context": {k: str(v) for k, v in ctx.items() if v},
+            "context": {k: self._relative(v) for k, v in ctx.items() if v},
             "splits": stats,
             "total_rows": sum(s["rows"] for s in stats.values()),
         }

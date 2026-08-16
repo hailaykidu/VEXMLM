@@ -24,7 +24,7 @@
     "extra": {}
   },
   "context": {
-    "local_path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tiquad_644"
+    "local_path": "datasets/raw/tiquad_644"
   },
   "splits": {
     "train": {

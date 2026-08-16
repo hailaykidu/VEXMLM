@@ -9,37 +9,37 @@
       "official_url": "https://zenodo.org/records/11423987",
       "citation": "Teklehaymanot et al. (2024), TIGQA",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigqa"
+        "datasets/raw/tigqa"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigqa",
+      "source_dir": "datasets/raw/tigqa",
       "files": {
         "train": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigqa/train.json",
+          "source": "datasets/raw/tigqa/train.json",
           "bytes": 466419,
           "sha256": "920aee6eb379af97d17cd51d830a2f694fb99b2cf85dc3bf45ced06f414485d4",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/tigqa_squad/train.json",
+          "origin": "<external>/lgse-repro/data/qa/tigqa_squad/train.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "validation": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigqa/dev.json",
+          "source": "datasets/raw/tigqa/dev.json",
           "bytes": 50021,
           "sha256": "4d79d9bbf7fbb8e2f5cb8e93cf137401146c493889dbe3ec0290c31da5006671",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/tigqa_squad/dev.json",
+          "origin": "<external>/lgse-repro/data/qa/tigqa_squad/dev.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "test": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigqa/test.json",
+          "source": "datasets/raw/tigqa/test.json",
           "bytes": 58614,
           "sha256": "999971f826d7521280888e2be4027e786d12d64774898e82365c635723855a68",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/tigqa_squad/test.json",
+          "origin": "<external>/lgse-repro/data/qa/tigqa_squad/test.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/tigqa_squad",
+      "origin_dir": "<external>/lgse-repro/data/qa/tigqa_squad",
       "first_imported": "2026-08-14T20:44:48"
     },
     "amqa": {
@@ -49,37 +49,37 @@
       "official_url": "https://github.com/semantic-systems/amharic-qa",
       "citation": "Taffa et al. (2024), AmQA",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amqa"
+        "datasets/raw/amqa"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amqa",
+      "source_dir": "datasets/raw/amqa",
       "files": {
         "train": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amqa/train.json",
+          "source": "datasets/raw/amqa/train.json",
           "bytes": 1747839,
           "sha256": "c2a76dee46332964cfa9b2b1d7f0a21af2a7b9cf9c5d0b57d6429774dd865cab",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/amqa/train.json",
+          "origin": "<external>/lgse-repro/data/qa/amqa/train.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "validation": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amqa/dev.json",
+          "source": "datasets/raw/amqa/dev.json",
           "bytes": 497479,
           "sha256": "af8497b3753aa3386c4e515712995dfb9dfb0578b4a032b7fa75d2ece13ae785",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/amqa/dev.json",
+          "origin": "<external>/lgse-repro/data/qa/amqa/dev.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "test": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amqa/test.json",
+          "source": "datasets/raw/amqa/test.json",
           "bytes": 254291,
           "sha256": "2196b4bb88d89db4d952832277825101d93eb0fd5dd4e9bc60d2cf923a78b830",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/amqa/test.json",
+          "origin": "<external>/lgse-repro/data/qa/amqa/test.json",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/qa/amqa",
+      "origin_dir": "<external>/lgse-repro/data/qa/amqa",
       "first_imported": "2026-08-14T20:44:48"
     },
     "masakhaner_amh": {
@@ -89,37 +89,37 @@
       "official_url": "https://github.com/masakhane-io/masakhane-ner",
       "citation": "Adelani et al. (2021), MasakhaNER",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/masakhaner_amh"
+        "datasets/raw/masakhaner_amh"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/masakhaner_amh",
+      "source_dir": "datasets/raw/masakhaner_amh",
       "files": {
         "train": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/masakhaner_amh/train.conll",
+          "source": "datasets/raw/masakhaner_amh/train.conll",
           "bytes": 398840,
           "sha256": "bc82370a67d38ddfc97d042bfeabe874464a4db183b897bcf3add04ce54c94d2",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic/train.conll",
+          "origin": "<external>/lgse-repro/data/ner/amharic/train.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "validation": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/masakhaner_amh/dev.conll",
+          "source": "datasets/raw/masakhaner_amh/dev.conll",
           "bytes": 57855,
           "sha256": "1a5a5d54e87b73b7e41eba0dcad13e07ed2c3a770f67c57c13f1270c9699b153",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic/dev.conll",
+          "origin": "<external>/lgse-repro/data/ner/amharic/dev.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "test": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/masakhaner_amh/test.conll",
+          "source": "datasets/raw/masakhaner_amh/test.conll",
           "bytes": 114626,
           "sha256": "af20aa41753c19fc84b9e938afcaae1da991c0d76b400ed7119b71fdbc30d8d7",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic/test.conll",
+          "origin": "<external>/lgse-repro/data/ner/amharic/test.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic",
+      "origin_dir": "<external>/lgse-repro/data/ner/amharic",
       "first_imported": "2026-08-14T20:44:48"
     },
     "tigrinya_ner": {
@@ -129,37 +129,37 @@
       "official_url": "https://github.com/mehari-eng/Tigrinya-NER",
       "citation": "Yohannes and Amagasa (2022), Tigrinya NER",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya_ner"
+        "datasets/raw/tigrinya_ner"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya_ner",
+      "source_dir": "datasets/raw/tigrinya_ner",
       "files": {
         "train": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya_ner/train.conll",
+          "source": "datasets/raw/tigrinya_ner/train.conll",
           "bytes": 1251673,
           "sha256": "01a9968d78ce30c9c3ca84ab290ea192a31683409d971e3c3e15f6f32683fc64",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya/train.conll",
+          "origin": "<external>/lgse-repro/data/ner/tigrinya/train.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "validation": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya_ner/dev.conll",
+          "source": "datasets/raw/tigrinya_ner/dev.conll",
           "bytes": 156134,
           "sha256": "e3f86c999f177e1fe7d3233f9b55e72e4b844fb9b7fdf55e675bd933c936339d",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya/dev.conll",
+          "origin": "<external>/lgse-repro/data/ner/tigrinya/dev.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         },
         "test": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya_ner/test.conll",
+          "source": "datasets/raw/tigrinya_ner/test.conll",
           "bytes": 152957,
           "sha256": "19fa30537db6b88addf254b1fbaf5cb10573d4c084ccce59fd50832b783f5a12",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya/test.conll",
+          "origin": "<external>/lgse-repro/data/ner/tigrinya/test.conll",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/ner/tigrinya",
+      "origin_dir": "<external>/lgse-repro/data/ner/tigrinya",
       "first_imported": "2026-08-14T20:44:48"
     },
     "amharic_mlm": {
@@ -169,21 +169,21 @@
       "official_url": "https://github.com/asmelashteka/HornMT",
       "citation": "see docs/DATASET_PROVENANCE.md -- origin under verification",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amharic"
+        "datasets/raw/amharic"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amharic",
+      "source_dir": "datasets/raw/amharic",
       "files": {
         "corpus": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amharic/amharic.txt",
+          "source": "datasets/raw/amharic/amharic.txt",
           "bytes": 23338664,
           "sha256": "b5d5b1da90d3fff680d083dcab7ad8416037665e7762c99a2826b53ef8a849e1",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/lapt/amharic.txt",
+          "origin": "<external>/lgse-repro/data/lapt/amharic.txt",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/lapt",
+      "origin_dir": "<external>/lgse-repro/data/lapt",
       "first_imported": "2026-08-14T20:44:48"
     },
     "tigrinya_mlm": {
@@ -193,21 +193,21 @@
       "official_url": "https://github.com/asmelashteka/HornMT",
       "citation": "see docs/DATASET_PROVENANCE.md -- origin under verification",
       "searched": [
-        "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya"
+        "datasets/raw/tigrinya"
       ],
       "status": "already_in_repository",
-      "source_dir": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya",
+      "source_dir": "datasets/raw/tigrinya",
       "files": {
         "corpus": {
-          "source": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya/tigrinya.txt",
+          "source": "datasets/raw/tigrinya/tigrinya.txt",
           "bytes": 18026579,
           "sha256": "e006c5ff19e3ec63f29b862871607d2be1cb94d3fe5db8447cd0f17898e0f6ec",
-          "origin": "/homes/neumann/teklehaymanot/lgse-repro/data/lapt/tigrinya.txt",
+          "origin": "<external>/lgse-repro/data/lapt/tigrinya.txt",
           "imported": "2026-08-14T20:44:48",
           "checksum_match": true
         }
       },
-      "origin_dir": "/homes/neumann/teklehaymanot/lgse-repro/data/lapt",
+      "origin_dir": "<external>/lgse-repro/data/lapt",
       "first_imported": "2026-08-14T20:44:48"
     }
   }

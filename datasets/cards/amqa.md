@@ -9,7 +9,7 @@
 | Licence | MIT |
 | Source | https://github.com/semantic-systems/amharic-qa |
 | Hub ID | **none — local copy** |
-| Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/qa/amqa` |
+| Imported from | `<external>/lgse-repro/data/qa/amqa` |
 | Imported on | 2026-08-14T20:44:48 |
 
 ## Checksums (source files)

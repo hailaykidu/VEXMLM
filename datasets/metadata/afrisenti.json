@@ -27,52 +27,37 @@
     "extra": {}
   },
   "context": {
-    "config": "amh",
-    "local_path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/afrisenti"
+    "config": "tir"
   },
   "splits": {
-    "train": {
-      "rows": 5984,
-      "columns": [
-        "tweet",
-        "label"
-      ],
-      "sha256": "53b830cedf932c835ecdb019de065d91",
-      "label_distribution": {
-        "negative": 1548,
-        "neutral": 3104,
-        "positive": 1332
-      },
-      "mean_chars": 71.45
-    },
     "validation": {
-      "rows": 1497,
+      "rows": 398,
       "columns": [
         "tweet",
         "label"
       ],
-      "sha256": "8b4834cb62331e57e289261ca74323b4",
+      "sha256": "07fb2eaa36ed68dc4668c383a8373861",
       "label_distribution": {
-        "negative": 388,
-        "neutral": 776,
-        "positive": 333
+        "0": 61,
+        "1": 122,
+        "2": 215
       },
-      "mean_chars": 70.94
+      "mean_chars": 88.3
     },
     "test": {
-      "rows": 1999,
+      "rows": 2000,
       "columns": [
         "tweet",
         "label"
       ],
-      "sha256": "c13aa97ebf94bcb247add36830d1ac4d",
+      "sha256": "e265c38ecd9b22460721bea2c9b07e5e",
       "label_distribution": {
-        "negative": 1337,
-        "neutral": 224,
-        "positive": 438
+        "0": 643,
+        "1": 387,
+        "2": 970
       },
-      "mean_chars": 80.86
+      "mean_chars": 89.61
     }
   },
-  "total_rows": 9480
+  "total_rows": 2398
 }

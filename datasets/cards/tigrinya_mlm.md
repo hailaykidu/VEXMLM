@@ -9,7 +9,7 @@
 | Licence | UNKNOWN — blocker |
 | Source | https://github.com/asmelashteka/HornMT |
 | Hub ID | **none — local copy** |
-| Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/lapt` |
+| Imported from | `<external>/lgse-repro/data/lapt` |
 | Imported on | 2026-08-14T20:44:48 |
 
 ## Checksums (source files)

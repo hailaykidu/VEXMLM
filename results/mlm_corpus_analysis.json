@@ -1,7 +1,7 @@
 {
   "corpora": {
     "amharic": {
-      "path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/amharic/amharic.txt",
+      "path": "datasets/raw/amharic/amharic.txt",
       "bytes": 23338664,
       "sha256": "b5d5b1da90d3fff680d083dcab7ad8416037665e7762c99a2826b53ef8a849e1",
       "lines_total": 200002,
@@ -163,21 +163,21 @@
       ],
       "reference_overlap": {
         "HornMT (tir)": {
-          "path": "/homes/neumann/teklehaymanot/amseg/data/corpus/hornmt_tir.txt",
+          "path": "<external>/amseg/data/corpus/hornmt_tir.txt",
           "reference_lines": 2030,
           "reference_unique": 2029,
           "exact_line_overlap": 0,
           "share_of_reference_found": 0.0
         },
         "HornMT (raw ti)": {
-          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
+          "path": "<external>/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
           "reference_lines": 2030,
           "reference_unique": 2029,
           "exact_line_overlap": 0,
           "share_of_reference_found": 0.0
         },
         "HornMT (raw en)": {
-          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
+          "path": "<external>/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
           "reference_lines": 2030,
           "reference_unique": 2030,
           "exact_line_overlap": 0,
@@ -198,7 +198,7 @@
       }
     },
     "tigrinya": {
-      "path": "/homes/neumann/teklehaymanot/VEXMLM_Official/datasets/raw/tigrinya/tigrinya.txt",
+      "path": "datasets/raw/tigrinya/tigrinya.txt",
       "bytes": 18026579,
       "sha256": "e006c5ff19e3ec63f29b862871607d2be1cb94d3fe5db8447cd0f17898e0f6ec",
       "lines_total": 200000,
@@ -360,21 +360,21 @@
       ],
       "reference_overlap": {
         "HornMT (tir)": {
-          "path": "/homes/neumann/teklehaymanot/amseg/data/corpus/hornmt_tir.txt",
+          "path": "<external>/amseg/data/corpus/hornmt_tir.txt",
           "reference_lines": 2030,
           "reference_unique": 2029,
           "exact_line_overlap": 0,
           "share_of_reference_found": 0.0
         },
         "HornMT (raw ti)": {
-          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
+          "path": "<external>/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.ti",
           "reference_lines": 2030,
           "reference_unique": 2029,
           "exact_line_overlap": 0,
           "share_of_reference_found": 0.0
         },
         "HornMT (raw en)": {
-          "path": "/homes/neumann/teklehaymanot/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
+          "path": "<external>/TigrinyaTokenizer/EnTiMT/01_collection/raw/hornmt.en",
           "reference_lines": 2030,
           "reference_unique": 2030,
           "exact_line_overlap": 0,

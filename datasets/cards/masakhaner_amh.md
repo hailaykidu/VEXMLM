@@ -9,7 +9,7 @@
 | Licence | CC BY-NC 4.0 |
 | Source | https://github.com/masakhane-io/masakhane-ner |
 | Hub ID | masakhane/masakhaner2 |
-| Imported from | `/homes/neumann/teklehaymanot/lgse-repro/data/ner/amharic` |
+| Imported from | `<external>/lgse-repro/data/ner/amharic` |
 | Imported on | 2026-08-14T20:44:48 |
 
 ## Checksums (source files)
