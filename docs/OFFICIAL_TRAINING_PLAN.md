@@ -136,7 +136,7 @@ confirm the initialization, and `evaluation/run_intrinsic.py` for Tables 2–3.
 ### Outputs
 
 ```
-checkpoints/vexmlm-stage1/
+checkpoints/vexmlm-stage1-spm/
 ├── model.safetensors, config.json, tokenizer files
 ├── stage1_summary.json          metrics + hardware record
 └── checkpoint-*/                3 retained

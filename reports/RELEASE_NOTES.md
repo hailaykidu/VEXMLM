@@ -151,7 +151,7 @@ tables. Every stage is idempotent; existing outputs are skipped unless `--force`
 
 | Model | Availability |
 |---|---|
-| `vexmlm-stage1` (the paper's model) | Hugging Face Hub — link pending |
+| `vexmlm-stage1-spm` | Hugging Face Hub — link pending |
 
 Base: `xlm-roberta-base` · Vocabulary: 250,002 → 280,002 · Languages: amh, tir
 

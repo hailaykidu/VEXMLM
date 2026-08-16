@@ -5,8 +5,7 @@
         --input datasets/raw/amharic/*.txt \
         --output-dir tokenizer/artifacts/amharic
 
-NOTE: no Amharic monolingual corpus exists on this machine. Supply one with
---input. See docs/OPEN_REPRODUCIBILITY_QUESTIONS.md item E5.
+Supply the Amharic monolingual corpus with --input; see docs/DATA_SETUP.md.
 """
 
 from __future__ import annotations

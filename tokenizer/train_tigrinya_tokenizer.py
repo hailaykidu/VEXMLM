@@ -5,8 +5,7 @@
         --input datasets/raw/tigrinya/*.txt \
         --output-dir tokenizer/artifacts/tigrinya
 
-NOTE: no Tigrinya monolingual corpus exists on this machine. Supply one with
---input. See docs/OPEN_REPRODUCIBILITY_QUESTIONS.md item E5.
+Supply the Tigrinya monolingual corpus with --input; see docs/DATA_SETUP.md.
 """
 
 from __future__ import annotations
