@@ -15,8 +15,13 @@ from __future__ import annotations
 import argparse
 import json
 import logging
+import os
 import sys
 from pathlib import Path
+
+# Deterministic cuBLAS GEMMs require this before CUDA initialises, so it is set
+# at import time rather than inside main().
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(ROOT / "src"))
@@ -69,8 +74,8 @@ def main() -> None:
                         format="%(asctime)s %(levelname)s %(message)s")
 
     from transformers import (AutoModelForSequenceClassification, AutoTokenizer,
-                              DataCollatorWithPadding, Trainer, TrainingArguments,
-                              set_seed)
+                              DataCollatorWithPadding, enable_full_determinism,
+                              Trainer, TrainingArguments)
     from manager import DatasetManager
     from registry import get as get_spec
 
@@ -79,7 +84,10 @@ def main() -> None:
     cfg = apply_to_config(cfg, mode, "finetuning")
     log.info("mode %s", mode.banner())
     seed = args.seed if args.seed is not None else cfgmod.get(cfg, "seed", 42)
-    set_seed(seed)
+    # enable_full_determinism seeds Python/NumPy/torch *and* enables deterministic
+    # cuDNN/cuBLAS kernels. set_seed alone left kernel selection nondeterministic,
+    # so identical seeds produced slightly different metrics between runs.
+    enable_full_determinism(seed)
 
     info = detect()
     log_environment(info)

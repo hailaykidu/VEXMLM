@@ -77,7 +77,8 @@ qa:
 
 hardware:
   precision: auto                # auto -> bf16 on SM80+, else fp16
-  dataloader_num_workers: 4
+  dataloader_num_workers: 0      # 0 for deterministic batch ordering; >0 makes
+                                 # worker interleaving nondeterministic
   gradient_checkpointing: false
   ddp_find_unused_parameters: false
   torch_compile: false
