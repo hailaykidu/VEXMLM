@@ -1,0 +1,36 @@
+{
+  "task": "ner",
+  "dataset": "masakhaner2",
+  "config": "zul",
+  "seed": 45,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "eval_loss": 0.19246673583984375,
+    "eval_accuracy": 0.9499433748584372,
+    "eval_macro_f1": 0.7717532710529615,
+    "eval_weighted_f1": 0.9520744127010417,
+    "eval_runtime": 0.9902,
+    "eval_samples_per_second": 844.307,
+    "eval_steps_per_second": 27.268,
+    "epoch": 4.0,
+    "test_loss": 0.13666535913944244,
+    "test_accuracy": 0.9627386337499042,
+    "test_macro_f1": 0.791861540463714,
+    "test_weighted_f1": 0.9633315489732465,
+    "test_runtime": 0.9102,
+    "test_samples_per_second": 1834.734,
+    "test_steps_per_second": 58.228,
+    "test_epoch": 4.0
+  },
+  "labels": [
+    "O",
+    "B-PER",
+    "I-PER",
+    "B-ORG",
+    "I-ORG",
+    "B-LOC",
+    "I-LOC",
+    "B-DATE",
+    "I-DATE"
+  ]
+}

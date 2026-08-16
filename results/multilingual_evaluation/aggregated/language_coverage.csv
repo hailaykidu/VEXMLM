@@ -1,0 +1,37 @@
+dataset,task,language_code,language,train,dev,test,split_source,mode,licence
+afrisenti,sentiment,amh,Amharic,5984,1497,1999,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,arq,Algerian Arabic,1651,414,958,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,ary,Moroccan Arabic,5583,494,2961,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,hau,Hausa,14172,2677,5303,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,ibo,Igbo,10192,1841,3682,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,kin,Kinyarwanda,3302,827,1026,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,orm,Oromo,0,396,2096,official,zero-shot (no train split),CC BY 4.0
+afrisenti,sentiment,pcm,Nigerian Pidgin,5121,1281,4154,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,por,Mozambican Portuguese,3063,767,3662,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,swa,Swahili,1810,453,748,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,tir,Tigrinya,0,398,2000,official,zero-shot (no train split),CC BY 4.0
+afrisenti,sentiment,tso,Xitsonga,804,203,254,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,twi,Twi,3481,388,949,official,fine-tune,CC BY 4.0
+afrisenti,sentiment,yor,Yoruba,8522,2090,4515,official,fine-tune,CC BY 4.0
+masakhaner2,ner,bam,Bambara,4462,638,1274,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,bbj,Ghomala,3384,483,966,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,ewe,Ewe,3505,501,1001,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,fon,Fon,4343,623,1228,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,hau,Hausa,5716,816,1633,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,ibo,Igbo,7634,1090,2181,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,kin,Kinyarwanda,7825,1118,2235,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,lug,Luganda,4942,706,1412,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,luo,Luo,5161,737,1474,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,mos,Mossi,4532,648,1294,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,nya,Chichewa,6250,893,1785,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,pcm,Nigerian Pidgin,5646,806,1613,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,sna,Shona,6207,887,1773,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,swa,Swahili,6593,942,1883,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,tsn,Setswana,3489,499,996,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,twi,Twi,4240,605,1211,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,wol,Wolof,4593,656,1312,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,xho,isiXhosa,5718,817,1633,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,yor,Yoruba,6876,983,1964,official,fine-tune,CC BY-NC 4.0
+masakhaner2,ner,zul,isiZulu,5848,836,1670,official,fine-tune,CC BY-NC 4.0
+masakhaner_amh,ner,amh,Amharic,1750,250,500,official,fine-tune,CC BY-NC 4.0
+tigrinya_ner,ner,tir,Tigrinya,,,,official,fine-tune,see registry

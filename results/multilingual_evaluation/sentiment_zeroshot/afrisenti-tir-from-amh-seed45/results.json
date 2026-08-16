@@ -1,0 +1,25 @@
+{
+  "run_type": "expanded multilingual evaluation run",
+  "task": "sentiment",
+  "mode": "zero-shot",
+  "dataset": "afrisenti",
+  "config": "tir",
+  "split": "test",
+  "source_language": "amh",
+  "source_model": "results/multilingual_evaluation/sentiment/afrisenti-amh-seed45",
+  "seed": 45,
+  "examples": 2000,
+  "label_order": [
+    "positive",
+    "neutral",
+    "negative"
+  ],
+  "metrics": {
+    "test_accuracy": 0.356,
+    "test_macro_f1": 0.3497833290775945,
+    "test_weighted_f1": 0.34487125479342806,
+    "test_micro_f1": 0.356,
+    "test_macro_precision": 0.6549718148259004,
+    "test_macro_recall": 0.46032033786986987
+  }
+}

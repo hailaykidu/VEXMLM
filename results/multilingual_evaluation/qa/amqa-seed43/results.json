@@ -1,0 +1,11 @@
+{
+  "task": "qa",
+  "dataset": "amqa",
+  "seed": 43,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "exact_match": 34.166666666666664,
+    "f1": 50.640006950494005,
+    "n_questions": 600
+  }
+}

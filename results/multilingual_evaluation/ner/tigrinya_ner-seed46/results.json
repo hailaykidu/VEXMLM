@@ -1,0 +1,38 @@
+{
+  "task": "ner",
+  "dataset": "tigrinya_ner",
+  "config": null,
+  "seed": 46,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "eval_loss": 0.162112757563591,
+    "eval_accuracy": 0.9481050622557484,
+    "eval_macro_f1": 0.7977406324051466,
+    "eval_weighted_f1": 0.9491913247533503,
+    "eval_runtime": 0.7489,
+    "eval_samples_per_second": 761.076,
+    "eval_steps_per_second": 24.034,
+    "epoch": 4.0,
+    "test_loss": 0.15359079837799072,
+    "test_accuracy": 0.9518395267147347,
+    "test_macro_f1": 0.8208792326299701,
+    "test_weighted_f1": 0.9526234280682885,
+    "test_runtime": 0.3862,
+    "test_samples_per_second": 1478.414,
+    "test_steps_per_second": 46.605,
+    "test_epoch": 4.0
+  },
+  "labels": [
+    "O",
+    "B-DATE",
+    "B-LOC",
+    "B-MISC",
+    "B-ORG",
+    "B-PER",
+    "I-DATE",
+    "I-LOC",
+    "I-MISC",
+    "I-ORG",
+    "I-PER"
+  ]
+}

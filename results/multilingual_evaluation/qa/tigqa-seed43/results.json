@@ -1,0 +1,11 @@
+{
+  "task": "qa",
+  "dataset": "tigqa",
+  "seed": 43,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "exact_match": 4.477611940298507,
+    "f1": 9.569053585415638,
+    "n_questions": 67
+  }
+}

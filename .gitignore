@@ -46,5 +46,14 @@ reports/internal/
 scripts/internal/
 
 # Expanded multilingual evaluation: run outputs and checkpoints (regenerable)
+# results.json and the aggregated tables are kept; model artifacts are not.
+# Each run copies the tokenizer out beside its results — 180 near-identical
+# copies of the same few files, ~1.4GB, all reproducible from the checkpoint.
 results/multilingual_evaluation/**/checkpoint-*/
 results/multilingual_evaluation/**/*.safetensors
+results/multilingual_evaluation/**/tokenizer.json
+results/multilingual_evaluation/**/tokenizer_config.json
+results/multilingual_evaluation/**/special_tokens_map.json
+results/multilingual_evaluation/**/sentencepiece.bpe.model
+results/multilingual_evaluation/**/config.json
+results/multilingual_evaluation/**/training_args.bin

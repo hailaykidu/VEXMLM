@@ -65,8 +65,7 @@ class DatasetManager:
         if resolved is not None:
             ds = self._load_local(spec, resolved)
         elif spec.hub_id:
-            ds = load_dataset(spec.hub_id, config or spec.hub_config,
-                              cache_dir=str(self.cache_dir))
+            ds = self._load_hub(spec, config)
         else:
             raise SystemExit(
                 f"{spec.name} has no public loader and no local copy.\n"
@@ -76,6 +75,39 @@ class DatasetManager:
         if not isinstance(ds, DatasetDict):
             ds = DatasetDict({"train": ds})
         self._record(spec, ds, config=config, local_path=local_path)
+        return ds
+
+    def _load_hub(self, spec: DatasetSpec, config: str | None):
+        """Load every split a Hub builder declares, skipping the empty ones.
+
+        A builder may declare a split it has no data for: AfriSenti declares
+        'train' for all 14 configs, but the zero-shot transfer languages (orm,
+        tir) ship dev and test only. Loading the whole DatasetDict at once then
+        fails with `Instruction "train" corresponds to no data!` before any
+        usable split is reached, so load split by split and drop the empties.
+        """
+        from datasets import DatasetDict, get_dataset_split_names, load_dataset
+
+        name = config or spec.hub_config
+        try:
+            ds = load_dataset(spec.hub_id, name, cache_dir=str(self.cache_dir))
+        except ValueError as exc:
+            if "corresponds to no data" not in str(exc):
+                raise
+            splits = {}
+            for split in get_dataset_split_names(spec.hub_id, name):
+                try:
+                    splits[split] = load_dataset(
+                        spec.hub_id, name, split=split,
+                        cache_dir=str(self.cache_dir))
+                except ValueError as split_exc:
+                    if "corresponds to no data" not in str(split_exc):
+                        raise
+                    log.info("%s/%s: split %r is empty, skipping",
+                             spec.name, name, split)
+            if not splits:
+                raise
+            ds = DatasetDict(splits)
         return ds
 
     def _load_local(self, spec: DatasetSpec, path: Path):

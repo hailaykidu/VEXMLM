@@ -1,0 +1,3 @@
+dataset,task,language_code,language,train,dev,test,split_source,mode,licence
+afrisenti,sentiment,orm,Oromo,0,396,2096,official,zero-shot (no train split),CC BY 4.0
+afrisenti,sentiment,tir,Tigrinya,0,398,2000,official,zero-shot (no train split),CC BY 4.0
