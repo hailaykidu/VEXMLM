@@ -126,7 +126,7 @@ Both are marked `license: UNKNOWN — blocker` in
    training and internal evaluation is fine; only redistribution and publication
    claims are blocked.
 4. **Deduplication is required before use** — see the 35%/29% duplicate rates in
-   [`reports/mlm_data_quality_report.md`](../reports/mlm_data_quality_report.md).
+   `results/mlm_corpus_analysis.json`.
 
 ## What would resolve this
 

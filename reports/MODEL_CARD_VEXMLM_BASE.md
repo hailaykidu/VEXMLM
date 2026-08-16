@@ -2,11 +2,12 @@
 
 ## Model Details
 
-**Model Name**: VEXMLM Base (vexmlm-stage1)  
+**Model Name**: VEXMLM Base (vexmlm-stage1-spm)  
 **Model Type**: Masked Language Model (MLM)  
 **Base Architecture**: XLM-RoBERTa (XLM-R)  
+**Tokenizer**: SP-Merge, 280,002 subwords  
 **Language Coverage**: Amharic (am), Tigrinya (ti)  
-**Release Date**: 2026-08-14  
+**Release Date**: 2026-08-16  
 **Status**: Stable, ready for fine-tuning  
 
 ---
@@ -15,7 +16,7 @@
 
 VEXMLM Base is a multilingual masked language model fine-tuned from XLM-RoBERTa with an expanded vocabulary tailored for Amharic and Tigrinya. The model was pretrained on 4.2M tokens of deduplicated Amharic and Tigrinya text, using bfloat16 precision on an NVIDIA A100 80GB GPU.
 
-The vocabulary was expanded from XLM-R's base 250K tokens to **576.5K tokens** by adding 145.9K Amharic-specific and 130.5K Tigrinya-specific tokens. This expansion enables the model to represent morphologically rich word forms natively, reducing subword fragmentation from 18.7% to 4.2% on held-out Tigrinya text.
+The vocabulary was expanded from XLM-R's base 250,002 tokens to **280,002** by adding 30,000 Ge'ez-script subwords selected from language-specific SentencePiece models (Amharic 32K, Tigrinya 50K) and merged natively into the SentencePiece model. This expansion enables the model to represent morphologically rich word forms natively: on held-out development text, fertility falls from 2.07 to 1.49 subwords per word for Amharic and from 3.13 to 1.69 for Tigrinya.
 
 ---
 
@@ -44,7 +45,7 @@ The vocabulary was expanded from XLM-R's base 250K tokens to **576.5K tokens** b
 | Attention heads | 12 |
 | Feed-forward dimension | 3072 |
 | Activation | GeLU |
-| Vocabulary size | 576,520 |
+| Vocabulary size | 280,002 |
 | Max sequence length | 256 |
 | Position embeddings | Absolute |
 
@@ -99,6 +100,43 @@ The vocabulary was expanded from XLM-R's base 250K tokens to **576.5K tokens** b
 - ✅ Script validation (Ge'ez script for both languages).
 - ✅ No test data leakage into pretraining.
 
+### Provenance and Licensing Disclosure
+
+The pretraining corpora are **not redistributed** with this model. Their
+composition is disclosed as follows:
+
+| Component | Share | Licence | Status |
+|---|---|---|---|
+| HornMT (`github.com/asmelashteka/HornMT`) | ~1% (2,030 records) | **CC BY 4.0** | ✅ confirmed |
+| Additional monolingual material | ~99% (~198,000 lines per language) | undetermined | ⚠️ under review |
+
+**HornMT** is confirmed CC BY 4.0, declared in prose in the repository README
+rather than a `LICENSE` file — note that GitHub's licence API reports `null` for
+that repository as a result.
+
+**The remaining ~99%** of each corpus consists of monolingual Amharic and
+Tigrinya text whose upstream source has not been conclusively traced. Content
+sampling is consistent with a CC-100 / OSCAR-style web crawl, which would be
+permissively licensed, but this has not been verified and is therefore not
+claimed here.
+
+**What this means for users:**
+
+- This model is released under **Apache-2.0**, inherited from
+  `xlm-roberta-base`.
+- No corpus text is distributed in this repository or model artifact.
+- Users who require full provenance certainty for their own compliance posture
+  should account for the undetermined portion above.
+- Should the remaining provenance be established, this section will be updated
+  and the corpora reclassified accordingly.
+
+This disclosure is deliberate: the alternative — withholding the artifact until
+~99% of a web-scale corpus is traced — would postpone release indefinitely for a
+question that may resolve favourably. Stating what is known and what is not is
+preferred to either overclaiming or silence.
+
+Full analysis: `reports/LICENSE_FINAL_STATUS.md`.
+
 ---
 
 ## Performance
@@ -147,7 +185,7 @@ The model converged smoothly over 10 epochs with a single epoch transition showi
 
 5. **No explicit script handling**: While both Amharic and Tigrinya use the Ge'ez script, the model does not have explicit script-aware components. Script diversity (Latin, Arabic scripts) is not represented in the vocabulary expansion.
 
-6. **Seed 42 only**: Reported metrics are from a single random seed. Results may vary with different random initializations (seeds 43–46 in progress).
+6. **Seed variance**: Downstream metrics are reported as mean ± standard deviation over seeds 42–46. Standard deviations are given in `results/downstream_task_metrics.csv`.
 
 ---
 
@@ -180,19 +218,17 @@ The model converged smoothly over 10 epochs with a single epoch transition showi
 ### Checkpoint Details
 | Attribute | Value |
 |---|---|
-| Checkpoint path | `checkpoints/vexmlm-stage1` |
+| Checkpoint path | `checkpoints/vexmlm-stage1-spm` |
 | Checkpoint size | 1.21 GB |
-| Config hash | `6ff692cf0ce5` |
-| Tokenizer hash | `1b5e5a21ddaf22a00b4108ae292aab357c01d683707075cfc135421bd457374f` |
-| Git commit (training) | `ce87877feef2fbeaf327ffddd8a31945e9453504` |
+| Vocabulary size | 280,002 |
+| Tokenizer | SP-Merge (native SentencePiece pieces) |
 | Git branch | `master` |
-| Vocabulary firing (validation) | 56.53% (new tokens) |
 
 ### Model Usage
 ```python
 from transformers import AutoTokenizer, AutoModelForMaskedLM
 
-model_id = "vexmlm-stage1"
+model_id = "vexmlm-stage1-spm"
 tokenizer = AutoTokenizer.from_pretrained(model_id)
 model = AutoModelForMaskedLM.from_pretrained(model_id)
 
@@ -212,7 +248,7 @@ For downstream fine-tuning (NER, QA, classification), use `AutoModelForTokenClas
 - **Validation**: 2% of deduplicated corpus, held out at sentence level.
 - **Test sets**: Standard benchmarks (MasakhaNER, AmQA, TigQA).
 - **Metrics**: Token-level and task-specific (F1, accuracy, exact match, perplexity).
-- **Reproducibility**: Seed 42 results are deterministic given hardware and library versions.
+- **Seeds**: Runs are deterministic given a fixed seed, hardware, and library versions.
 
 ### Citation
 If you use VEXMLM Base in your research, please cite:

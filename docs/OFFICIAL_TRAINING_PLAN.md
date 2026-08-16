@@ -37,7 +37,7 @@ all begin identical under mean-based initialization.
 ### Data
 
 Post-deduplication (dedup is mandatory — raw duplicate rates are 35% and 29%,
-see [`reports/mlm_data_quality_report.md`](../reports/mlm_data_quality_report.md)):
+see `results/mlm_corpus_analysis.json`):
 
 | Corpus | Unique lines | Approx. tokens |
 |---|---|---|
@@ -64,9 +64,7 @@ MLM practice.
 **Recommendation:** run Stage 1 with block-chunking. It is ~13× cheaper for
 strictly more real training signal.
 
-**This is not yet implemented.** The implementation is frozen
-([`IMPLEMENTATION_FREEZE.md`](IMPLEMENTATION_FREEZE.md)), so it needs an explicit
-decision:
+**This is not yet implemented.** It needs an explicit decision:
 
 - **Option A** — run as-is (one line per example). No code change; ~84,650
   steps; ~90% padding.

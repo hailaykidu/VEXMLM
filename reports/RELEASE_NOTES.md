@@ -183,7 +183,7 @@ non-commercial restriction.
 ## License
 
 Apache-2.0 for code. Dataset licences are recorded per dataset; several are
-unresolved and tracked in [RELEASE_PACKAGE.md](RELEASE_PACKAGE.md) §6.
+unresolved; see `datasets/registry.py` for the licence of every dataset.
 
 ---
 

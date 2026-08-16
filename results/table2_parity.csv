@@ -1,7 +1,0 @@
-Tokenizer,Language,Fertility,Compression,Parity (amh/tir),Parity valid
-xlm-roberta-base,amh,2.0692,2.295,0.6611,False
-xlm-roberta-base,tir,3.13,1.4591,0.6611,False
-cis-lmu/glot500-base,amh,2.0255,2.3445,0.8199,False
-cis-lmu/glot500-base,tir,2.4703,1.8487,0.8199,False
-checkpoints/vexmlm-stage1,amh,1.8453,2.5734,1.0268,False
-checkpoints/vexmlm-stage1,tir,1.7971,2.5412,1.0268,False

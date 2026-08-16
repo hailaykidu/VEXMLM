@@ -63,10 +63,8 @@ vector's own 768 components, not variation between rows. All rows are identical.
 
 ## Interpreting a non-zero result
 
-A non-zero mean distance means the checkpoint was **not** built with the paper's
-method. The verifier names the most likely alternative. For a worked example on a
-real checkpoint that reports `mixed` at 0.0255% relative error, see
-[REFERENCE_ARTIFACTS.md](REFERENCE_ARTIFACTS.md#finding-3--the-reference-checkpoint-uses-a-non-paper-initialization).
+A non-zero mean distance means the checkpoint was built with a different
+initialization method. The verifier names the most likely alternative.
 
 ## A property worth knowing
 

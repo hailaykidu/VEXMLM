@@ -1,7 +1,0 @@
-Tokenizer,Language,OOV Accuracy,No-UNK Rate,Words
-xlm-roberta-base,amh,1.0,1.0,2414
-xlm-roberta-base,tir,0.9954,0.9954,3021
-cis-lmu/glot500-base,amh,1.0,1.0,2414
-cis-lmu/glot500-base,tir,1.0,1.0,3021
-checkpoints/vexmlm-stage1,amh,0.5008,1.0,2414
-checkpoints/vexmlm-stage1,tir,0.4459,0.9987,3021

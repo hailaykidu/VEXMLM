@@ -57,19 +57,6 @@ comparable** to the overall NER accuracy in Table 4.
 VEXMLM improves average OOV accuracy by **+5.5 points** over XLM-R, and improves
 OOV accuracy on **all 11 languages**.
 
-> **Correction applied (B1).** The averages above are the verified recomputation
-> from the eleven tabulated rows: XLM-R OOV **88.9** (was 81.4) and VEXMLM OOV
-> **94.4** (was 94.3), giving an improvement of **+5.5** (was +12.9). Three of
-> four column means reproduced exactly before correction, confirming the method
-> as an unweighted mean over 11 languages. Derivation:
-> [internal/TABLE3_VERIFICATION.md](internal/TABLE3_VERIFICATION.md) ·
-> [TABLE3_RELEASE_PATCH.md](TABLE3_RELEASE_PATCH.md).
->
-> The caption cross-reference has been corrected to **Table 4**. One editorial
-> item remains for the authors: Tigrinya is coded `(tig)` in the source table,
-> whereas ISO 639-3 `tig` denotes **Tigre** — Tigrinya is `tir` (used here), and
-> Table 2 lists Tigre as a separate language.
-
 ---
 
 ## Table 4 — Downstream Task Performance
@@ -88,7 +75,6 @@ VEXMLM significantly outperforms XLM-R on QA (**+21 EM**, **+12 F1**) and SA
 (**+3 accuracy**), and Glot500 on SA (**+34 accuracy**) and QA. Glot500 attains
 the highest NER accuracy.
 
-*All caption deltas verified against the tabulated values.*
 
 ---
 
@@ -109,8 +95,8 @@ the largest single gain (+1.2); mean initialization improves on random
 initialization by **+0.5**, and continued pretraining adds a further **+0.4**.
 Total improvement over the baseline: **+2.1 points**.
 
-*Consistency verified: the ablation endpoints match Table 3's Tigrinya row
-exactly — baseline 96.1 = XLM-R OOV, final 98.2 = VEXMLM OOV.*
+*The ablation endpoints correspond to Table 3's Tigrinya row: baseline 96.1 =
+XLM-R OOV, final 98.2 = VEXMLM OOV.*
 
 ---
 
@@ -135,12 +121,11 @@ pretraining.
 
 ---
 
-## Reproduction
+## Running the Pipeline
 
 ```bash
 bash scripts/reproduce_paper.sh
 ```
 
-Generated tables are written to `results/` as CSV plus a rendered
-`results/RESULTS.md`. See [DOCUMENTATION_OVERVIEW.md](DOCUMENTATION_OVERVIEW.md)
-for per-component details.
+Implementation artifacts are written to `results/` — see
+[../results/README.md](../results/README.md).

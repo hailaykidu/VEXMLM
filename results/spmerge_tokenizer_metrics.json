@@ -1,0 +1,137 @@
+{
+  "parallel": false,
+  "tokenizers": {
+    "xlm-roberta-base": {
+      "vocab_size": 250002,
+      "per_language": {
+        "amh": {
+          "language": "amh",
+          "tokenizer": "xlm-roberta-base",
+          "sentences": 2588,
+          "words": 25595,
+          "tokens": 52960,
+          "chars": 121544,
+          "fertility": 2.0692,
+          "compression": 2.295,
+          "continuation_rate": 0.5167,
+          "unk_rate": 0.0,
+          "new_token_share": 0.0
+        },
+        "tir": {
+          "language": "tir",
+          "tokenizer": "xlm-roberta-base",
+          "sentences": 2811,
+          "words": 21968,
+          "tokens": 68759,
+          "chars": 100326,
+          "fertility": 3.13,
+          "compression": 1.4591,
+          "continuation_rate": 0.6805,
+          "unk_rate": 0.00032,
+          "new_token_share": 0.0
+        }
+      },
+      "oov": {
+        "amh": {
+          "words": 2414,
+          "no_unk_rate": 1.0,
+          "roundtrip_rate": 1.0,
+          "oov_accuracy": 1.0,
+          "example_failures": []
+        },
+        "tir": {
+          "words": 3021,
+          "no_unk_rate": 0.9954,
+          "roundtrip_rate": 0.9954,
+          "oov_accuracy": 0.9954,
+          "example_failures": [
+            "'(ብብሕቘይ' -> '(ብብሕይ'",
+            "'ቘልዓን' -> 'ልዓን'",
+            "'ቘረርስ፡' -> 'ረርስ፡'",
+            "'ተቘጢዑኩም' -> 'ተጢዑኩም'",
+            "'አንተዘርህወለይ\"🙉😀' -> 'አንተዘርህወለይ\"😀'",
+            "'ኣቘጥዕዎ።' -> 'ኣጥዕዎ።'",
+            "'ከቚሞ' -> 'ከሞ'",
+            "'ዕቚበኛታትን' -> 'ዕበኛታትን'",
+            "'ዘቘመላ' -> 'ዘመላ'",
+            "'ዝቘረጹ' -> 'ዝረጹ'",
+            "'ይቘጽሩ' -> 'ይጽሩ'",
+            "'ጛኖት' -> 'ኖት'",
+            "'ጥንቃቔታት' -> 'ጥንቃታት'",
+            "'﷽' -> ''"
+          ]
+        }
+      },
+      "parity": {
+        "value": 0.6611,
+        "fertility_a": 2.0692,
+        "fertility_b": 3.13,
+        "parallel_corpus": false,
+        "valid": false,
+        "interpretation": "NOT VALID as parity: corpora are not sentence-aligned, so the ratio reflects content differences as well as tokenization",
+        "pair": "amh/tir"
+      }
+    },
+    "checkpoints/vexmlm-stage1-spm": {
+      "vocab_size": 280002,
+      "per_language": {
+        "amh": {
+          "language": "amh",
+          "tokenizer": "checkpoints/vexmlm-stage1-spm",
+          "sentences": 2588,
+          "words": 25595,
+          "tokens": 38106,
+          "chars": 121544,
+          "fertility": 1.4888,
+          "compression": 3.1896,
+          "continuation_rate": 0.3283,
+          "unk_rate": 0.0,
+          "new_token_share": 0.242245
+        },
+        "tir": {
+          "language": "tir",
+          "tokenizer": "checkpoints/vexmlm-stage1-spm",
+          "sentences": 2811,
+          "words": 21968,
+          "tokens": 37187,
+          "chars": 100326,
+          "fertility": 1.6928,
+          "compression": 2.6979,
+          "continuation_rate": 0.4093,
+          "unk_rate": 0.000134,
+          "new_token_share": 0.455267
+        }
+      },
+      "oov": {
+        "amh": {
+          "words": 2414,
+          "no_unk_rate": 1.0,
+          "roundtrip_rate": 1.0,
+          "oov_accuracy": 1.0,
+          "example_failures": []
+        },
+        "tir": {
+          "words": 3021,
+          "no_unk_rate": 0.9987,
+          "roundtrip_rate": 0.9987,
+          "oov_accuracy": 0.9987,
+          "example_failures": [
+            "'አንተዘርህወለይ\"🙉😀' -> 'አንተዘርህወለይ\"😀'",
+            "'ጛኖት' -> 'ኖት'",
+            "'ጥንቃቔታት' -> 'ጥንቃታት'",
+            "'﷽' -> ''"
+          ]
+        }
+      },
+      "parity": {
+        "value": 0.8795,
+        "fertility_a": 1.4888,
+        "fertility_b": 1.6928,
+        "parallel_corpus": false,
+        "valid": false,
+        "interpretation": "NOT VALID as parity: corpora are not sentence-aligned, so the ratio reflects content differences as well as tokenization",
+        "pair": "amh/tir"
+      }
+    }
+  }
+}

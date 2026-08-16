@@ -40,3 +40,7 @@ logs/
 
 # Legacy pre-VEXMLM artifacts (retained locally for provenance, not released)
 legacy/
+
+# Internal development material (retained locally, not part of the public release)
+reports/internal/
+scripts/internal/

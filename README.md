@@ -49,7 +49,8 @@ Implemented as `global_mean` in `vocabulary_expansion/initialization.py`.
 **Language-specific tokenization.** Separate SentencePiece Unigram models are
 trained per language (Amharic 32K, Tigrinya 50K) with NFC normalization and an
 Ethiopic-ratio filter, then merged by rank-interleaving so each language
-contributes its highest-value tokens.
+contributes its highest-value tokens. The selected tokens are merged natively
+into the SentencePiece model (**SP-Merge**), so encoding and decoding are exact.
 
 **Two-stage training.** Stage 1 continues MLM pretraining on Amharic and
 Tigrinya with all parameters trainable; Stage 2 fine-tunes per task across
@@ -170,13 +171,13 @@ commit, seed, config hash, dataset hashes, hardware, and metrics to
 
 ```bash
 python3 evaluation/run_intrinsic.py \
-  --tokenizer xlm-roberta-base checkpoints/vexmlm-expanded \
+  --tokenizer xlm-roberta-base checkpoints/vexmlm-stage1-spm \
   --corpus amh=datasets/processed/amharic.dev.txt \
            tir=datasets/processed/tigrinya.dev.txt \
   --oov-words amh=datasets/processed/amharic.oov.txt \
               tir=datasets/processed/tigrinya.oov.txt \
   --base-vocab-size 250002 \
-  --out results/tokenizer_metrics.json
+  --out results/spmerge_tokenizer_metrics.json
 ```
 
 Parity is reported as valid **only** on a sentence-aligned parallel corpus
@@ -206,10 +207,11 @@ See [RESULTS_SUMMARY.md](reports/RESULTS_SUMMARY.md) for the full tables.
 | Table 4 | Downstream performance (QA, NER, Sentiment) |
 | Table 5 | Ablation over initialization strategies |
 
-Generated tables live in `results/` as CSV plus a rendered `RESULTS.md`.
+Implementation artifacts produced by this repository live in `results/` — see
+[results/README.md](results/README.md).
 
-**Model**: the Stage 1 checkpoint (`vexmlm-stage1`) is the paper's model. Release
-location to be added.
+**Model**: `vexmlm-stage1-spm` — the Stage 1 model with the SP-Merge tokenizer
+(280,002 subwords). Release location to be added.
 
 ---
 

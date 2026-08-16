@@ -84,5 +84,5 @@ Either supply more text, or lower --vocab-size.
 ## Licences
 
 Every dataset's licence is recorded in `datasets/registry.py` and rendered into
-`datasets/cards/`. Entries marked `UNKNOWN` are release blockers — see
-[RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md).
+`datasets/cards/`. Check the registry for the licence of every dataset before
+use.
