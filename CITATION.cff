@@ -6,8 +6,8 @@ abstract: >-
   XLM-R to the Ge'ez-script languages Amharic and Tigrinya through language-specific
   SentencePiece tokenization, mean-based embedding initialization, and two-stage
   training (continued MLM pretraining followed by task-specific fine-tuning).
-  Evaluation spans intrinsic tokenizer quality across 19 languages and downstream
-  question answering, named entity recognition, and sentiment analysis.
+  Evaluation spans intrinsic tokenizer quality and downstream question answering,
+  named entity recognition, and sentiment analysis.
 authors:
   - family-names: Teklehaymanot
     given-names: Hailay

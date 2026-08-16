@@ -171,7 +171,8 @@ non-commercial restriction.
 ## Known Limitations
 
 - Vocabulary construction and continued pretraining cover **two languages**;
-  the 19-language evaluation is intrinsic (tokenizer-level), not downstream.
+  the broader cross-language evaluation is intrinsic (tokenizer-level), not
+  downstream.
 - Parity requires sentence-aligned parallel text; the tooling marks it invalid
   rather than reporting a misleading figure when alignment is unavailable.
 - Two pretraining corpora have unresolved provenance (tracked as release
