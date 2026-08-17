@@ -27,37 +27,52 @@
     "extra": {}
   },
   "context": {
-    "config": "tir"
+    "config": "amh",
+    "local_path": "datasets/raw/afrisenti"
   },
   "splits": {
-    "validation": {
-      "rows": 398,
+    "train": {
+      "rows": 5984,
       "columns": [
         "tweet",
         "label"
       ],
-      "sha256": "07fb2eaa36ed68dc4668c383a8373861",
+      "sha256": "53b830cedf932c835ecdb019de065d91",
       "label_distribution": {
-        "0": 61,
-        "1": 122,
-        "2": 215
+        "negative": 1548,
+        "neutral": 3104,
+        "positive": 1332
       },
-      "mean_chars": 88.3
+      "mean_chars": 71.45
+    },
+    "validation": {
+      "rows": 1497,
+      "columns": [
+        "tweet",
+        "label"
+      ],
+      "sha256": "8b4834cb62331e57e289261ca74323b4",
+      "label_distribution": {
+        "negative": 388,
+        "neutral": 776,
+        "positive": 333
+      },
+      "mean_chars": 70.94
     },
     "test": {
-      "rows": 2000,
+      "rows": 1999,
       "columns": [
         "tweet",
         "label"
       ],
-      "sha256": "e265c38ecd9b22460721bea2c9b07e5e",
+      "sha256": "c13aa97ebf94bcb247add36830d1ac4d",
       "label_distribution": {
-        "0": 643,
-        "1": 387,
-        "2": 970
+        "negative": 1337,
+        "neutral": 224,
+        "positive": 438
       },
-      "mean_chars": 89.61
+      "mean_chars": 80.86
     }
   },
-  "total_rows": 2398
+  "total_rows": 9480
 }

@@ -24,7 +24,9 @@
     "local_dir": "masakhaner_amh",
     "extra": {}
   },
-  "context": {},
+  "context": {
+    "local_path": "datasets/raw/masakhaner_amh"
+  },
   "splits": {
     "train": {
       "rows": 1750,

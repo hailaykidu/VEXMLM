@@ -44,42 +44,42 @@
     "extra": {}
   },
   "context": {
-    "config": "swa"
+    "config": "fon"
   },
   "splits": {
     "train": {
-      "rows": 6593,
+      "rows": 4343,
       "columns": [
         "id",
         "tokens",
         "ner_tags"
       ],
-      "sha256": "5bb13d28686f71e817115d560e652a9f",
+      "sha256": "0a829b00ad1719eaeebf465bea2def0d",
       "label_distribution": null,
-      "mean_chars": 161.42
+      "mean_chars": 114.07
     },
     "validation": {
-      "rows": 942,
+      "rows": 623,
       "columns": [
         "id",
         "tokens",
         "ner_tags"
       ],
-      "sha256": "1bef28ca816002ce3cd992bca7546996",
+      "sha256": "29e9d5999ca74dc837e042bacb5d999c",
       "label_distribution": null,
-      "mean_chars": 161.81
+      "mean_chars": 113.96
     },
     "test": {
-      "rows": 1883,
+      "rows": 1228,
       "columns": [
         "id",
         "tokens",
         "ner_tags"
       ],
-      "sha256": "f6fa731f57f7fb037d7848cbf86dfa68",
+      "sha256": "3bdd1721408c886893b7201d301babfa",
       "label_distribution": null,
-      "mean_chars": 164.28
+      "mean_chars": 121.26
     }
   },
-  "total_rows": 9418
+  "total_rows": 6194
 }
