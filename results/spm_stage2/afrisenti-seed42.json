@@ -1,0 +1,34 @@
+{
+  "task": "sentiment",
+  "dataset": "afrisenti",
+  "config": "amh",
+  "seed": 42,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "eval_loss": 0.9174450635910034,
+    "eval_accuracy": 0.5971943887775552,
+    "eval_macro_f1": 0.576626697766048,
+    "eval_weighted_f1": 0.5954351433462548,
+    "eval_macro_precision": 0.5785360304709019,
+    "eval_macro_recall": 0.575629753464805,
+    "eval_runtime": 1.458,
+    "eval_samples_per_second": 1026.779,
+    "eval_steps_per_second": 32.237,
+    "epoch": 4.0,
+    "test_loss": 1.1361298561096191,
+    "test_accuracy": 0.5147573786893447,
+    "test_macro_f1": 0.5100107818166894,
+    "test_weighted_f1": 0.5705465656794276,
+    "test_macro_precision": 0.6013148393601773,
+    "test_macro_recall": 0.6207854200036658,
+    "test_runtime": 1.9673,
+    "test_samples_per_second": 1016.103,
+    "test_steps_per_second": 32.023,
+    "test_epoch": 4.0
+  },
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ]
+}

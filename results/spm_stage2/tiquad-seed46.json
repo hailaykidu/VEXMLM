@@ -1,0 +1,11 @@
+{
+  "task": "qa",
+  "dataset": "tiquad",
+  "seed": 46,
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "exact_match": 50.107991360691145,
+    "f1": 58.34705566110608,
+    "n_questions": 926
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "run_set": "SP-Merge Stage 2 (authoritative downstream evaluation)",
+  "source": "checkpoints/vexmlm-spm-stage2",
+  "model": "checkpoints/vexmlm-stage1-spm",
+  "n_runs": 30,
+  "seeds": {
+    "afrisenti": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "amqa": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "masakhaner_amh": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "tigqa": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "tigrinya_ner": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ],
+    "tiquad": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ]
+  },
+  "supplementary_tasks": [
+    "tiquad"
+  ],
+  "note": "Distinct from results/multilingual_evaluation/ and from the historical add_tokens VEXMLM runs; these sets are never pooled."
+}

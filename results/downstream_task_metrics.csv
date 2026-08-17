@@ -1,9 +1,15 @@
-Task,Dataset,Metric,VEXMLM (mean ± std),Seeds
-ner,masakhaner_amh,Accuracy,0.89 ± 0.01,5
-ner,masakhaner_amh,Macro-F1,0.46 ± 0.06,5
-ner,tigrinya_ner,Accuracy,0.92 ± 0.00,5
-ner,tigrinya_ner,Macro-F1,0.68 ± 0.01,5
-qa,amqa,EM,20.30 ± 1.55,5
-qa,amqa,F1,33.52 ± 2.07,5
-qa,tigqa,EM,0.60 ± 0.82,5
-qa,tigqa,F1,6.97 ± 1.47,5
+Task,Dataset,Metric,VEXMLM SP-Merge (mean ± std),Seeds,Status
+ner,masakhaner_amh,Accuracy,0.9413 ± 0.0026,5,benchmark
+ner,masakhaner_amh,Macro-F1,0.7423 ± 0.0122,5,benchmark
+ner,masakhaner_amh,Entity-F1,0.6347 ± 0.0148,5,benchmark
+ner,tigrinya_ner,Accuracy,0.9515 ± 0.0005,5,benchmark
+ner,tigrinya_ner,Macro-F1,0.8219 ± 0.0069,5,benchmark
+ner,tigrinya_ner,Entity-F1,0.7282 ± 0.0079,5,benchmark
+qa,amqa,EM,32.57 ± 0.77,5,benchmark
+qa,amqa,F1,48.85 ± 0.96,5,benchmark
+qa,tigqa,EM,2.39 ± 0.82,5,benchmark
+qa,tigqa,F1,9.76 ± 0.97,5,benchmark
+qa,tiquad,EM,50.24 ± 0.48,5,supplementary
+qa,tiquad,F1,58.90 ± 0.66,5,supplementary
+sentiment,afrisenti,Accuracy,0.4978 ± 0.0331,5,benchmark
+sentiment,afrisenti,Macro-F1,0.4971 ± 0.0193,5,benchmark
