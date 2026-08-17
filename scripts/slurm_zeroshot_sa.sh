@@ -36,7 +36,9 @@ else
 fi
 cd "$REPO"
 
-source /opt/conda/bin/activate /homes/neumann/teklehaymanot/.conda/envs/Gllm
+# Conda environment. Override for your site:
+#   export VEXMLM_CONDA_BASE=/opt/conda VEXMLM_CONDA_ENV=/path/to/env
+source "${VEXMLM_CONDA_BASE:-/opt/conda}/bin/activate" "${VEXMLM_CONDA_ENV:?set VEXMLM_CONDA_ENV to your conda env path}"
 
 LANGS=(orm tir)
 SEEDS=(42 43 44 45 46)

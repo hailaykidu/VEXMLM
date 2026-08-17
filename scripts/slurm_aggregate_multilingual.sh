@@ -16,7 +16,9 @@ set -euo pipefail
 mkdir -p logs/slurm
 REPO="${SLURM_SUBMIT_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 cd "$REPO"
-source /opt/conda/bin/activate /homes/neumann/teklehaymanot/.conda/envs/Gllm
+# Conda environment. Override for your site:
+#   export VEXMLM_CONDA_BASE=/opt/conda VEXMLM_CONDA_ENV=/path/to/env
+source "${VEXMLM_CONDA_BASE:-/opt/conda}/bin/activate" "${VEXMLM_CONDA_ENV:?set VEXMLM_CONDA_ENV to your conda env path}"
 
 python3 evaluation/aggregate_multilingual.py \
   --runs results/multilingual_evaluation \
