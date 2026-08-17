@@ -55,30 +55,24 @@ Merged to ~30,000 new tokens after cross-language deduplication.
 
 ---
 
-## 19-Language Intrinsic Evaluation
+## Evaluation Scope
 
-Tokenizer behaviour is evaluated well beyond the two training languages, across
-two intrinsic studies.
+**Intrinsic tokenizer evaluation** covers the two training languages, Amharic and
+Tigrinya, on their development corpora — the languages for which OOV word lists
+and dev splits exist in this repository. Results are in
+[RESULTS_SUMMARY.md](RESULTS_SUMMARY.md).
 
-**Parity relative to English sentence length** — 11 languages:
-Tigrinya, Amharic, Ge'ez, Tigre, Harari, Gurage, Afar, Oromo, Afrikaans, German,
-Arabic.
+`evaluation/run_intrinsic.py` is language-agnostic and would extend to further
+languages given corpora and OOV lists; none are included here, so no
+broader-language intrinsic table is reported.
 
-VEXMLM achieves the most equitable tokenization on **9 of 11**, including
-under-served Ge'ez-script languages (Ge'ez, Tigre, Harari, Gurage, Afar) and
-non-Ge'ez controls (Afrikaans, German, Arabic).
+**Downstream evaluation** covers six tasks over Amharic and Tigrinya, five seeds
+each — the authoritative result set.
 
-**OOV word accuracy on NER** — 11 African languages:
-Amharic, Tigrinya, Hausa, Igbo, Kinyarwanda, Luganda, Luo, Nigerian Pidgin,
-Swahili, Wolof, Yoruba.
-
-VEXMLM improves OOV accuracy on **all 11 languages**, with the largest gains on
-Swahili, Kinyarwanda, and Nigerian Pidgin.
-
-Together these span **19 distinct languages**, with Amharic and Tigrinya
-appearing in both. Coverage extends across Ge'ez-script, Niger-Congo, Cushitic,
-Semitic, and Germanic families — a substantially broader evaluation than the
-two-language training scope.
+**A separate multilingual set** (`results/multilingual_evaluation/`) additionally
+covers AfriSenti across 12 languages, MasakhaNER2 across 20, and two zero-shot
+transfer configurations, at five seeds. It uses different run configurations and
+is deliberately not pooled with the authoritative downstream results.
 
 ---
 
@@ -88,36 +82,47 @@ Full tables in [RESULTS_SUMMARY.md](RESULTS_SUMMARY.md).
 
 ### Downstream performance
 
-| Task (Metric) | XLM-R | VEXMLM | Glot500 |
+Mean ± std over seeds 42–46, from `results/downstream_task_metrics.csv`.
+
+| Task | Dataset | Metric | VEXMLM |
 |---|---|---|---|
-| SA (Accuracy) | 0.77 | **0.80** | 0.46 |
-| NER (Accuracy) | 0.75 | 0.78 | **0.92** |
-| QA (EM) | 0.66 | **0.87** | 0.74 |
-| QA (F1) | 0.78 | **0.90** | 0.78 |
+| NER | MasakhaNER Amharic | Accuracy | 0.9413 ± 0.0026 |
+| | | Macro-F1 | 0.7423 ± 0.0122 |
+| NER | Tigrinya NER | Accuracy | 0.9515 ± 0.0005 |
+| | | Macro-F1 | 0.8219 ± 0.0069 |
+| QA | AmQA | EM / F1 | 32.57 ± 0.77 / 48.85 ± 0.96 |
+| QA | TIGQA | EM / F1 | 2.39 ± 0.82 / 9.76 ± 0.97 |
+| SA | AfriSenti (Amharic) | Accuracy | 0.4978 ± 0.0331 |
 
-VEXMLM leads question answering (**+21 EM**, **+12 F1** over XLM-R) and
-sentiment analysis (**+3** over XLM-R, **+34** over Glot500). Glot500 attains
-the highest NER accuracy.
+TiQuAD is **supplementary** — a diagnostic task, not a paper benchmark:
+EM 50.24 ± 0.48, F1 58.90 ± 0.66.
 
-### Ablation — Tigrinya NER OOV accuracy
+Baseline XLM-R and Glot500 runs exist for seed 42 only and are not aggregated
+here, so no multi-seed head-to-head comparison is stated.
+
+### Ablation — downstream NER OOV accuracy
+
+Tigrinya NER test, seeds 42–46, from `results/table5_ablation.csv`. All four arms
+are scored on one OOV set: 3,491 of 4,677 word types (74.6%).
 
 | Configuration | OOV Acc. (%) | Δ |
 |---|---|---|
-| XLM-R baseline | 96.1 | — |
-| + VocabExp (Random Init) | 97.3 | +1.2 |
-| + VocabExp (Mean Init) | 97.8 | +0.5 |
-| + Continued Pretraining | **98.2** | +0.4 |
+| XLM-R baseline | 94.57 ± 0.16 | — |
+| + VocabExp (Random Init) | 87.04 ± 0.20 | **−7.52** |
+| + VocabExp (Mean Init) | 87.63 ± 0.14 | +0.59 |
+| + Continued Pretraining | **95.66 ± 0.09** | **+8.02** |
 
-Every component contributes. Mean initialization improves on random by +0.5;
-continued pretraining adds a further +0.4.
+Vocabulary expansion alone *hurts* until Stage 1 adapts the new embedding rows;
+continued pretraining is what makes it pay off, finishing +1.09 over the baseline.
 
 ### Intrinsic
 
-- Parity: best on 9 of 11 languages
-- OOV accuracy: improved on all 11 African languages evaluated
+Tigrinya fertility falls 45.9% (3.1300 → 1.6928) and compression rises 84.9%;
+Amharic fertility falls 28.0%. OOV word round-trip reaches 1.0000 (amh) and
+0.9987 (tir).
 
-> ⚠️ The Table 3 XLM-R OOV column average and its stated improvement are under
-> verification — see [TABLE3_VERIFICATION.md](internal/TABLE3_VERIFICATION.md).
+Parity is **not** reported: it requires a sentence-aligned parallel corpus, which
+is unavailable here, and the artifact records `valid: false`.
 
 ---
 
