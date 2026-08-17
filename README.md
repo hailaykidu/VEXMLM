@@ -193,6 +193,51 @@ python3 evaluation/generate_tables.py --runs checkpoints --out results
 Metrics with no run behind them are emitted as `NOT YET MEASURED` — never
 estimated, never silently omitted.
 
+Note that `generate_tables.py` **excludes** the SentencePiece-merged runs by
+default: they are a different model variant from the historical `add_tokens`
+VEXMLM, and averaging the two would report a blend of two models as one number.
+The authoritative downstream evaluation has its own path, below.
+
+### Authoritative downstream evaluation (SP-Merge, 5 seeds)
+
+The reported downstream results come from the SentencePiece-merged Stage 1
+checkpoint, fine-tuned on six tasks under seeds 42–46 — 30 runs sharing one
+configuration hash. Launch with:
+
+```bash
+sbatch scripts/slurm_stage2_spm_seeds.sh          # 6 tasks × 5 seeds
+```
+
+Then export the tracked result artifacts and regenerate the paper table:
+
+```bash
+python3 evaluation/export_spm_results.py
+# -> results/spm_stage2/*.json           per-run records + PROVENANCE.json
+# -> results/downstream_task_metrics.csv
+```
+
+`checkpoints/` is gitignored (model weights and optimizer state), so
+`results/spm_stage2/` is the tracked evidence for these numbers. **TiQuAD is
+supplementary** — a diagnostic task, not a paper benchmark — and is flagged as
+such in the CSV's `Status` column. `results/multilingual_evaluation/` is a
+separate evaluation set covering additional languages and is never pooled with
+these results.
+
+### Ablation — downstream NER OOV accuracy
+
+Four arms on Tigrinya NER, each adding one component to the previous:
+
+```bash
+sbatch scripts/slurm_ablation_tigrinya_oov.sh     # 4 arms × 5 seeds
+python3 evaluation/aggregate_ablation.py          # -> results/table5_ablation.csv
+```
+
+A word counts as out-of-vocabulary when the baseline `xlm-roberta-base`
+tokenizer emits `<unk>`, fails to round-trip it, or fragments it into more
+subwords than the fixed expanded reference tokenizer. That definition depends
+only on the baseline and the reference — never on the arm being scored — so all
+four arms are evaluated on an identical word set.
+
 ---
 
 ## Main Results
