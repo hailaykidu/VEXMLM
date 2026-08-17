@@ -1,0 +1,18 @@
+{
+  "arm": "full_vexmlm",
+  "label": "+ Continued Pretraining",
+  "model": "checkpoints/ablation/full_vexmlm-tigrinya-seed43",
+  "dataset": "tigrinya_ner",
+  "split": "test",
+  "seed": 43,
+  "baseline_tokenizer": "xlm-roberta-base",
+  "reference_tokenizer": "checkpoints/vexmlm-expanded-spm",
+  "word_types": 4677,
+  "oov_word_types": 3491,
+  "metrics": {
+    "oov_accuracy": 95.6909,
+    "non_oov_accuracy": 94.0397,
+    "oov_tokens": 7194,
+    "non_oov_tokens": 3624
+  }
+}

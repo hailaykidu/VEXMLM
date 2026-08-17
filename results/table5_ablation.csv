@@ -1,0 +1,5 @@
+Configuration,Arm,OOV Accuracy (%) mean ± std,Delta,Seeds,Seed list
+XLM-R baseline,xlmr_baseline,94.57 ± 0.16,,5,"42,43,44,45,46"
++ VocabExp (Random Init),expansion_random_init,87.04 ± 0.20,-7.52,5,"42,43,44,45,46"
++ VocabExp (Mean Init),expansion_mean_init,87.63 ± 0.14,+0.59,5,"42,43,44,45,46"
++ Continued Pretraining,full_vexmlm,95.66 ± 0.09,+8.02,5,"42,43,44,45,46"

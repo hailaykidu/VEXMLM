@@ -1,0 +1,18 @@
+{
+  "arm": "expansion_mean_init",
+  "label": "+ VocabExp (Mean Init)",
+  "model": "checkpoints/ablation/expansion_mean_init-tigrinya-seed42",
+  "dataset": "tigrinya_ner",
+  "split": "test",
+  "seed": 42,
+  "baseline_tokenizer": "xlm-roberta-base",
+  "reference_tokenizer": "checkpoints/vexmlm-expanded-spm",
+  "word_types": 4677,
+  "oov_word_types": 3491,
+  "metrics": {
+    "oov_accuracy": 87.4896,
+    "non_oov_accuracy": 90.287,
+    "oov_tokens": 7194,
+    "non_oov_tokens": 3624
+  }
+}
