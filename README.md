@@ -1,4 +1,7 @@
-# Expanding the Lexicon of Ge'ez Based African Languages: A Comparative Study of Amharic and Tigrinya
+# Vocabulary Expansion for Low-Resource African Languages: A Case Study in Amharic and Tigrinya
+
+Corrected version of the LM4UC 2026 paper published as *Expanding the Lexicon of Ge'ez Based
+African Languages: A Comparative Study of Amharic and Tigrinya*.
 
 **Accepted at the LM4UC Workshop, IJCAI 2026.**
 
@@ -57,7 +60,8 @@ Tigrinya with all parameters trainable; Stage 2 fine-tunes per task across
 seeds 42–46.
 
 **Intrinsic and downstream evaluation.** Tokenizer quality (fertility,
-compression, parity, OOV accuracy) alongside five downstream tasks spanning
+compression, OOV accuracy; parity is not reported, as no parallel corpus is available)
+alongside five downstream tasks spanning
 question answering, named entity recognition, and sentiment analysis.
 
 ---
@@ -167,7 +171,8 @@ commit, seed, config hash, dataset hashes, hardware, and metrics to
 
 ## Evaluation
 
-**Intrinsic** — fertility, compression, parity, OOV accuracy:
+**Intrinsic** — fertility, compression, OOV accuracy (parity is not reported: it needs a
+sentence-aligned parallel corpus, which is not available):
 
 ```bash
 python3 evaluation/run_intrinsic.py \
@@ -247,16 +252,16 @@ See [RESULTS_SUMMARY.md](reports/RESULTS_SUMMARY.md) for the full tables.
 | Table | Content |
 |---|---|
 | Table 1 | Hyperparameters (`configs/base.yaml`) |
-| Table 2 | Tokenizer fertility, compression, parity |
-| Table 3 | OOV word accuracy |
+| Table 2 | Tokenizer fertility, compression, OOV round-trip (XLM-R, Glot500, VEXMLM) |
+| Table 3 | Tigrinya NER accuracy on OOV and other words |
 | Table 4 | Downstream performance (QA, NER, Sentiment) |
-| Table 5 | Ablation over initialization strategies |
+| Table 5 | Ablation: vocabulary expansion (random / mean initialization) and continued pretraining |
 
 Implementation artifacts produced by this repository live in `results/` — see
 [results/README.md](results/README.md).
 
 **Model**: `vexmlm-stage1-spm` — the Stage 1 model with the SP-Merge tokenizer
-(280,002 subwords). Release location to be added.
+(280,002 subwords), released at https://huggingface.co/Hailay/VEXMLM.
 
 ---
 

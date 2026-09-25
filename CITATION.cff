@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software or the VEXMLM models, please cite the paper below."
-title: "VEXMLM: Vocabulary-Extended XLM-R for Amharic and Tigrinya"
+title: "VEXMLM: Vocabulary Expansion for Low-Resource African Languages (Amharic and Tigrinya)"
 abstract: >-
   Official implementation of VEXMLM, a vocabulary-expansion framework that adapts
   XLM-R to the Ge'ez-script languages Amharic and Tigrinya through language-specific
@@ -28,7 +28,7 @@ keywords:
 preferred-citation:
   type: conference-paper
   title: >-
-    Expanding the Lexicon of Ge'ez Based African Languages: A Comparative Study of Amharic and Tigrinya
+    Vocabulary Expansion for Low-Resource African Languages: A Case Study in Amharic and Tigrinya
   authors:
     - family-names: Teklehaymanot
       given-names: Hailay

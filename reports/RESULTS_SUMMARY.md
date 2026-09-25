@@ -47,10 +47,11 @@ Source: `checkpoints/vexmlm-stage1*/stage1_summary.json`.
 | Run | Tokenizer integration | Epochs | Eval loss | Perplexity |
 |---|---|---|---|---|
 | `vexmlm-stage1` | `add_tokens` | 10 | 4.5850 | 98.00 |
-| **`vexmlm-stage1-spm`** | SentencePiece merge | 56 of 60 configured | **3.7120** | **41.67** |
+| **`vexmlm-stage1-spm`** | SentencePiece merge | 56 of 60 configured | **3.7120** (best) / 3.7299 (final re-evaluation) | 41.67 (final re-evaluation) |
 
 The released model is the best-by-validation-loss checkpoint at epoch 56 (24,808
-of 26,580 steps). The two runs differ in both tokenizer integration and training
+of 26,580 steps), whose validation loss during training was 3.7120; the perplexity
+41.67 is exp(3.7299), from the final re-evaluation recorded in `stage1_summary.json`. The two runs differ in both tokenizer integration and training
 budget, so their difference cannot be attributed to either alone.
 
 ---
@@ -86,8 +87,9 @@ flagged as such in the CSV's `Status` column.
 | QA | TiQuAD *(supplementary)* | EM | 50.24 ± 0.48 |
 | | | F1 | 58.90 ± 0.66 |
 
-TIGQA's 67 test questions are too few to carry a QA claim alone; TiQuAD's 926
-questions are reported alongside it for that reason.
+QA scores are computed on the development splits (`finetuning/qa/run_qa.py` evaluates on the
+validation split when one exists): AmQA 600, TIGQA 67 and TiQuAD 926 questions. TIGQA's 67
+questions are too few to carry a QA claim alone; TiQuAD is reported alongside it for that reason.
 
 ---
 
@@ -127,9 +129,10 @@ addition itself.
 
 ## Scope and limitations
 
-**Baselines are single-seed.** The XLM-R and Glot500 comparison runs under
-`checkpoints/baseline-*` exist for seed 42 only. They are not aggregated into the
-tables above, and no multi-seed head-to-head claim is made from them.
+**The XLM-R baseline is single-seed.** Its seed-42 run records are in
+[`results/baselines/xlmr_seed42/`](../results/baselines/xlmr_seed42/); the paper reports them
+with that caveat. No downstream Glot500 result is reported (its seed-42 runs include failed
+configurations); Glot500 is compared only on tokenizer metrics.
 
 **A separate multilingual evaluation set** lives in
 `results/multilingual_evaluation/` (AfriSenti and MasakhaNER2 across additional

@@ -37,8 +37,8 @@ tokens.
 **Two-stage training.** Stage 1 continues MLM pretraining with all parameters
 trainable; Stage 2 fine-tunes per task.
 
-**Intrinsic and downstream evaluation.** Tokenizer parity and OOV accuracy
-alongside question answering, named entity recognition, and sentiment analysis.
+**Intrinsic and downstream evaluation.** Tokenizer fertility, compression and OOV
+round-trip alongside question answering, named entity recognition, and sentiment analysis.
 
 ---
 
@@ -97,8 +97,8 @@ Mean ± std over seeds 42–46, from `results/downstream_task_metrics.csv`.
 TiQuAD is **supplementary** — a diagnostic task, not a paper benchmark:
 EM 50.24 ± 0.48, F1 58.90 ± 0.66.
 
-Baseline XLM-R and Glot500 runs exist for seed 42 only and are not aggregated
-here, so no multi-seed head-to-head comparison is stated.
+The XLM-R baseline exists for seed 42 only (`results/baselines/xlmr_seed42/`), so no multi-seed
+head-to-head comparison is stated. No downstream Glot500 result is reported.
 
 ### Ablation — downstream NER OOV accuracy
 
@@ -182,7 +182,6 @@ non-commercial restriction.
   rather than reporting a misleading figure when alignment is unavailable.
 - Two pretraining corpora have unresolved provenance (tracked as release
   blockers).
-- Glot500 outperforms VEXMLM on NER accuracy.
 
 ---
 

@@ -1,288 +1,115 @@
 # Model Card: VEXMLM Base
 
-## Model Details
+The released model is on Hugging Face: https://huggingface.co/Hailay/VEXMLM
+(checkpoint `checkpoints/vexmlm-stage1-spm`). Every value below is taken from the stored run
+records named in the Source column.
 
-**Model Name**: VEXMLM Base (vexmlm-stage1-spm)  
-**Model Type**: Masked Language Model (MLM)  
-**Base Architecture**: XLM-RoBERTa (XLM-R)  
-**Tokenizer**: SP-Merge, 280,002 subwords  
-**Language Coverage**: Amharic (am), Tigrinya (ti)  
-**Release Date**: 2026-08-16  
-**Status**: Stable, ready for fine-tuning  
+## Model details
 
----
-
-## Model Summary
-
-VEXMLM Base is a multilingual masked language model fine-tuned from XLM-RoBERTa with an expanded vocabulary tailored for Amharic and Tigrinya. The model was pretrained on 4.2M tokens of deduplicated Amharic and Tigrinya text, using bfloat16 precision on an NVIDIA A100 80GB GPU.
-
-The vocabulary was expanded from XLM-R's base 250,002 tokens to **280,002** by adding 30,000 Ge'ez-script subwords selected from language-specific SentencePiece models (Amharic 32K, Tigrinya 50K) and merged natively into the SentencePiece model. This expansion enables the model to represent morphologically rich word forms natively: on held-out development text, fertility falls from 2.07 to 1.49 subwords per word for Amharic and from 3.13 to 1.69 for Tigrinya.
-
----
-
-## Intended Use
-
-### Primary Applications
-- **Downstream fine-tuning** on African language NLP tasks (QA, NER, sentiment analysis, text classification).
-- **Transfer learning** for morphologically rich, low-resource African languages.
-- **Multilingual benchmarking** on Amharic and Tigrinya language understanding.
-
-### Out of Scope
-- **Generation tasks** (summarization, translation, paraphrasing) — MLM is discriminative only.
-- **Sequence-to-sequence** applications without task-specific fine-tuning.
-- **Languages not in the vocabulary** — XLM-R's cross-lingual transfer does not guarantee performance on other African languages.
-
----
-
-## Model Specifications
-
-### Architecture
-| Parameter | Value |
-|---|---|
-| Architecture | Transformer (encoder-only) |
-| Hidden size | 768 |
-| Number of layers | 12 |
-| Attention heads | 12 |
-| Feed-forward dimension | 3072 |
-| Activation | GeLU |
-| Vocabulary size | 280,002 |
-| Max sequence length | 256 |
-| Position embeddings | Absolute |
-
-### Pretraining Configuration
-| Hyperparameter | Value |
-|---|---|
-| Optimizer | AdamW |
-| Learning rate | 5e-5 |
-| Learning rate schedule | Linear decay with warmup |
-| Warmup steps | 1,000 |
-| Weight decay | 0.01 |
-| Batch size | 32 |
-| Effective sequences per epoch | 16,376 (5,120 steps) |
-| Total epochs | 10 |
-| MLM masking probability | 0.15 |
-| Gradient clipping | 1.0 |
-| Training precision | bfloat16 (mixed precision) |
-| Training time | ~21 minutes (1,258 seconds) |
-| Hardware | 1× NVIDIA A100 80GB PCIe |
-
-### Vocabulary Composition
-| Component | Count | Share |
+| | Value | Source |
 |---|---|---|
-| XLM-RoBERTa base | 250,000 | 43.47% |
-| Amharic expansion | 145,923 | 25.36% |
-| Tigrinya expansion | 130,547 | 22.67% |
-| Special tokens | 50 | 0.01% |
-| **Total** | **576,520** | **100%** |
+| Base model | `xlm-roberta-base` | `results/provenance/expansion_manifest_spm.json` |
+| Architecture | 12 layers, hidden size 768, 12 attention heads, GELU | `configs/base.yaml`; checkpoint `config.json` |
+| Parameters | 301,365,186 | Hugging Face model card |
+| Vocabulary | 280,002 = 250,002 (XLM-R) + 30,000 added | `results/provenance/expansion_manifest_spm.json` |
+| Added pieces | 14,189 Amharic-only, 14,279 Tigrinya-only, 1,532 shared | `results/provenance/new_tokens*.json` |
+| Integration | merged into XLM-R's SentencePiece model (`sentencepiece_merge`) | `results/provenance/expansion_manifest_spm.json` |
+| Initialization of new embeddings | mean of all pretrained embeddings (`global_mean`) | `results/provenance/expansion_manifest_spm.json` |
+| Languages | Amharic (am), Tigrinya (ti) | — |
 
----
+Candidate pieces come from language-specific SentencePiece unigram models (Amharic 32,000,
+Tigrinya 50,000 pieces, character coverage 0.9995, NFC; `results/provenance/tokenizer_manifest_*.json`):
+per language, the 20,000 most frequent pieces absent from XLM-R, interleaved by rank and
+deduplicated to 30,000.
 
-## Training Data
+## Continued pretraining (Stage 1)
 
-### Corpus Composition
-| Language | Train samples | Val samples | Train tokens | Val tokens | Dedup. rate |
-|---|---|---|---|---|---|
-| Amharic | 129,402 | 2,054 | 2,146,128 | 33,101 | 35.03% |
-| Tigrinya | 140,583 | 591 | 2,088,112 | 8,883 | 29.58% |
-| **Combined** | **269,985** | **2,645** | **4,234,240** | **41,984** | **32.30%** |
+| Setting | Value | Source |
+|---|---|---|
+| Objective | masked language modelling, masking probability 0.15 | `configs/base.yaml` |
+| Epochs | 60 configured; checkpoint with the lowest validation loss released (epoch 56, step 24,808) | `results/provenance/training_args.json`, `stage1_spm_trainer_state_best.json` |
+| Best validation loss | 3.7120 | `results/provenance/stage1_spm_trainer_state_best.json` |
+| Final re-evaluation of the released checkpoint | loss 3.7299, perplexity 41.67 | `results/provenance/stage1_summary_spm.json` |
+| Optimizer | AdamW (β₁ 0.9, β₂ 0.999, ε 1e-8), learning rate 5e-5, linear decay after 6% warmup, weight decay 0.01 | `results/provenance/training_args.json` |
+| Batch size / sequence length | 32 / 256 (block-chunked) | `results/provenance/training_args.json`, `configs/base.yaml` |
+| Gradient clipping / precision | 1.0 / bf16 | `results/provenance/training_args.json` |
+| Hardware | 1× NVIDIA A100 80GB PCIe, CUDA 11.8, PyTorch 2.5.1+cu118 | `results/provenance/stage1_summary_spm.json` |
 
-### Data Processing
-- **Source**: Raw monolingual text corpora for Amharic and Tigrinya.
-- **Deduplication**: Removed exact duplicates at sentence level. Amharic: 70,070 duplicates removed (35.03%); Tigrinya: 59,164 duplicates removed (29.58%).
-- **Tokenization**: BPE-based (from XLM-R), with language-specific expansions added via continued training.
-- **Example construction**: Block-chunking (approved). Consecutive sentences concatenated up to max_seq_length = 256, no padding.
-- **Train/val split**: 98% / 2% at the sentence level.
+## Training data
 
-### Data Quality Assurance
-- ✅ No HTML or XML markup.
-- ✅ No code or non-linguistic content.
-- ✅ Language identification verified (fastText).
-- ✅ Script validation (Ge'ez script for both languages).
-- ✅ No test data leakage into pretraining.
+The pretraining text is one Amharic and one Tigrinya monolingual file (200,002 and 200,000
+lines) taken from a prepared local collection whose original source is not documented. The
+files match no named corpus available to the authors, and manual samples contain religious
+translations alongside general web prose; the licence is therefore unknown and the text is not
+redistributed. An earlier attribution to HornMT is ruled out (HornMT has about 2,030 sentence
+pairs, and no line overlaps). See `docs/DATASET_PROVENANCE.md` and `docs/MLM_CORPUS_ANALYSIS.md`.
 
-### Provenance and Licensing Disclosure
-
-The pretraining corpora are **not redistributed** with this model. Their
-composition is disclosed as follows:
-
-| Component | Share | Licence | Status |
+| | Amharic | Tigrinya | Source |
 |---|---|---|---|
-| HornMT (`github.com/asmelashteka/HornMT`) | ~1% (2,030 records) | **CC BY 4.0** | ✅ confirmed |
-| Additional monolingual material | ~99% (~198,000 lines per language) | undetermined | ⚠️ under review |
+| Lines kept after NFC normalization, length / script filtering and deduplication | 129,402 | 140,583 | `results/provenance/preparation_report.json` |
+| Training / development lines (2% held out) | 126,814 / 2,588 | 137,772 / 2,811 | `results/provenance/preparation_report.json` |
+| Lines after language resampling (α = 0.5) | 129,552 | 135,034 | `results/provenance/stage1_spm_data.log.txt` |
 
-**HornMT** is confirmed CC BY 4.0, declared in prose in the repository README
-rather than a `LICENSE` file — note that GitHub's licence API reports `null` for
-that repository as a result.
+Stage 1 holds out a further 1% (2,645 lines) for validation and trains on 14,161 blocks of 256
+tokens (`results/provenance/stage1_spm_data.log.txt`).
 
-**The remaining ~99%** of each corpus consists of monolingual Amharic and
-Tigrinya text whose upstream source has not been conclusively traced. Content
-sampling is consistent with a CC-100 / OSCAR-style web crawl, which would be
-permissively licensed, but this has not been verified and is therefore not
-claimed here.
+## Evaluation
 
-**What this means for users:**
+Tokenizer metrics on the held-out development text (`results/spmerge_tokenizer_metrics.json`):
 
-- This model is released under **Apache-2.0**, inherited from
-  `xlm-roberta-base`.
-- No corpus text is distributed in this repository or model artifact.
-- Users who require full provenance certainty for their own compliance posture
-  should account for the undetermined portion above.
-- Should the remaining provenance be established, this section will be updated
-  and the corpora reclassified accordingly.
-
-This disclosure is deliberate: the alternative — withholding the artifact until
-~99% of a web-scale corpus is traced — would postpone release indefinitely for a
-question that may resolve favourably. Stating what is known and what is not is
-preferred to either overclaiming or silence.
-
-Full analysis: `reports/LICENSE_FINAL_STATUS.md`.
-
----
-
-## Performance
-
-### Pretraining Metrics (Seed 42)
-| Metric | Value |
-|---|---|
-| Final validation loss | 4.5850 |
-| Best validation loss | 4.5764 (step 4,608 / epoch 9) |
-| Final perplexity | 98.00 |
-| Best perplexity | 97.17 |
-| Training loss (final) | 5.3492 |
-
-### Convergence
-The model converged smoothly over 10 epochs with a single epoch transition showing validation loss increase (epoch 10 vs. 9). The final checkpoint is the best by validation loss (step 4,608), selected via `load_best_model_at_end=True`.
-
-### Downstream Task Performance (Seed 42)
-
-#### Named Entity Recognition (MasakhaNER)
-| Task | Entity F1 | Accuracy | Macro F1 | Status |
-|---|---|---|---|---|
-| Amharic NER | 42.70% | 89.62% | 56.02% | ✅ Solid |
-| Tigrinya NER | 56.77% | 91.89% | 67.33% | ✅ Strong |
-
-#### Question Answering
-| Task | Exact Match | F1 | Status |
+| Metric | Language | XLM-R | VEXMLM |
 |---|---|---|---|
-| Amharic QA (AmQA) | 19.33% | 32.02 | ⚠️ Baseline |
-| Tigrinya QA (TigQA) | 0% | 5.76 | ⚠️ Very limited |
+| Fertility (tokens per word) ↓ | Amharic | 2.0692 | 1.4888 |
+| | Tigrinya | 3.1300 | 1.6928 |
+| Compression (characters per token) ↑ | Amharic | 2.2950 | 3.1896 |
+| | Tigrinya | 1.4591 | 2.6979 |
+| OOV word round-trip ↑ | Amharic | 1.0000 | 1.0000 |
+| | Tigrinya | 0.9954 | 0.9987 |
 
-**Notes**: 
-- NER performance is strong, especially for Tigrinya (56.77% entity F1).
-- QA performance is limited, attributed to small dataset size (especially TigQA with 67 samples). Seed 42 is exploratory; variance across seeds 43–46 will clarify robustness.
+Parity is not reported: it needs a sentence-aligned parallel corpus, which is not available.
 
----
+Downstream results, mean ± standard deviation over seeds 42–46 (`results/downstream_task_metrics.csv`).
+NER and SA are scored on the test splits, QA on the development splits:
+
+| Task | Dataset | Metric | VEXMLM |
+|---|---|---|---|
+| NER | MasakhaNER Amharic | Accuracy / Macro-F1 / Entity-F1 | 0.9413 ± 0.0026 / 0.7423 ± 0.0122 / 0.6347 ± 0.0148 |
+| NER | Tigrinya NER | Accuracy / Macro-F1 / Entity-F1 | 0.9515 ± 0.0005 / 0.8219 ± 0.0069 / 0.7282 ± 0.0079 |
+| QA | AmQA | EM / F1 | 32.57 ± 0.77 / 48.85 ± 0.96 |
+| QA | TIGQA | EM / F1 | 2.39 ± 0.82 / 9.76 ± 0.97 |
+| SA | AfriSenti (Amharic) | Accuracy / Macro-F1 | 0.4978 ± 0.0331 / 0.4971 ± 0.0193 |
+
+A single-seed XLM-R baseline is in `results/baselines/xlmr_seed42/`. Ablation on Tigrinya NER OOV
+accuracy (`results/table5_ablation.csv`): XLM-R 94.57 ± 0.16; vocabulary expansion with random
+initialization 87.04 ± 0.20; with mean initialization 87.63 ± 0.14; plus continued pretraining
+95.66 ± 0.09.
 
 ## Limitations
 
-1. **Vocabulary freezing**: The expanded vocabulary was created using frequency-based selection from the training corpus. Languages or domains not well-represented in the pretraining data may still experience subword fragmentation.
+- Downstream benefit is task-dependent: NER improves over the single-seed XLM-R baseline, QA is
+  lower and sentiment is comparable.
+- Vocabulary expansion alone lowers OOV accuracy; continued pretraining is required.
+- The pretraining text has undocumented origin and an unknown licence.
+- The XLM-R downstream baseline is a single seed.
 
-2. **Morphological bias**: The vocabulary expansion heavily favors Amharic and Tigrinya morphological patterns. Cross-language transfer to other African languages is not guaranteed.
-
-3. **Dataset scale**: Pretraining corpus is modest (4.2M tokens, ~270K sentences). Models trained on larger corpora (e.g., mC4, OSCAR) typically generalize better.
-
-4. **Short sequences**: Max sequence length of 256 tokens limits the model's ability to capture long-range dependencies for document-level tasks.
-
-5. **No explicit script handling**: While both Amharic and Tigrinya use the Ge'ez script, the model does not have explicit script-aware components. Script diversity (Latin, Arabic scripts) is not represented in the vocabulary expansion.
-
-6. **Seed variance**: Downstream metrics are reported as mean ± standard deviation over seeds 42–46. Standard deviations are given in `results/downstream_task_metrics.csv`.
-
----
-
-## Bias & Fairness
-
-### Known Biases
-- **Language imbalance**: Amharic has slightly more tokens (51.1%) than Tigrinya (49.2%), but both are equally represented in the vocabulary expansion.
-- **Data source bias**: Training data is sourced from specific domains (news, Wikipedia, web text) and may underrepresent marginalized dialects or sociolinguistic varieties.
-- **Gender representation**: No explicit gender bias analysis has been performed. The model may reflect gender stereotypes present in the source text.
-
-### Fairness Considerations
-- Fine-tuning on downstream tasks should include bias evaluation on task-specific datasets.
-- The model is not recommended for high-stakes applications (hiring, criminal justice, medical decision-making) without task-specific bias audits.
-
----
-
-## Technical Details
-
-### Hardware & Training Setup
-| Specification | Value |
-|---|---|
-| GPU | NVIDIA A100 80GB PCIe |
-| CUDA version | 11.8 |
-| PyTorch | 2.5.1+cu118 |
-| Transformers library | 4.34.0+ |
-| Mixed precision | bfloat16 (BF16) |
-| Gradient checkpointing | No (full model fits in 80GB) |
-| Distributed training | Single GPU (no DDP) |
-
-### Checkpoint Details
-| Attribute | Value |
-|---|---|
-| Checkpoint path | `checkpoints/vexmlm-stage1-spm` |
-| Checkpoint size | 1.21 GB |
-| Vocabulary size | 280,002 |
-| Tokenizer | SP-Merge (native SentencePiece pieces) |
-| Git branch | `master` |
-
-### Model Usage
-```python
-from transformers import AutoTokenizer, AutoModelForMaskedLM
-
-model_id = "vexmlm-stage1-spm"
-tokenizer = AutoTokenizer.from_pretrained(model_id)
-model = AutoModelForMaskedLM.from_pretrained(model_id)
-
-# Example: Masked language model prediction
-text = "በደመቅ ሮኮ [MASK] ትሪብ"  # Amharic example
-inputs = tokenizer(text, return_tensors="pt")
-outputs = model(**inputs)
-```
-
-For downstream fine-tuning (NER, QA, classification), use `AutoModelForTokenClassification`, `AutoModelForQuestionAnswering`, or `AutoModelForSequenceClassification` with the same model ID.
-
----
-
-## Evaluation & Citation
-
-### Evaluation Methodology
-- **Validation**: 2% of deduplicated corpus, held out at sentence level.
-- **Test sets**: Standard benchmarks (MasakhaNER, AmQA, TigQA).
-- **Metrics**: Token-level and task-specific (F1, accuracy, exact match, perplexity).
-- **Seeds**: Runs are deterministic given a fixed seed, hardware, and library versions.
-
-### Citation
-If you use VEXMLM Base in your research, please cite:
+## Citation
 
 ```bibtex
-@techreport{vexmlm2026,
-  title={VEXMLM: Vocabulary-Expanded Multilingual Language Models for African Languages},
-  author={Kidu, Hailay and ...},
-  institution={Addis Ababa University},
-  year={2026},
-  month={August}
+@inproceedings{teklehaymanot2026vexmlm,
+  title     = {Vocabulary Expansion for Low-Resource African Languages:
+               A Case Study in Amharic and Tigrinya},
+  author    = {Teklehaymanot, Hailay Kidu and Yadeta, Debela Desalegn and Nejdl, Wolfgang},
+  booktitle = {Proceedings of the Workshop on Language Models for Underserved Communities (LM4UC), IJCAI 2026},
+  year      = {2026}
 }
 ```
 
----
+Corrected version of the LM4UC 2026 paper published as *Expanding the Lexicon of Ge'ez Based
+African Languages: A Comparative Study of Amharic and Tigrinya*.
 
 ## Changelog
 
-| Date | Version | Change |
-|---|---|---|
-| 2026-08-14 | 1.0 | Initial release; stage 1 pretraining complete. |
-| 2026-08-15 | 1.0 | Model card and first review finalized; seeds 43–46 awaiting approval. |
-
----
-
-## Contact & Support
-
-For questions, bug reports, or feedback:
-- **Email**: [your email]
-- **GitHub**: https://github.com/hailaykidu/VEXMLM
-- **Issues**: https://github.com/hailaykidu/VEXMLM/issues
-
----
-
-**Model Card Version**: 1.0  
-**Last Updated**: 2026-08-15  
-**Status**: Active & Maintained
+| Date | Change |
+|---|---|
+| 2026-08-15 | First model card |
+| 2026-09-25 | Rewritten for the released checkpoint `vexmlm-stage1-spm` (the previous card described an earlier 10-epoch run and a 576,520-entry vocabulary); data statement corrected; title updated |

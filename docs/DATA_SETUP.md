@@ -57,7 +57,7 @@ BIO tags.
 
 ## Parallel corpus for parity
 
-Table 2's parity metric requires **sentence-aligned** Amharic–Tigrinya text:
+Tokenizer parity (not reported in the paper) requires **sentence-aligned** Amharic–Tigrinya text:
 
 ```
 datasets/processed/parallel.amh.txt
