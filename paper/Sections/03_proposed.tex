@@ -1,0 +1,36 @@
+\section{Proposed Method}
+
+This section describes the VEXMLM framework for mitigating over-segmentation of Ge'ez-script languages within a multilingual PLM. The framework consists of four components: (1) base model selection, (2) language-specific tokenizer construction and vocabulary expansion/integration, (3) mean-based embedding initialization for new tokens, and (4) a two-stage training procedure of continued pretraining followed by task-specific fine-tuning.
+
+\subsection{Multilingual Base Model}
+We adopt XLM-RoBERTa (XLM-R)~\cite{conneau2020unsupervised} as the base model due to its strong cross-lingual transfer capabilities. XLM-R is built on the Transformer architecture~\cite{vaswani2017attention} and the RoBERTa framework~\cite{liu2019roberta}, an optimized variant of BERT~\cite{devlin2019bert}, and is pretrained via masked language modeling (MLM) on CommonCrawl data spanning 100 languages.
+
+Despite broad coverage, XLM-R exhibits systematic limitations for Ge'ez-script languages. Its Latin-centric SentencePiece vocabulary contains few Ge'ez-script subwords, so Amharic and Tigrinya words are split into many pieces~\cite{zhang2022robust,ahia2023all}; on our data, XLM-R produces \tokXlmrAmhFertility{} (Amharic) and \tokXlmrTirFertility{} (Tigrinya) tokens per word, although it can still represent nearly every word without an [UNK] token (Table~\ref{tab:tokenizer}). This over-segmentation motivates our targeted augmentation strategy.
+
+\subsection{Target Language Tokenization and Vocabulary Expansion}
+We construct independent language-specific SentencePiece unigram tokenizers~\cite{kudo2018sentencepiece} for Amharic and Tigrinya, trained on the training portions of the monolingual corpora described in Section~\ref{sec:data} (\spmAmhTrainLines{} Amharic and \spmTirTrainLines{} Tigrinya lines; NFC normalization, character coverage \spmCharCoverage). For Tigrinya, we train a vocabulary of \spmTirVocab{} subword units; for Amharic, \spmAmhVocab{} subword units.
+
+To merge the new vocabulary with XLM-R's original vocabulary $\mathcal{V}^s$, we consider only pieces of the new tokenizers that are absent from $\mathcal{V}^s$ (\candAmhAbsent{} Amharic and \candTirAbsent{} Tigrinya pieces). From each language we take the \candAmhSelected{} most frequent of these pieces in its training corpus, interleave the two ranked lists, and remove cross-language duplicates until \vocabAdded{} pieces are selected: \newOnlyAmh{} Amharic-only, \newOnlyTir{} Tigrinya-only and \newShared{} shared pieces. The selected pieces are merged into XLM-R's SentencePiece model rather than appended as separate added tokens, so that they are segmented by the same unigram model as the original vocabulary. This expands XLM-R's vocabulary from \vocabBase{} to \vocabFinal{} entries. Backward compatibility with all original XLM-R representations is fully preserved, as no existing entries are modified.
+
+\subsection{Embedding Initialization for Expanded Vocabulary}
+Integrating new vocabulary tokens into a pretrained model requires initializing their embeddings compatibly with the existing embedding space. Random initialization risks destabilizing pretraining dynamics, while zero-initialization introduces systematic magnitude bias. We adopt a simple \textit{mean initialization} strategy, which positions every new token at the centroid of the source embedding distribution. More informed methods such as WECHSEL~\cite{minixhofer2022wechsel} instead initialize each new embedding as a similarity-weighted combination of its nearest source embeddings; we do not compare against them.
+
+\paragraph{Formal Setup.} Let $\theta$ denote the parameters of the pretrained model $LM^s_\theta$, trained on source vocabulary $\mathcal{V}^s=\{v^s_1,\ldots,v^s_n\}$ with embeddings $\mathcal{E}^s=\{e^s_1,\ldots,e^s_n\}$, where $e^s_i\in\mathbb{R}^d$. The probability of predicting token $w_i$ given context $w_{1:i-1}$ is:
+\begin{equation}
+p_\theta(w_i\mid w_{1:i-1})=\frac{\exp(h_{i-1}^\top e^s_{w_i})}{\sum_{j\in\mathcal{V}^s}\exp(h_{i-1}^\top e^s_j)},
+\end{equation}
+where $h_{i-1}=\phi(w_{1:i-1};LM^s_\theta)\in\mathbb{R}^d$ is the encoder's contextual representation.
+
+\paragraph{Vocabulary Extension.} Let $\mathcal{V}^t=\{v^t_1,\ldots,v^t_{n'}\}$ be the set of new tokens with $\mathcal{V}^t\cap\mathcal{V}^s=\emptyset$ by construction.\footnote{Any token already present in $\mathcal{V}^s$ retains its original embedding; only genuinely new tokens enter $\mathcal{V}^t$.} The updated parameter set becomes $\theta'=\theta\cup\{e^t_j: j\in\mathcal{V}^t\}$, and the extended model $LM^t_{\theta'}$ operates over $\mathcal{V}^{s\cup t}$.
+
+\paragraph{Mean Initialization.} Each new embedding $e^t_j$ is initialized to the mean of all source embeddings:
+\begin{equation}
+e^t_j=\frac{1}{|\mathcal{V}^s|}\sum_{i=1}^{|\mathcal{V}^s|}e^s_i.
+\label{eq:mean}
+\end{equation}
+This places new tokens at the centroid of the source embedding space, reducing the risk of outlier placement and avoiding directional bias toward any specific source language. All new tokens therefore start from the same vector and are differentiated only during continued pretraining. Since XLM-R ties its input embedding matrix with the MLM output projection, Equation~\ref{eq:mean} is applied once to the shared matrix. An ablation comparing mean initialization against random initialization is reported in Section~\ref{sec:ablation}.
+
+\subsection{Two-Stage Training: Continued Pretraining and Fine-Tuning}
+\paragraph{Stage 1: Continued Pretraining.} We perform continued pretraining using the MLM objective ($p_{\text{mask}}=\ptMLMProb$) on the Amharic and Tigrinya monolingual corpora. During this stage, \textit{all} model parameters, including original and newly added embeddings, are updated. The two languages are resampled with probabilities proportional to $n_\ell^{\alpha}$, where $n_\ell$ is the number of training lines of language $\ell$ and $\alpha=\ptAlpha$, which yields \ptSampledAmh{} Amharic and \ptSampledTir{} Tigrinya lines. Full parameter training allows newly initialized embeddings to move toward meaningful representations within the shared embedding space. The model at the end of this stage is referred to as \textbf{VEXMLM}.
+
+\paragraph{Stage 2: Task-Specific Fine-Tuning.} VEXMLM is subsequently fine-tuned on three downstream tasks: named entity recognition (NER), sentiment analysis (SA), and question answering (QA). All model parameters are updated during fine-tuning, with a task-specific classification head on top of the encoder. Evaluation covers NER and QA in Amharic and Tigrinya and SA in Amharic.

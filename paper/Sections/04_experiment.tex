@@ -1,0 +1,67 @@
+\begin{table}[t]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lll}
+\toprule
+\textbf{Hyperparameter} & \textbf{Cont.\ Pretraining} & \textbf{Fine-Tuning} \\
+\midrule
+Maximum sequence length & \ptMaxLen$^\dagger$ & \ftMaxLen \\
+Batch size & \ptBatch & \ftBatch \\
+Training epochs & \ptEpochsConfigured{} (best: \ptBestEpoch) & \ftEpochs \\
+Learning rate & \ptLR & \ftLR \\
+LR schedule & Linear, \ptWarmup{} warmup & Linear, \ftWarmup{} warmup \\
+Weight decay & \ptWeightDecay & \ftWeightDecay \\
+MLM probability & \ptMLMProb & N/A \\
+Gradient clipping & \ptClip & \ftClip \\
+Optimizer & AdamW & AdamW \\
+Adam $\epsilon$ & \ptAdamEps & \ftAdamEps \\
+Adam $\beta_1$ & \ptAdamBetaOne & \ftAdamBetaOne \\
+Adam $\beta_2$ & \ptAdamBetaTwo & \ftAdamBetaTwo \\
+Mixed precision & \ptPrecision & \ftPrecision \\
+Trainable parameters & All & All \\
+\bottomrule
+\end{tabular}
+\caption{Hyperparameter settings for continued pretraining and supervised fine-tuning. For pretraining, the checkpoint with the lowest validation loss (epoch \ptBestEpoch{} of \ptEpochsConfigured) is released.}
+\label{tab:hyperparams}
+\end{table}
+
+$^\dagger$XLM-R supports inputs of up to 512 tokens; a 256-token limit is used for computational efficiency. For QA, longer contexts are split into overlapping windows (stride 128), and the possible effect of the limit on QA performance is discussed in Section~\ref{sec:discussion}.
+
+For NER and SA, we report accuracy as the primary metric.\footnote{Accuracy is used for NER to maintain consistency with SA; however, we acknowledge that macro-F1 is the standard metric for NER evaluation and report macro-F1 and entity-level F1 in Table~\ref{tab:appendix_f1} in the Appendix.} For QA, we report both Exact Match (EM) and F1 scores.
+
+\section{Experimental Setup}
+
+\subsection{Model Architecture}
+VEXMLM builds on XLM-RoBERTa-base's encoder architecture, retaining 12 Transformer layers, hidden size of 768, 12 attention heads, GELU activation, and layer normalization ($\epsilon=1\times10^{-5}$). The key change lies in targeted vocabulary expansion: we expand the vocabulary from \vocabBase{} to \vocabFinal{} entries by adding \vocabAdded{} Ge'ez-script tokens, resulting in \paramVex{} parameters (model card); relative to XLM-R, the expansion adds \vocabAdded{} embedding rows of dimension 768. These new vocabulary entries are initialized using mean-based embedding initialization. For reference, Glot500 has 395M parameters and a 400K vocabulary~\cite{imanigooghari2023glot500}.
+
+\subsection{Training Configuration}
+Table~\ref{tab:hyperparams} lists all settings. Continued pretraining runs for \ptEpochsConfigured{} epochs with a learning rate of \ptLR{}, decayed linearly after a \ptWarmup{} warmup; we release the checkpoint with the lowest validation loss, reached at epoch \ptBestEpoch{} (step \ptBestStep; validation loss \ptBestLoss). Fine-tuning uses a learning rate of \ftLR{} with a \ftWarmup{} warmup followed by linear decay over \ftEpochs{} epochs. Both stages use sequences of maximum length \ptMaxLen, batch size \ptBatch, AdamW optimizer ($\beta_1$=\ptAdamBetaOne, $\beta_2$=\ptAdamBetaTwo, $\epsilon$=\ptAdamEps) with weight decay \ptWeightDecay, gradient clipping at \ptClip, and \ptPrecision{} mixed-precision training on a single \ptGPU{} (pretraining). During both stages, all parameters are trainable; pretraining uses \ptMLMProb{} MLM probability. For NER and SA, the fine-tuning epoch with the best validation score (macro-F1 for NER, accuracy for SA) is kept; for QA, the final epoch is used. Each VEXMLM downstream configuration is fine-tuned with five seeds (42--46), and we report the mean and standard deviation.
+
+\subsection{Datasets and Tasks}
+\label{sec:data}
+\paragraph{Pretraining data.} Continued pretraining uses one Amharic and one Tigrinya monolingual text file, taken from a prepared local collection whose original source is not documented. We could not identify the source: the files match no named corpus available to us, and manual samples contain religious translations alongside general web prose. Their licence is therefore unknown, and we do not redistribute them. After NFC normalization, removal of lines shorter than 10 characters or below 50\% Ge'ez characters, and exact deduplication, the Amharic file (\corpusAmhRaw{} lines) yields \corpusAmhKept{} lines and the Tigrinya file (\corpusTirRaw{} lines) \corpusTirKept{} lines; 2\% of each is held out as a development set (\corpusAmhDev{} and \corpusTirDev{} sentences), which we use for the intrinsic tokenizer evaluation, together with the words of the development set that do not occur in the training lines (\corpusAmhOOVWords{} Amharic and \corpusTirOOVWords{} Tigrinya OOV words). Stage 1 uses the remaining training lines, from which a further 1\% (\ptValLines{} lines) is held out for validation.
+
+We evaluate VEXMLM on NER and QA in Amharic and Tigrinya and on SA in Amharic. TIGQA, which lacks a standard split, is divided 80:10:10 by context (not by question, so no passage appears in two splits) with seed 42, giving \splitTigQATrain{}/\splitTigQAValidation{}/\splitTigQATest{} questions over 292/36/37 contexts. Our copy of TIGQA contains only the 797 span-extractable question--answer pairs over 365 contexts: as recorded in \texttt{datasets/cards/tigqa.md}, 1{,}039 abstractive and 272 unanswerable items were removed before we received the data, because their \texttt{answer\_start} of $-1$ means the answer does not occur verbatim in the context and cannot be scored by span-extraction EM/F1. These counts sum to 2{,}108, fewer than the 2{,}685 pairs of the published release~\cite{teklehaymanot2024tigqa}; we cannot account for the remaining items, because the preprocessing was done upstream of our pipeline and was not logged. The TIGQA scores below are therefore obtained on a reduced, span-extractable subset and are not comparable with results on the full release.
+
+\paragraph{Sentiment Analysis (SA).} We use the Amharic portion of AfriSenti~\cite{muhammad2023afrisenti}, a multilingual Twitter corpus with three-way sentiment labels (positive, negative, neutral) that covers 14 African languages (\splitSATrain{}/\splitSAValidation{}/\splitSATest{} train/dev/test tweets). This benchmark tests VEXMLM's ability to capture sentiment signals in noisy social media text.
+
+\paragraph{Named Entity Recognition (NER).} We evaluate on the Amharic portion of MasakhaNER~\cite{adelani2021masakhaner} (\splitNERAmhTrain{}/\splitNERAmhValidation{}/\splitNERAmhTest{} sentences), with BIO-tagged PER, LOC, ORG and DATE entities, and on the Tigrinya NER dataset~\cite{yohannes2022method} (\splitNERTirTrain{}/\splitNERTirValidation{}/\splitNERTirTest{} sentences), which additionally tags MISC entities. NER and SA scores are computed on the test splits.
+
+\paragraph{Question Answering (QA).} We use TIGQA~\cite{teklehaymanot2024tigqa}, an expert-annotated extractive QA dataset in Tigrinya (\splitTigQATrain{}/\splitTigQAValidation{}/\splitTigQATest{} questions), and AmQA~\cite{taffa2024low}, an extractive QA corpus for Amharic (\splitAmQATrain{}/\splitAmQAValidation{}/\splitAmQATest{} questions in the official release). QA scores are computed on the development splits, which our fine-tuning script uses for QA evaluation; because QA keeps the final fine-tuning epoch, these splits play no role in model selection and serve as held-out data. In the official AmQA release the development split is larger than the test split.
+
+\subsection{Baselines}
+We compare VEXMLM against XLM-R~\cite{conneau2020unsupervised}, the base model from which VEXMLM is derived, fine-tuned with identical hyperparameters and evaluation protocols. This baseline isolates the contribution of vocabulary expansion and continued pretraining. The XLM-R baseline of Table~\ref{tab:downstream} and Table~\ref{tab:appendix_f1} is a single run (seed 42); the XLM-R baseline of the OOV evaluation (Table~\ref{tab:oov}) and the ablation (Table~\ref{tab:ablation}) uses five seeds (42--46), like the other ablation arms. For the intrinsic tokenizer evaluation we additionally compare against the tokenizer of Glot500~\cite{imanigooghari2023glot500}, which provides a comparison against scale-oriented multilingual pretraining without Ge'ez-script-specific optimization.
+
+Additional African NLP models (e.g., AfroXLMR, AfriBERTa) are excluded from the comparison; their positioning relative to this work is discussed in Section~\ref{sec:discussion}.
+
+\subsection{Ablation Study Design}
+\label{sec:ablation_design}
+We conduct ablation experiments on Tigrinya NER to isolate the contribution of each component. Tigrinya is selected as the ablation target given its representation in both the expansion vocabulary and downstream tasks. We compare four models, each fine-tuned on Tigrinya NER with the Stage 2 settings and five seeds:
+\begin{enumerate}
+    \item \textbf{XLM-R (baseline)}: No vocabulary expansion, no continued pretraining.
+    \item \textbf{+VocabExp (Random Init)}: Vocabulary expanded with \vocabAdded{} new tokens, initialized from a zero-mean normal distribution with the standard deviation of the pretrained embeddings (\randInitStd). No continued pretraining.
+    \item \textbf{+VocabExp (Mean Init)}: Vocabulary expanded with \vocabAdded{} new tokens, mean-initialized (Equation~\ref{eq:mean}). No continued pretraining.
+    \item \textbf{VEXMLM (Full)}: Mean-initialized vocabulary expansion + continued pretraining.
+\end{enumerate}
+Models 2--4 share the same expanded tokenizer. The metric is token-level accuracy on out-of-vocabulary (OOV) words of the Tigrinya NER test split, with the repository's definition (\texttt{evaluation/run\_ner\_oov.py}): a word is OOV when the XLM-R tokenizer maps it to [UNK], cannot reproduce it on decoding, or splits it into more pieces than the expanded tokenizer. The set (\ablOOVTypes{} of the \ablWordTypes{} word types) is thus defined relative to the expanded tokenizer and includes words that XLM-R can represent but fragments more than VEXMLM; it is identical for all four models.

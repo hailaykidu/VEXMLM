@@ -1,0 +1,54 @@
+{
+ "note": "row counts per split as loaded by datasets/manager.py::DatasetManager.load, the loader used by finetuning/*/run_*.py",
+ "datasets": {
+  "afrisenti": {
+   "load_args": {
+    "config": "amh",
+    "local_path": "datasets/raw/afrisenti"
+   },
+   "splits": {
+    "train": 5984,
+    "validation": 1497,
+    "test": 1999
+   }
+  },
+  "masakhaner_amh": {
+   "load_args": {},
+   "splits": {
+    "train": 1750,
+    "validation": 250,
+    "test": 500
+   }
+  },
+  "tigrinya_ner": {
+   "load_args": {
+    "local_path": "datasets/raw/tigrinya_ner"
+   },
+   "splits": {
+    "train": 4562,
+    "validation": 570,
+    "test": 571
+   }
+  },
+  "amqa": {
+   "load_args": {
+    "local_path": "datasets/raw/amqa"
+   },
+   "splits": {
+    "train": 1723,
+    "validation": 600,
+    "test": 299
+   }
+  },
+  "tigqa": {
+   "load_args": {
+    "local_path": "datasets/raw/tigqa"
+   },
+   "splits": {
+    "train": 644,
+    "validation": 67,
+    "test": 86
+   }
+  }
+ }
+}

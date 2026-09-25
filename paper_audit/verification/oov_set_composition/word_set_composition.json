@@ -1,0 +1,47 @@
+{
+ "word_types": 4677,
+ "oov_word_types": 3491,
+ "oov_types_by_clause": {
+  "more_pieces": 3491
+ },
+ "token_totals": {
+  "oov": 7194,
+  "non_oov": 3624
+ },
+ "stored_totals": {
+  "oov": 7194,
+  "non_oov": 3624
+ },
+ "gold_tag_counts": {
+  "oov": {
+   "B-DATE": 182,
+   "B-LOC": 163,
+   "B-MISC": 36,
+   "B-ORG": 113,
+   "B-PER": 110,
+   "I-DATE": 124,
+   "I-LOC": 40,
+   "I-MISC": 25,
+   "I-ORG": 114,
+   "I-PER": 58,
+   "O": 6229
+  },
+  "non_oov": {
+   "B-DATE": 60,
+   "B-LOC": 164,
+   "B-MISC": 12,
+   "B-ORG": 68,
+   "B-PER": 74,
+   "I-DATE": 105,
+   "I-LOC": 38,
+   "I-MISC": 10,
+   "I-ORG": 106,
+   "I-PER": 75,
+   "O": 2912
+  }
+ },
+ "entity_share_pct": {
+  "oov": 13.4,
+  "non_oov": 19.6
+ }
+}

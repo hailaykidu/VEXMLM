@@ -1,0 +1,21 @@
+\section{Additional Downstream Metrics}
+
+Table~\ref{tab:appendix_f1} reports macro-F1 for NER and SA and entity-level F1 for NER, complementing the accuracy scores in Table~\ref{tab:downstream}.
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{llcc}
+\toprule
+\textbf{Task (Metric)} & \textbf{Dataset} & \textbf{XLM-R}$^\ast$ & \textbf{VEXMLM} \\
+\midrule
+\inputtable{generated/table_appendix_f1.tex}
+\bottomrule
+\end{tabular}
+\caption{Macro-F1 and entity-level F1 (fractions) on the test splits. VEXMLM: mean $\pm$ standard deviation over five seeds. $^\ast$XLM-R: single run (seed 42). Bold marks the higher score where the difference exceeds one standard deviation of VEXMLM.}
+\label{tab:appendix_f1}
+\end{table}
+
+\section{Reproducibility}
+Code, configurations and result files are available at \url{https://github.com/hailaykidu/VEXMLM} (release tag \texttt{v1.1-correction}); the released model is \url{https://huggingface.co/Hailay/VEXMLM}. Every result number, table and figure in this paper is generated from the stored result files by \texttt{scripts/make\_paper\_artifacts.py}, which reads the result files written by \texttt{evaluation/export\_spm\_results.py} (\texttt{results/downstream\_task\_metrics.csv}) and \texttt{evaluation/aggregate\_ablation.py} (\texttt{results/table5\_ablation.csv}); \texttt{REPRODUCE.md} maps each table and figure to its producing script, configuration and command, and records where \texttt{scripts/reproduce\_paper.sh} differs from the commands that produced the released artifacts.
