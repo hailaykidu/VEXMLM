@@ -7,7 +7,7 @@
 | Languages | amh |
 | Version | lgse-lapt-200k |
 | Licence | UNKNOWN — blocker |
-| Source | https://github.com/asmelashteka/HornMT |
+| Source | undocumented (HornMT ruled out; see `docs/DATASET_PROVENANCE.md`) |
 | Hub ID | **none — local copy** |
 | Imported from | `<external>/lgse-repro/data/lapt` |
 | Imported on | 2026-08-14T20:44:48 |
