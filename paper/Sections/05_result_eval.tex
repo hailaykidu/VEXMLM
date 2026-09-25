@@ -1,6 +1,6 @@
 \section{Results and Evaluation}
 
-We evaluate VEXMLM using intrinsic tokenization quality metrics and extrinsic downstream task performance on Amharic and Tigrinya. All results are reported exactly as in the repository's result files and the released model cards: NER and SA accuracy and F1 as fractions with four decimals, QA Exact Match and F1 and the ablation accuracies as percentages with two decimals, and tokenizer metrics with four decimals. VEXMLM scores are means $\pm$ sample standard deviations over five seeds; differences are computed from unrounded means, as in the repository's tables, so they can differ by one unit in the last decimal from differences of the displayed values.
+We evaluate VEXMLM using intrinsic tokenization quality metrics and extrinsic downstream task performance on Amharic and Tigrinya. NER and SA accuracy and F1 are given as fractions to four decimals, QA Exact Match and F1 and the ablation accuracies as percentages to two decimals, and tokenizer metrics to four decimals. VEXMLM scores are means $\pm$ sample standard deviations over five seeds, and differences are computed from unrounded means, so they may differ by one unit in the last decimal from differences of the displayed values.
 
 \subsection{Intrinsic Evaluation: Tokenization Quality}
 Table~\ref{tab:tokenizer} compares the tokenizers of XLM-R, Glot500 and VEXMLM on the held-out Amharic and Tigrinya development sentences (\corpusAmhDev{} and \corpusTirDev{}). We do not report parity~\cite{petrov2023language}, which requires a sentence-aligned parallel corpus that was not available.
@@ -16,7 +16,7 @@ Table~\ref{tab:tokenizer} compares the tokenizers of XLM-R, Glot500 and VEXMLM o
 \inputtable{generated/table_tokenizer.tex}
 \bottomrule
 \end{tabular}
-\caption{Tokenizer metrics on held-out Amharic and Tigrinya text: fertility (tokens per word, lower is better), compression (characters per token, higher is better) and the share of OOV words (development-set words absent from the training lines) that the tokenizer reproduces exactly on decoding. Bold indicates the best fertility and compression. The XLM-R and VEXMLM columns come from \texttt{results/spmerge\_tokenizer\_metrics.json}; the Glot500 column comes from the earlier run \texttt{results/provenance/tokenizer\_metrics\_2026-08-15.json}, which measures the same development sets and reports identical XLM-R values. That earlier file also holds a superseded expanded-vocabulary variant, built with \texttt{add\_tokens} rather than SentencePiece merging, which is not the released model and is not reported here.}
+\caption{Tokenizer metrics on held-out Amharic and Tigrinya text: fertility (tokens per word, lower is better), compression (characters per token, higher is better) and the share of OOV words (development-set words absent from the training lines) that the tokenizer reproduces exactly on decoding. Bold indicates the best fertility and compression. All three tokenizers are measured on the same development sets; the XLM-R and VEXMLM values are recorded in \texttt{results/spmerge\_tokenizer\_metrics.json} and the Glot500 values in \texttt{results/provenance/tokenizer\_metrics\_2026-08-15.json}, which agree on XLM-R.}
 \label{tab:tokenizer}
 \end{table}
 
