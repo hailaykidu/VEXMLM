@@ -67,20 +67,40 @@ re-running it; the verification is noted.
 | Tokenizer metrics | command in `paper_audit/verification/tokenizer_rerun/README.md` | stored results `results/spmerge_tokenizer_metrics.json` and `results/provenance/tokenizer_metrics_2026-08-15.json`; re-run 2026-09-24: identical |
 | Aggregation | `python3 evaluation/export_spm_results.py`; `python3 evaluation/aggregate_ablation.py`; `python3 scripts/make_paper_artifacts.py` | `results/downstream_task_metrics.csv`, `results/table5_ablation.csv`, `paper/generated/` |
 
-`scripts/reproduce_paper.sh` (the one-command pipeline in the repository) does **not** run these
-exact commands, and should not be used to reproduce the paper's numbers as is:
+`scripts/reproduce_paper.sh` (the one-command pipeline in the repository) issues the commands
+above. Print them all without running anything with:
+
+```bash
+bash scripts/reproduce_paper.sh --dry-run
+```
+
+Until 2026-09-25 the script ran a different configuration from the released one — the raw corpus
+files instead of the training splits, 15,000 candidate tokens instead of 20,000, the
+`checkpoints/vexmlm-expanded` / `-stage1` names of the superseded `add_tokens` path, the
+`configs/base.yaml` default of 10 epochs instead of 60, no `--block-chunk` and no `--mode
+official`, no random-init ablation model, and `evaluation/generate_tables.py` for the tables. It
+therefore reproduced the abandoned run while appearing to succeed. The script now issues the
+recorded commands. The released artifacts are unchanged and were **not** re-run.
+
+Three differences from the released run remain, by design:
 
 | Step | `reproduce_paper.sh` | Released artifact |
 |---|---|---|
-| Tokenizer and Stage 1 input | raw files `datasets/raw/{amharic,tigrinya}/*.txt` | training splits `datasets/processed/*.train.txt` |
-| Candidate tokens | `--max-new-tokens 15000` | 20,000 per language |
-| Checkpoint names | `checkpoints/vexmlm-expanded`, `checkpoints/vexmlm-stage1` | `checkpoints/vexmlm-expanded-spm`, `checkpoints/vexmlm-stage1-spm` |
-| Stage 1 epochs | `configs/base.yaml` default (10) | 60 (`--override`), checkpoint of epoch 56 released |
-| Stage 1 options | no `--block-chunk`, no `--mode official` | both |
-| Random-init ablation model | not built | `--init random` (see above) |
-| Stage 2 | no `--mode official`; outputs `checkpoints/{qa,ner,sa}-*` | `scripts/slurm_stage2_spm_seeds.sh` |
-| Tokenizer metrics | XLM-R and expanded model only, no OOV word lists | XLM-R, Glot500 and `vexmlm-stage1-spm`, with OOV word lists |
-| Tables | `evaluation/generate_tables.py` | commands in the Aggregation row above |
+| Output location | everything under `--run-root` (default `runs/repro/`) | `checkpoints/…`, `results/`, `logs/` |
+| Stage 2 launcher | the runners in a loop over seeds | `sbatch scripts/slurm_stage2_spm_seeds.sh` (same runners, same flags) |
+| Tokenizer metrics | XLM-R and the expanded model | XLM-R, Glot500 and `vexmlm-stage1-spm`, with OOV word lists |
+
+The output location is deliberate. The script must not write into the released run's directories,
+so that the experimental record of the original run stays exactly as it is: a re-run produces a
+parallel set of artifacts under `runs/` (git-ignored) for comparison, and never edits, overwrites
+or relabels the originals. `--run-root` refuses `checkpoints/`, `results/`, `logs/`,
+`tokenizer/artifacts/`, `vocabulary_expansion/artifacts/`, `datasets/processed/` and the
+repository root, and `--dry-run` writes nothing at all.
+
+The pipeline cannot in any case be executed end to end outside the original environment: the
+pretraining text is of undocumented origin and unknown licence and is not redistributed
+(`docs/DATASET_PROVENANCE.md`). The script's value is as an accurate specification of what was
+run, which `--dry-run` prints in full.
 
 ## 4. Data
 

@@ -61,3 +61,7 @@ results/multilingual_evaluation/**/training_args.bin
 # Hugging Face verification job: scratch download dir and private report
 .hf_verify_*/
 hf_downstream_release_report.txt
+
+# Output of scripts/reproduce_paper.sh. Kept out of the repository so a
+# re-run never touches the released run's artifacts or its record.
+runs/

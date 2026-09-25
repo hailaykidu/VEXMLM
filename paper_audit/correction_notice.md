@@ -190,6 +190,8 @@ Fixes for the points raised in an external review of the corrected draft against
 | X-9 | `README.md`, `CITATION.cff` | README BibTeX still carried the superseded title; `CITATION.cff` at version 1.0.0 | BibTeX uses the corrected title and notes the original; version bumped to 1.1.0 | commit `9eeaedc` |
 | X-10 | `README.md` | Dead link to `docs/RELEASE_CHECKLIST.md` | Points to `docs/DATASET_REDISTRIBUTION.md`, which tracks the unresolved dataset licences | `docs/DATASET_REDISTRIBUTION.md` |
 
+| X-11 | `scripts/reproduce_paper.sh` | The one-command pipeline ran the superseded configuration — raw corpus files, 15,000 candidates, the `vexmlm-expanded` / `-stage1` (`add_tokens`) names, 10 epochs, no `--block-chunk`, no `--mode official`, no random-init arm — and so reproduced the abandoned run while appearing to succeed | The script now issues the commands recorded in `REPRODUCE.md` §3, verified with `--dry-run` (37 commands: training splits, 20,000 candidates, `sentencepiece_merge`, both expansion arms, 60 epochs, `--block-chunk`, `--mode official` on Stage 1 and all 25 fine-tuning runs). Outputs go under `--run-root` (default `runs/repro/`, git-ignored) and the option refuses any path of the released run, so the original artifacts and their record are untouched; `--dry-run` writes nothing. The released artifacts were **not** re-run | `REPRODUCE.md` §3 |
+
 Two review points needed no change. Table 6's duplicated row was a defect of the published PDF
 only; the regenerated `paper/generated/table_appendix_f1.tex` carries MasakhaNER Macro-F1 0.7423
 and Entity-F1 0.6347, as the repository CSV does. The `macro 2945.07` aggregation bug was in a
