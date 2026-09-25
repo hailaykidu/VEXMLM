@@ -278,12 +278,16 @@ pytest tests/test_geez.py -v   # script handling and encoding checks
 
 ```bibtex
 @inproceedings{teklehaymanot2026vexmlm,
-  title     = {Expanding the Lexicon of Ge'ez Based African Languages:
-               A Comparative Study of Amharic and Tigrinya},
+  title     = {Vocabulary Expansion for Low-Resource African Languages:
+               A Case Study in Amharic and Tigrinya},
   author    = {Teklehaymanot, Hailay},
   booktitle = {Proceedings of the Workshop on Language Models for
                Underserved Communities (LM4UC), IJCAI 2026},
-  year      = {2026}
+  year      = {2026},
+  note      = {Corrected version. Originally published as
+               ``Expanding the Lexicon of Ge'ez Based African Languages:
+               A Comparative Study of Amharic and Tigrinya''; see
+               the correction notice for the affected tables.}
 }
 ```
 
@@ -293,4 +297,4 @@ pytest tests/test_geez.py -v   # script handling and encoding checks
 
 Apache-2.0 for the code. Dataset licences are recorded per dataset in
 `datasets/registry.py` and `datasets/cards/`; several are unresolved and are
-tracked in `docs/RELEASE_CHECKLIST.md`.
+tracked in `docs/DATASET_REDISTRIBUTION.md`.

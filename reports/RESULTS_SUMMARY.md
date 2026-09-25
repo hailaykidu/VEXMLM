@@ -8,8 +8,8 @@ subword vocabulary (30,000 Ge'ez-script tokens merged natively into the
 SentencePiece model), `global_mean` embedding initialization, then continued MLM
 pretraining.
 
-**Protocol.** Seeds 42–46, configuration hash `ce27cc194946`, one A100-PCIE-40GB,
-bf16. Fine-tuning is bit-reproducible (`enable_full_determinism`,
+**Protocol.** Seeds 42–46, configuration hash `ce27cc194946`, one NVIDIA A100 80GB
+PCIe (`results/gpu_environment.json`, SLURM job 60674), bf16. Fine-tuning is bit-reproducible (`enable_full_determinism`,
 `CUBLAS_WORKSPACE_CONFIG=:4096:8`, `dataloader_num_workers=0`).
 
 ---
