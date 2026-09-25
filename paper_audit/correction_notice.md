@@ -152,7 +152,7 @@ vocabularies and global-mean initialization all describe the released SP-Merge m
 | S-3 | Sec. 4.3 | AfriSenti (14 languages) and MasakhaNER (10 languages) described as evaluation data | only the Amharic subsets are used | `scripts/slurm_stage2_spm_seeds.sh` |
 | S-4 | Sec. 4.4 | Glot500 as a downstream baseline "under identical fine-tuning hyperparameters" | Glot500 is used only for the tokenizer comparison | T4-3/6/9/12 |
 | S-5 | Figure 2 | vocabulary size per language, including a series labelled "xlm-roberta-large" | removed; no generating script, and the base model is xlm-roberta-base | — |
-| S-8 | Reproducibility section | — | Repository release tag `v1.1-correction` named (to be created by the authors) | — |
+| S-8 | Reproducibility section | — | Repository release tag `v1.1-correction` named; created at commit `a7b257b` (see X-1) | — |
 | S-6 | Abstract resources link | `huggingface.co/collections/Hailay/vexmlm` | `huggingface.co/Hailay/VEXMLM` (collection link returns 404) | checked 2026-09-24 |
 | S-7 | Limitations | — | added: single-seed XLM-R baseline; OOV set defined relative to the expanded tokenizer; small QA development sets | — |
 
@@ -172,6 +172,29 @@ vocabularies and global-mean initialization all describe the released SP-Merge m
 | K-10 | Reproducibility (REPRODUCE.md) | One-command pipeline `scripts/reproduce_paper.sh` implied to reproduce the paper | The exact commands behind each released artifact are listed; `reproduce_paper.sh` differs in nine settings (e.g. 15,000 vs 20,000 candidate tokens, raw vs training-split input, 10 vs 60 epochs) and is flagged as not reproducing the paper as is. The implementation itself is unchanged | `REPRODUCE.md` §3; token lists re-generated with the listed commands are identical to the released ones |
 | K-11 | All results | Values rounded for the paper (one decimal, differences between displayed values) | Every result is given exactly as in the public artifacts — `results/downstream_task_metrics.csv`, `results/table5_ablation.csv`, `results/spmerge_tokenizer_metrics.json` on GitHub and the Hugging Face model card — with their precision and units; differences are computed from unrounded means, as there. `paper_audit/check_public_consistency.py` confirms 37 paper values against both | `paper_audit/check_public_consistency.py` |
 | K-12 | All results | Some values were read from computations made during the correction (a tokenizer re-run, parameter counting, split re-counting, a QA span check, an OOV-set analysis) | Every number now comes from stored results of earlier runs: GitHub `origin/main`, the Hugging Face card, or unchanged copies of earlier local run records (2026-08-14 to 08-17). Claims that rested only on the correction-time analyses (clause counts, tag-mix shares, O-tag share, QA span check, XLM-R parameter count) are removed; those runs are kept as verification in `paper_audit/verification/`. `paper_audit/check_result_provenance.py` confirms all 73 source files | `paper_audit/check_result_provenance.py` |
+
+## External review pass (2026-09-25)
+
+Fixes for the points raised in an external review of the corrected draft against the repository.
+
+| ID | Location | Earlier wording / state | Corrected | Source |
+|---|---|---|---|---|
+| X-1 | Reproducibility | `v1.1-correction` named but never created; a reader following it got a 404 | Tag created and pushed at commit `a7b257b` | `git ls-remote --tags origin` |
+| X-2 | Reproducibility | `scripts/make_paper_artifacts.py` named but not in the repository | Script published on `main`; the section also names the upstream generators it reads (`evaluation/export_spm_results.py`, `evaluation/aggregate_ablation.py`) | commit `a7b257b` |
+| X-3 | Reproducibility | `REPRODUCE.md` named but not in the repository | Published on `main`, together with `paper/` and `paper_audit/` | commit `a7b257b` |
+| X-4 | Sec. 4.4, Limitations | "The downstream XLM-R baseline was run with a single seed (42)" — too broad; the OOV and ablation tables use five XLM-R seeds | Single seed (42) for Tables 4 and 6; five seeds (42–46) for the OOV and ablation tables | `results/ablation/xlmr_baseline-seed42..46.json` |
+| X-5 | Sec. 4.3 | TIGQA described only as lacking a standard split | The 80:10:10 split by context (seed 42) is stated, with the upstream exclusion of 1,039 abstractive and 272 unanswerable items, the fact that 797+1,039+272 = 2,108 falls short of the 2,685 pairs of the published release, and that the remainder cannot be accounted for because the preprocessing was upstream and unlogged. The TIGQA scores are flagged as obtained on a reduced, span-extractable subset | `datasets/cards/tigqa.md`, `docs/DATASET_PROVENANCE.md` |
+| X-6 | Table 2 caption | Column sources not given; `results/spmerge_tokenizer_metrics.json` holds no Glot500 entry | Caption names both files: XLM-R and VEXMLM from `spmerge_tokenizer_metrics.json`, Glot500 from the earlier `results/provenance/tokenizer_metrics_2026-08-15.json`, which measures the same development sets and reports identical XLM-R values (2.0692 / 3.1300); that file's superseded `add_tokens` variant is flagged as not reported | both result files |
+| X-7 | `configs/base.yaml` | Header claimed every value follows paper Table 1, while `pretraining.num_train_epochs` is 10 and the released run used 60 — so `scripts/reproduce_paper.sh` silently ran the abandoned configuration | Header and both fields annotated: 10 is this file's default, not the released run, which used `--override pretraining.num_train_epochs=60` (best epoch 56); `target_vocab_size: 280000` is nominal against the released 280,002. No value changed | `REPRODUCE.md` Stage 1; `results/provenance/training_args.json` |
+| X-8 | `reports/RESULTS_SUMMARY.md` | "one A100-PCIE-40GB", contradicting the model card and the paper | "one NVIDIA A100 80GB PCIe", with the run record cited | `results/gpu_environment.json` (SLURM job 60674) |
+| X-9 | `README.md`, `CITATION.cff` | README BibTeX still carried the superseded title; `CITATION.cff` at version 1.0.0 | BibTeX uses the corrected title and notes the original; version bumped to 1.1.0 | commit `9eeaedc` |
+| X-10 | `README.md` | Dead link to `docs/RELEASE_CHECKLIST.md` | Points to `docs/DATASET_REDISTRIBUTION.md`, which tracks the unresolved dataset licences | `docs/DATASET_REDISTRIBUTION.md` |
+
+Two review points needed no change. Table 6's duplicated row was a defect of the published PDF
+only; the regenerated `paper/generated/table_appendix_f1.tex` carries MasakhaNER Macro-F1 0.7423
+and Entity-F1 0.6347, as the repository CSV does. The `macro 2945.07` aggregation bug was in a
+`MULTILINGUAL_RESULTS.md` that is no longer in the tree; `results/multilingual_evaluation/`
+remains labelled "Not paper results" and is never pooled with them.
 
 ## Not changed
 Architecture (12 layers, hidden size 768, 12 heads), SentencePiece vocabulary sizes (32,000 / 50,000),
