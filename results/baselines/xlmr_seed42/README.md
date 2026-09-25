@@ -22,4 +22,3 @@ Caveats for any comparison:
 - One seed only. VEXMLM results are means over seeds 42–46.
 - Run on 2026-08-15, before commit `f117c33` (2026-08-16) made fine-tuning bit-reproducible
   (`enable_full_determinism`). Re-running seed 42 now may differ slightly.
-- A five-seed replacement is prepared but not run: `scripts/slurm_xlmr_baseline_5seeds.sh`.
