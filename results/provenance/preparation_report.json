@@ -1,0 +1,26 @@
+{
+  "amharic": {
+    "language": "amharic",
+    "files": 1,
+    "lines_read": 200002,
+    "kept": 129402,
+    "train": 126814,
+    "dev": 2588,
+    "oov_words": 2414,
+    "dropped_short": 263,
+    "dropped_low_ethiopic": 267,
+    "dropped_duplicate": 70070
+  },
+  "tigrinya": {
+    "language": "tigrinya",
+    "files": 1,
+    "lines_read": 200000,
+    "kept": 140583,
+    "train": 137772,
+    "dev": 2811,
+    "oov_words": 3021,
+    "dropped_short": 1,
+    "dropped_low_ethiopic": 252,
+    "dropped_duplicate": 59164
+  }
+}

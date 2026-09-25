@@ -1,0 +1,51 @@
+{
+  "stage": "pretraining",
+  "seed": 42,
+  "model": "checkpoints/vexmlm-expanded-spm",
+  "output": "checkpoints/vexmlm-stage1-spm",
+  "metrics": {
+    "eval_loss": 3.729891061782837,
+    "eval_runtime": 0.842,
+    "eval_samples_per_second": 168.643,
+    "eval_steps_per_second": 5.938,
+    "epoch": 60.0,
+    "perplexity": 41.674567963598115,
+    "train_train_runtime": 6830.8728,
+    "train_train_samples_per_second": 124.385,
+    "train_train_steps_per_second": 3.891,
+    "train_total_flos": 1.121428914213888e+17,
+    "train_train_loss": 4.225897185797078,
+    "train_epoch": 60.0
+  },
+  "hardware": {
+    "device_type": "cuda",
+    "device_count": 1,
+    "device_names": [
+      "NVIDIA A100 80GB PCIe"
+    ],
+    "total_vram_gb": [
+      79.27
+    ],
+    "cuda_version": "11.8",
+    "torch_version": "2.5.1+cu118",
+    "bf16_supported": true,
+    "fp16_supported": true,
+    "capability": [
+      "8.0"
+    ],
+    "distributed": false,
+    "world_size": 1,
+    "local_rank": 0,
+    "utilization": [
+      {
+        "index": 0,
+        "name": "NVIDIA A100 80GB PCIe",
+        "util_pct": 0.0,
+        "mem_used_mb": 4.0,
+        "mem_total_mb": 81920.0,
+        "temp_c": 32.0
+      }
+    ]
+  },
+  "effective_batch_size": 32
+}

@@ -1,0 +1,36 @@
+{
+  "spec": {
+    "language": "amh",
+    "vocab_size": 32000,
+    "model_type": "unigram",
+    "character_coverage": 0.9995,
+    "min_sentence_length": 10,
+    "min_ethiopic_ratio": 0.5,
+    "normalization": "NFC",
+    "deduplicate": true,
+    "seed": 42,
+    "input_sentence_size": 0,
+    "extra": {}
+  },
+  "corpus": {
+    "input_files": [
+      "datasets/processed/amharic.train.txt"
+    ],
+    "lines_read": 126814,
+    "lines_kept": 126814,
+    "duplicates_dropped": 0,
+    "too_short_dropped": 0,
+    "low_ethiopic_dropped": 0,
+    "chars_kept": 5992044,
+    "sha256": "3ac0839f39abeebaa45a08aebc40a96c3ed520fb4a05fb65f7f996323c4852eb"
+  },
+  "vocabulary": {
+    "model": "tokenizer/artifacts/amharic/amharic_sp.model",
+    "piece_size": 32000,
+    "ethiopic_pieces": 29259,
+    "ethiopic_fraction": 0.9143,
+    "mean_ethiopic_piece_len": 4.17,
+    "max_ethiopic_piece_len": 11,
+    "sha256": "2a3ba832bf4f2f8d8bcb6c386e5960294302b5d573de852a75d737f1707a6cbc"
+  }
+}

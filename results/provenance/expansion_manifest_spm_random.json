@@ -1,0 +1,25 @@
+{
+  "base_model": "xlm-roberta-base",
+  "base_vocab_size": 250002,
+  "final_vocab_size": 280002,
+  "candidates_supplied": 30000,
+  "tokens_added": 30000,
+  "duplicates_skipped": 0,
+  "integration": "sentencepiece_merge",
+  "initialization": {
+    "strategy": "random",
+    "n_new": 30000,
+    "hidden_size": 768,
+    "new_norm_mean": 5.8732,
+    "new_perdim_std": 0.212,
+    "dist_to_global_mean_mean": 6.4222,
+    "dist_to_global_mean_min": 5.7739,
+    "dist_to_global_mean_max": 7.1316,
+    "old_norm_mean": 5.8657,
+    "old_perdim_std": 0.212,
+    "fallback_count": 0
+  },
+  "seed": 42,
+  "encoding_gate": "enforced",
+  "new_tokens_source": "vocabulary_expansion/artifacts/new_tokens.json"
+}
