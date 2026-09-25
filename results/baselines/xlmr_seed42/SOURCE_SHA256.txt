@@ -1,0 +1,5 @@
+73c8932cb058a656 checkpoints/baseline-xlmr-phase-a/afrisenti-seed42/results.json
+78032a0e8eb6d07c checkpoints/baseline-xlmr-phase-a/amqa-seed42/results.json
+abe1f7938e7992d6 checkpoints/baseline-xlmr-phase-a/masakhaner_amh-seed42/results.json
+e8070b9bb10cb612 checkpoints/baseline-xlmr-phase-a/tigqa-seed42/results.json
+a3c06424a67bf694 checkpoints/baseline-xlmr-phase-a/tigrinya_ner-seed42/results.json

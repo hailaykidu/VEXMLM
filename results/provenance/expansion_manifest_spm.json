@@ -1,0 +1,38 @@
+{
+  "base_model": "xlm-roberta-base",
+  "base_vocab_size": 250002,
+  "final_vocab_size": 280002,
+  "candidates_supplied": 30000,
+  "tokens_added": 30000,
+  "duplicates_skipped": 0,
+  "integration": "sentencepiece_merge",
+  "initialization": {
+    "strategy": "global_mean",
+    "n_new": 30000,
+    "hidden_size": 768,
+    "new_norm_mean": 2.5981,
+    "new_perdim_std": 0.0931,
+    "dist_to_global_mean_mean": 0.0,
+    "dist_to_global_mean_min": 0.0,
+    "dist_to_global_mean_max": 0.0,
+    "old_norm_mean": 5.8657,
+    "old_perdim_std": 0.212,
+    "fallback_count": 0
+  },
+  "seed": 42,
+  "encoding_gate": "enforced",
+  "new_tokens_source": "vocabulary_expansion/artifacts/new_tokens.json",
+  "firing_verification": {
+    "sentences": 2000,
+    "tokens": 26739,
+    "new_token_firings": 12095,
+    "new_token_share": 0.452336,
+    "status": "OK"
+  },
+  "roundtrip_verification": {
+    "sentences": 300,
+    "roundtrip_ok": 300,
+    "roundtrip_rate": 1.0,
+    "examples": []
+  }
+}

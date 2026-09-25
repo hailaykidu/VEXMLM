@@ -1,0 +1,11 @@
+{
+  "task": "qa",
+  "dataset": "tigqa",
+  "seed": 42,
+  "model": "xlm-roberta-base",
+  "metrics": {
+    "exact_match": 13.432835820895523,
+    "f1": 27.896320097812634,
+    "n_questions": 67
+  }
+}

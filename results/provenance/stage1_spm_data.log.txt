@@ -1,0 +1,16 @@
+2026-08-15 14:46:01,487 INFO corpus: amharic=126814 tigrinya=137772 lines
+2026-08-15 14:46:01,543 INFO upsampled (alpha=0.50): amharic=129552 tigrinya=135034
+2026-08-15 14:46:08,344 INFO block-chunked train: 261941 lines -> 14161 blocks of 256 tokens
+2026-08-15 14:46:08,344 INFO block-chunked validation: 2645 lines -> 142 blocks of 256 tokens
+2026-08-15 14:46:08,379 INFO tokenized: train=14161 val=142
+srun python3 pretraining/run_mlm.py \
+  --config configs/base.yaml \
+  --model checkpoints/vexmlm-expanded-spm \
+  --amharic datasets/processed/amharic.train.txt \
+  --tigrinya datasets/processed/tigrinya.train.txt \
+  --block-chunk \
+  --mode official \
+  --output checkpoints/vexmlm-stage1-spm \
+  --override pretraining.num_train_epochs=60 \
+             pretraining.save_total_limit=1 \
+             pretraining.logging_steps=50

@@ -1,0 +1,34 @@
+{
+  "task": "sentiment",
+  "dataset": "afrisenti",
+  "config": null,
+  "seed": 42,
+  "model": "xlm-roberta-base",
+  "metrics": {
+    "eval_loss": 0.8503439426422119,
+    "eval_accuracy": 0.6092184368737475,
+    "eval_macro_f1": 0.5825155911115859,
+    "eval_weighted_f1": 0.6038257391079612,
+    "eval_macro_precision": 0.5910749751737835,
+    "eval_macro_recall": 0.5796298876195783,
+    "eval_runtime": 0.7714,
+    "eval_samples_per_second": 1940.56,
+    "eval_steps_per_second": 60.926,
+    "epoch": 4.0,
+    "test_loss": 1.0624303817749023,
+    "test_accuracy": 0.5072536268134067,
+    "test_macro_f1": 0.5035507380544129,
+    "test_weighted_f1": 0.5649543716820293,
+    "test_macro_precision": 0.6001094987598408,
+    "test_macro_recall": 0.6112824791754182,
+    "test_runtime": 0.9277,
+    "test_samples_per_second": 2154.769,
+    "test_steps_per_second": 67.909,
+    "test_epoch": 4.0
+  },
+  "labels": [
+    "negative",
+    "neutral",
+    "positive"
+  ]
+}

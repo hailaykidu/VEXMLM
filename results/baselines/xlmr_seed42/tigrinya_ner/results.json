@@ -1,0 +1,43 @@
+{
+  "task": "ner",
+  "dataset": "tigrinya_ner",
+  "seed": 42,
+  "model": "xlm-roberta-base",
+  "metrics": {
+    "eval_loss": 0.19327512383460999,
+    "eval_accuracy": 0.9404707806961737,
+    "eval_macro_f1": 0.7778791647872857,
+    "eval_weighted_f1": 0.9402748885170397,
+    "eval_entity_f1": 0.6827067669172934,
+    "eval_entity_precision": 0.670935960591133,
+    "eval_entity_recall": 0.6948979591836735,
+    "eval_runtime": 0.5941,
+    "eval_samples_per_second": 959.492,
+    "eval_steps_per_second": 30.3,
+    "epoch": 4.0,
+    "test_loss": 0.19226263463497162,
+    "test_accuracy": 0.943057866518765,
+    "test_macro_f1": 0.7874769190766209,
+    "test_weighted_f1": 0.9429252775747101,
+    "test_entity_f1": 0.6817496229260935,
+    "test_entity_precision": 0.6752988047808764,
+    "test_entity_recall": 0.6883248730964467,
+    "test_runtime": 0.541,
+    "test_samples_per_second": 1055.428,
+    "test_steps_per_second": 33.271,
+    "test_epoch": 4.0
+  },
+  "labels": [
+    "O",
+    "B-DATE",
+    "B-LOC",
+    "B-MISC",
+    "B-ORG",
+    "B-PER",
+    "I-DATE",
+    "I-LOC",
+    "I-MISC",
+    "I-ORG",
+    "I-PER"
+  ]
+}

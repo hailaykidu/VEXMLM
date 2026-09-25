@@ -1,0 +1,11 @@
+{
+  "task": "qa",
+  "dataset": "amqa",
+  "seed": 42,
+  "model": "xlm-roberta-base",
+  "metrics": {
+    "exact_match": 41.5,
+    "f1": 58.46030215864316,
+    "n_questions": 600
+  }
+}
