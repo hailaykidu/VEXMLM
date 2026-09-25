@@ -2,7 +2,7 @@
 
 **Version**: 1.0
 **Date**: 2026-08-15
-**Paper**: *Expanding the Lexicon of Ge'ez Based African Languages: A Comparative Study of Amharic and Tigrinya*
+**Paper**: *Vocabulary Expansion for Low-Resource African Languages: A Case Study in Amharic and Tigrinya* (corrected version of the paper published as *Expanding the Lexicon of Ge'ez Based African Languages: A Comparative Study of Amharic and Tigrinya*)
 
 > ⚠️ Reconcile the title across README, BibTeX, and `CITATION.cff` before
 > release — the release brief uses *"VEXMLM: Expanding the Lexicon of Ge'ez-Based
