@@ -28,7 +28,8 @@ Every substantive content change, its reason and its evidence is a row of `corre
 | Font: Times New Roman if installed, else Nimbus Roman; `inconsolata` only if installed | Neither is installed on the build machine |
 | Bibliography reconstructed from the published list; two garbled entries corrected; three flagged | See `draft_audit.md` §6 |
 
-## Repository additions (uncommitted)
+## Repository additions
+Committed in `a7b257b` and pushed to `main` on 2026-09-25:
 `paper/`, `paper_audit/`, `REPRODUCE.md`, `scripts/make_paper_artifacts.py`,
 `scripts/slurm_xlmr_baseline_5seeds.sh` (not run), `tests/test_paper_artifacts.py`,
 `results/baselines/xlmr_seed42/`, `results/provenance/` (copies of earlier run records), `paper_audit/`
@@ -38,6 +39,18 @@ fix was drafted and reverted: the implementation is documented, not changed). Th
 (`evaluation/run_intrinsic.py`, as instructed), parameter counting, dataset row counting, the QA
 span check, the word-set composition count and a re-run of token selection (identical output);
 no training or fine-tuning was run.
+
+## Later additions (2026-10-10)
+Two notes compiled from stored run outputs. No experiment was run for either.
+
+| File | Content |
+|---|---|
+| `related_artifacts.md` | The three public Hugging Face models of the same author (`TigRoberta`, `EXLMR`, `FT_EXLMR`), their revision histories, and why none is a result of this paper |
+| `tigqa_em_analysis.md` | What the TIGQA EM figure of `2.39 ± 0.82` is, and why its resolution (67 scored questions, 1.49 points per question) cannot support a causal conclusion |
+
+Neither changes a result value. `tigqa_em_analysis.md` records one correction to an earlier
+informal reading, which used the 86-question test split as the denominator instead of the
+67-question validation split the runner scores; the conclusion is unchanged.
 
 ## Not produced
 `paper_audit/draft_vs_final.pdf` (latexdiff): no LaTeX source of the published draft exists and
